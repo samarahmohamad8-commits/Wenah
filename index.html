@@ -6,16 +6,15 @@
 <meta name="theme-color" content="#071d19">
 <title>Wenah | وينه؟</title>
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
 :root{
   --bg:#061b17;
-  --card:#0d2923;
-  --card2:#103129;
+  --card:#0c2821;
+  --card2:#10332a;
   --green:#21e6a0;
-  --text:#f4fffb;
+  --text:#f3fffb;
   --muted:#91aaa3;
   --line:rgba(255,255,255,.09);
 }
@@ -28,9 +27,13 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 body{
   margin:0;
   background:
-    radial-gradient(circle at 85% 0,#115944,transparent 30%),
+    radial-gradient(circle at 85% -5%,#116047 0,transparent 32%),
     var(--bg);
   color:var(--text);
+}
+
+button,input{
+  font:inherit;
 }
 
 .app{
@@ -39,54 +42,61 @@ body{
   padding:16px 16px 35px;
 }
 
-.top{
+/* HEADER */
+.header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:9px;
-  font-size:23px;
-  font-weight:900;
+  font-size:22px;
+  font-weight:950;
 }
 
-.mark{
-  width:40px;
-  height:40px;
-  border-radius:13px;
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:14px;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#27f0aa,#07906b);
+  background:linear-gradient(135deg,#2af2aa,#078c69);
+  box-shadow:0 8px 25px rgba(33,230,160,.18);
 }
 
-.badge{
+.logo span{
   color:var(--green);
-  border:1px solid rgba(33,230,160,.2);
-  background:rgba(33,230,160,.08);
-  padding:8px 11px;
-  border-radius:99px;
-  font-size:11px;
-  font-weight:800;
 }
 
+.favorite-top{
+  border:1px solid var(--line);
+  background:#0b2922;
+  color:#fff;
+  border-radius:13px;
+  padding:9px 12px;
+  cursor:pointer;
+}
+
+/* HERO */
 .hero{
-  padding:25px 0 10px;
+  padding:30px 0 15px;
 }
 
 .eyebrow{
   color:var(--green);
-  font-weight:800;
-  font-size:14px;
+  font-size:13px;
+  font-weight:900;
 }
 
 .hero h1{
-  font-size:44px;
-  line-height:1;
-  margin:9px 0 12px;
+  font-size:46px;
+  line-height:1.05;
+  margin:8px 0 10px;
+  letter-spacing:-1px;
 }
 
 .hero h1 span{
@@ -100,61 +110,60 @@ body{
   margin:0 0 18px;
 }
 
-.search{
+/* SEARCH */
+.search-box{
   display:flex;
   gap:8px;
   padding:7px;
+  border-radius:18px;
   background:#0a2721;
   border:1px solid var(--line);
-  border-radius:17px;
+  box-shadow:0 12px 35px rgba(0,0,0,.15);
 }
 
-.search input{
+.search-box input{
   flex:1;
   min-width:0;
   border:0;
   outline:0;
   background:transparent;
   color:#fff;
-  padding:11px;
-  font-size:15px;
+  padding:11px 12px;
 }
 
-.btn{
+.search-box input::placeholder{
+  color:#6f8b84;
+}
+
+.search-btn{
   border:0;
   border-radius:13px;
+  padding:11px 18px;
   background:var(--green);
   color:#05281f;
-  font-weight:900;
-  padding:11px 17px;
+  font-weight:950;
   cursor:pointer;
 }
 
+/* LOCATION */
 .location-btn{
   width:100%;
-  margin:10px 0 8px;
+  margin:10px 0 14px;
   padding:14px;
-  border:0;
+  border:1px solid rgba(33,230,160,.14);
   border-radius:15px;
-  background:#10362e;
-  color:#eafff8;
+  background:#0d3027;
+  color:#eafff7;
   font-weight:850;
   cursor:pointer;
 }
 
-.status{
-  min-height:22px;
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  margin:7px;
-}
-
+/* CATEGORIES */
 .categories{
   display:flex;
   gap:8px;
   overflow:auto;
-  padding:5px 0 12px;
+  padding:2px 0 15px;
   scrollbar-width:none;
 }
 
@@ -166,13 +175,14 @@ body{
   flex:none;
   border:1px solid var(--line);
   background:#0b2721;
-  color:#e5f7f2;
+  color:#d8eee8;
   border-radius:999px;
-  padding:9px 13px;
+  padding:9px 14px;
   cursor:pointer;
-  font-size:12px;
+  transition:.2s;
 }
 
+.category:hover,
 .category.active{
   background:var(--green);
   color:#05281f;
@@ -180,19 +190,49 @@ body{
   font-weight:900;
 }
 
-.map{
-  height:330px;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  box-shadow:0 20px 60px #0005;
+/* STATUS */
+.status{
+  min-height:20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin:5px 0 10px;
 }
 
+/* MAP */
+.map-wrap{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  border:1px solid var(--line);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+#map{
+  height:350px;
+  width:100%;
+}
+
+.map-label{
+  position:absolute;
+  z-index:500;
+  top:12px;
+  right:12px;
+  background:rgba(6,27,23,.9);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--line);
+  padding:8px 11px;
+  border-radius:12px;
+  font-size:11px;
+  color:#c6ddd7;
+}
+
+/* SECTION */
 .section-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:20px 0 10px;
+  margin:22px 0 10px;
 }
 
 .section-head h2{
@@ -200,14 +240,25 @@ body{
   font-size:19px;
 }
 
-.count{
+.section-head span{
   color:var(--muted);
-  font-size:11px;
+  font-size:12px;
 }
 
+/* RESULTS */
 .results{
   display:grid;
   gap:9px;
+}
+
+.empty{
+  text-align:center;
+  padding:28px 15px;
+  border-radius:18px;
+  background:#0b2721;
+  border:1px solid var(--line);
+  color:var(--muted);
+  line-height:1.8;
 }
 
 .result{
@@ -215,21 +266,27 @@ body{
   align-items:center;
   gap:11px;
   padding:12px;
-  border-radius:17px;
-  background:linear-gradient(145deg,#103129,#0a241f);
+  border-radius:18px;
+  background:linear-gradient(145deg,#10332a,#0a241e);
   border:1px solid var(--line);
   cursor:pointer;
+  transition:.18s;
+}
+
+.result:hover{
+  transform:translateY(-1px);
+  border-color:rgba(33,230,160,.25);
 }
 
 .result-icon{
   width:50px;
   height:50px;
-  flex:none;
-  border-radius:14px;
-  background:#0b241f;
+  border-radius:15px;
   display:grid;
   place-items:center;
-  font-size:24px;
+  font-size:23px;
+  background:#0b241f;
+  flex:none;
 }
 
 .result-info{
@@ -248,26 +305,18 @@ body{
 .result-info small{
   display:block;
   color:var(--muted);
-  margin-top:4px;
   font-size:11px;
+  margin-top:5px;
 }
 
 .distance{
   color:var(--green);
-  font-weight:900;
   font-size:11px;
+  font-weight:900;
   white-space:nowrap;
 }
 
-.empty{
-  padding:28px 15px;
-  text-align:center;
-  color:var(--muted);
-  background:#0b2721;
-  border-radius:17px;
-  line-height:1.7;
-}
-
+/* DETAIL */
 .detail{
   position:fixed;
   left:12px;
@@ -275,13 +324,13 @@ body{
   bottom:12px;
   max-width:736px;
   margin:auto;
-  background:#0b2721;
+  background:#0b2922;
   border:1px solid var(--line);
   border-radius:23px;
   padding:17px;
-  box-shadow:0 25px 90px #0009;
+  box-shadow:0 25px 90px rgba(0,0,0,.75);
+  z-index:3000;
   display:none;
-  z-index:5000;
 }
 
 .detail.show{
@@ -295,23 +344,18 @@ body{
 }
 
 .detail-icon{
-  font-size:30px;
+  font-size:31px;
 }
 
 .detail h3{
-  margin:4px 0 7px;
+  margin:4px 0 6px;
   font-size:21px;
 }
 
 .detail-distance{
   color:var(--green);
   font-weight:900;
-}
-
-.detail-type{
-  color:var(--muted);
   font-size:12px;
-  margin:12px 0;
 }
 
 .close{
@@ -322,6 +366,13 @@ body{
   background:#ffffff10;
   color:#fff;
   cursor:pointer;
+}
+
+.detail-type{
+  color:var(--muted);
+  line-height:1.7;
+  margin:8px 0 14px;
+  font-size:13px;
 }
 
 .detail-actions{
@@ -338,89 +389,102 @@ body{
   cursor:pointer;
 }
 
-.primary{
+.direction{
   background:var(--green);
   color:#05281f;
 }
 
-.secondary{
-  background:#15382f;
-  color:#dff8f0;
+.save{
+  background:#ffffff10;
+  color:#fff;
 }
 
-footer{
-  text-align:center;
-  color:#6f8d85;
-  font-size:11px;
-  padding:25px 0 8px;
+.save.saved{
+  color:var(--green);
 }
 
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%) translateY(20px);
+  background:#12362d;
+  border:1px solid var(--line);
+  padding:11px 15px;
+  border-radius:14px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:9999;
+  font-size:13px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* BOTTOM NAV */
 .bottom-nav{
   position:sticky;
   bottom:8px;
-  margin-top:17px;
-  background:rgba(7,29,25,.93);
-  backdrop-filter:blur(15px);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:6px;
+  margin-top:20px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:5px;
+  padding:6px;
+  border-radius:19px;
+  background:rgba(7,29,25,.94);
+  backdrop-filter:blur(15px);
+  border:1px solid var(--line);
+  box-shadow:0 15px 45px rgba(0,0,0,.4);
 }
 
 .nav-btn{
   border:0;
   background:transparent;
-  color:var(--muted);
+  color:#78958d;
   padding:8px;
   border-radius:13px;
   cursor:pointer;
   font-size:11px;
 }
 
+.nav-btn b{
+  display:block;
+  font-size:19px;
+  margin-bottom:2px;
+}
+
 .nav-btn.active{
+  background:#21e6a014;
   color:var(--green);
-  background:#21e6a018;
   font-weight:900;
 }
 
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:85px;
-  transform:translateX(-50%);
-  background:#102f28;
-  border:1px solid var(--line);
-  padding:11px 15px;
-  border-radius:13px;
-  opacity:0;
-  pointer-events:none;
-  transition:.2s;
-  z-index:9999;
-  font-size:12px;
-}
-
-.toast.show{
-  opacity:1;
+footer{
+  text-align:center;
+  color:#617d76;
+  font-size:11px;
+  padding:20px 0 5px;
 }
 
 @media(max-width:500px){
+  .app{
+    padding:14px 13px 28px;
+  }
+
   .hero h1{
-    font-size:38px;
+    font-size:40px;
   }
 
-  .map{
-    height:300px;
+  #map{
+    height:315px;
   }
 
-  .result{
-    padding:10px;
-  }
-
-  .result-icon{
-    width:45px;
-    height:45px;
+  .search-btn{
+    padding:11px 14px;
   }
 }
 </style>
@@ -430,15 +494,19 @@ footer{
 
 <main class="app">
 
-  <div class="top">
+  <!-- HEADER -->
+  <header class="header">
     <div class="logo">
-      <div class="mark">📍</div>
-      Wenah <span style="color:var(--green)">| وينه؟</span>
+      <div class="logo-icon">📍</div>
+      Wenah <span>| وينه؟</span>
     </div>
 
-    <div class="badge">● قريب منك</div>
-  </div>
+    <button class="favorite-top" onclick="showFavorites()">
+      ♡ المفضلة
+    </button>
+  </header>
 
+  <!-- HERO -->
   <section class="hero">
 
     <div class="eyebrow">كل شيء قريب منك.</div>
@@ -448,125 +516,116 @@ footer{
     </h1>
 
     <p>
-      حدد موقعك وابحث عن المكان الذي تريده.
-      Wenah يعرض لك الأماكن القريبة مرتبة من الأقرب إلى الأبعد.
+      ابحث عن أي مكان قريب منك، وشوف النتائج مرتبة حسب المسافة على الخريطة.
     </p>
 
-    <div class="search">
+    <!-- SEARCH -->
+    <div class="search-box">
       <input
         id="searchInput"
         type="text"
-        placeholder="مثلاً: مطعم، قهوة، صيدلية..."
+        placeholder="مثلاً: مطاعم، كافيهات، صيدليات..."
         onkeydown="if(event.key==='Enter') searchPlaces()"
       >
 
-      <button class="btn" onclick="searchPlaces()">
+      <button class="search-btn" onclick="searchPlaces()">
         بحث
       </button>
     </div>
 
-    <button class="location-btn" onclick="getLocation()">
+    <button class="location-btn" onclick="locateUser()">
       📍 استخدم موقعي
     </button>
 
     <div id="status" class="status"></div>
 
+    <!-- CATEGORIES -->
+    <div class="categories">
+
+      <button class="category" onclick="categorySearch('restaurant',this)">
+        🍔 مطاعم
+      </button>
+
+      <button class="category" onclick="categorySearch('cafe',this)">
+        ☕ كافيهات
+      </button>
+
+      <button class="category" onclick="categorySearch('pharmacy',this)">
+        💊 صيدليات
+      </button>
+
+      <button class="category" onclick="categorySearch('fuel',this)">
+        ⛽ بنزين
+      </button>
+
+      <button class="category" onclick="categorySearch('supermarket',this)">
+        🛒 سوبرماركت
+      </button>
+
+      <button class="category" onclick="categorySearch('atm',this)">
+        🏧 ATM
+      </button>
+
+      <button class="category" onclick="categorySearch('hospital',this)">
+        🏥 مستشفيات
+      </button>
+
+    </div>
+
   </section>
 
-  <!-- الفئات -->
-  <div class="categories">
+  <!-- MAP -->
+  <div class="map-wrap">
 
-    <button
-      class="category active"
-      data-category="all"
-      onclick="selectCategory(this,'all')">
-      ✨ الكل
-    </button>
+    <div class="map-label">
+      🗺️ Wenah | الأماكن حولك
+    </div>
 
-    <button
-      class="category"
-      data-category="restaurant"
-      onclick="selectCategory(this,'restaurant')">
-      🍔 مطاعم
-    </button>
-
-    <button
-      class="category"
-      data-category="cafe"
-      onclick="selectCategory(this,'cafe')">
-      ☕ كافيهات
-    </button>
-
-    <button
-      class="category"
-      data-category="pharmacy"
-      onclick="selectCategory(this,'pharmacy')">
-      💊 صيدليات
-    </button>
-
-    <button
-      class="category"
-      data-category="fuel"
-      onclick="selectCategory(this,'fuel')">
-      ⛽ بنزين
-    </button>
-
-    <button
-      class="category"
-      data-category="supermarket"
-      onclick="selectCategory(this,'supermarket')">
-      🛒 سوبرماركت
-    </button>
-
-    <button
-      class="category"
-      data-category="atm"
-      onclick="selectCategory(this,'atm')">
-      🏧 ATM
-    </button>
+    <div id="map"></div>
 
   </div>
 
-  <!-- الخريطة -->
-  <div id="map" class="map"></div>
-
+  <!-- RESULTS -->
   <div class="section-head">
     <h2>الأماكن القريبة</h2>
-    <span id="count" class="count">حدد موقعك أولاً</span>
+    <span id="count">حدد موقعك أولاً</span>
   </div>
 
   <div id="results" class="results">
+
     <div class="empty">
-      📍 اضغط «استخدم موقعي» حتى نعرض الأماكن حولك.
+      📍 اضغط «استخدم موقعي» ثم اختر الفئة التي تريدها.
     </div>
+
   </div>
+
+  <!-- BOTTOM -->
+  <nav class="bottom-nav">
+
+    <button class="nav-btn active" onclick="goHome()">
+      <b>⌂</b>
+      الرئيسية
+    </button>
+
+    <button class="nav-btn" onclick="focusSearch()">
+      <b>⌕</b>
+      بحث
+    </button>
+
+    <button class="nav-btn" onclick="showFavorites()">
+      <b>♡</b>
+      المفضلة
+    </button>
+
+  </nav>
 
   <footer>
     Wenah — وينه؟ • اكتشف أقرب مكان بسهولة.
   </footer>
 
-  <div class="bottom-nav">
-
-    <button class="nav-btn active"
-      onclick="window.scrollTo({top:0,behavior:'smooth'})">
-      🏠<br>الرئيسية
-    </button>
-
-    <button class="nav-btn"
-      onclick="document.getElementById('searchInput').focus()">
-      🔎<br>بحث
-    </button>
-
-    <button class="nav-btn"
-      onclick="showFavorites()">
-      ❤️<br>المفضلة
-    </button>
-
-  </div>
-
 </main>
 
-<!-- نافذة التفاصيل -->
+<!-- DETAIL -->
 <div id="detail" class="detail">
 
   <div class="detail-head">
@@ -574,9 +633,7 @@ footer{
     <div>
       <div id="detailIcon" class="detail-icon">📍</div>
 
-      <h3 id="detailName">
-        مكان قريب
-      </h3>
+      <h3 id="detailName">مكان قريب</h3>
 
       <div id="detailDistance" class="detail-distance"></div>
     </div>
@@ -591,14 +648,11 @@ footer{
 
   <div class="detail-actions">
 
-    <button class="primary" onclick="openDirections()">
+    <button class="direction" onclick="openDirections()">
       🧭 الاتجاهات
     </button>
 
-    <button
-      id="favoriteButton"
-      class="secondary"
-      onclick="toggleFavorite()">
+    <button id="saveButton" class="save" onclick="toggleFavorite()">
       ♡ حفظ بالمفضلة
     </button>
 
@@ -613,56 +667,113 @@ footer{
 <script>
 
 /* =========================
-   إعداد الخريطة
+   MAP
 ========================= */
 
-const map = L.map('map').setView([32.05,35.93],12);
+const map = L.map("map", {
+  zoomControl:false
+}).setView([31.95,35.91],12);
 
 L.control.zoom({
-  position:'bottomright'
+  position:"bottomright"
 }).addTo(map);
 
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {
     maxZoom:19,
-    attribution:'© OpenStreetMap'
+    attribution:"© OpenStreetMap"
   }
 ).addTo(map);
 
 
 /* =========================
-   المتغيرات
+   VARIABLES
 ========================= */
 
 let userLocation = null;
 let markers = [];
 let selectedPlace = null;
 
-let favorites = JSON.parse(
-  localStorage.getItem('wenahFavorites') || '[]'
-);
+let favorites =
+  JSON.parse(
+    localStorage.getItem("wenahFavorites") || "[]"
+  );
 
-let selectedCategory = 'all';
+const statusEl =
+  document.getElementById("status");
 
-const statusEl = document.getElementById('status');
-const resultsEl = document.getElementById('results');
-const countEl = document.getElementById('count');
+const resultsEl =
+  document.getElementById("results");
+
+const countEl =
+  document.getElementById("count");
 
 
 /* =========================
-   تحديد الموقع
+   CATEGORY SETTINGS
 ========================= */
 
-function getLocation(){
+const categories = {
+
+  restaurant:{
+    tag:'["amenity"="restaurant"]',
+    text:"مطاعم",
+    icon:"🍔"
+  },
+
+  cafe:{
+    tag:'["amenity"="cafe"]',
+    text:"كافيهات",
+    icon:"☕"
+  },
+
+  pharmacy:{
+    tag:'["amenity"="pharmacy"]',
+    text:"صيدليات",
+    icon:"💊"
+  },
+
+  fuel:{
+    tag:'["amenity"="fuel"]',
+    text:"محطات بنزين",
+    icon:"⛽"
+  },
+
+  supermarket:{
+    tag:'["shop"="supermarket"]',
+    text:"سوبرماركت",
+    icon:"🛒"
+  },
+
+  atm:{
+    tag:'["amenity"="atm"]',
+    text:"صراف آلي",
+    icon:"🏧"
+  },
+
+  hospital:{
+    tag:'["amenity"="hospital"]',
+    text:"مستشفيات",
+    icon:"🏥"
+  }
+
+};
+
+
+/* =========================
+   LOCATION
+========================= */
+
+function locateUser(){
 
   statusEl.textContent =
-    '📍 جاري تحديد موقعك...';
+    "📍 جاري تحديد موقعك...";
 
   if(!navigator.geolocation){
 
     statusEl.textContent =
-      '❌ المتصفح لا يدعم تحديد الموقع.';
+      "❌ المتصفح لا يدعم تحديد الموقع.";
 
     return;
   }
@@ -676,44 +787,43 @@ function getLocation(){
         position.coords.longitude
       ];
 
-      map.setView(userLocation,15);
+      map.setView(
+        userLocation,
+        15
+      );
 
-      clearMarkers();
-
-      const userMarker =
-        L.circleMarker(
-          userLocation,
-          {
-            radius:9,
-            color:'#071d19',
-            weight:4,
-            fillColor:'#21e6a0',
-            fillOpacity:1
-          }
-        )
-        .addTo(map)
-        .bindPopup('📍 موقعك');
-
-      markers.push(userMarker);
+      L.circleMarker(
+        userLocation,
+        {
+          radius:9,
+          color:"#071d19",
+          weight:4,
+          fillColor:"#21e6a0",
+          fillOpacity:1
+        }
+      )
+      .addTo(map)
+      .bindPopup("📍 موقعك")
+      .openPopup();
 
       statusEl.textContent =
-        '✅ تم تحديد موقعك';
+        "✅ تم تحديد موقعك";
 
-      loadPlaces();
+      countEl.textContent =
+        "اختر فئة للبحث";
 
     },
 
     () => {
 
       statusEl.textContent =
-        '❌ اسمح للموقع من Edge حتى نقدر نحدد الأماكن القريبة.';
+        "❌ اسمح بالوصول للموقع حتى نكمل.";
 
     },
 
     {
       enableHighAccuracy:true,
-      timeout:15000,
-      maximumAge:0
+      timeout:15000
     }
 
   );
@@ -721,623 +831,366 @@ function getLocation(){
 
 
 /* =========================
-   اختيار الفئة
+   CATEGORY SEARCH
 ========================= */
 
-function selectCategory(button,category){
-
-  document
-    .querySelectorAll('.category')
-    .forEach(btn => btn.classList.remove('active'));
-
-  button.classList.add('active');
-
-  selectedCategory = category;
+function categorySearch(type,button){
 
   if(!userLocation){
 
-    statusEl.textContent =
-      '📍 حدد موقعك أولاً.';
+    locateUser();
 
-    getLocation();
+    toast("📍 حدد موقعك أولاً");
 
     return;
   }
 
-  loadPlaces();
+  document
+    .querySelectorAll(".category")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  document.getElementById("searchInput").value =
+    categories[type].text;
+
+  loadPlaces(type);
 
 }
 
 
 /* =========================
-   البحث
+   TEXT SEARCH
 ========================= */
 
 function searchPlaces(){
 
-  const input =
-    document
-      .getElementById('searchInput')
-      .value
-      .trim()
-      .toLowerCase();
-
-  /*
-   إذا كتب المستخدم كلمة معروفة
-   نحدد الفئة تلقائياً.
-  */
-
-  if(
-    input.includes('مطعم') ||
-    input.includes('مطاعم') ||
-    input.includes('restaurant') ||
-    input.includes('burger') ||
-    input.includes('برغر')
-  ){
-    selectedCategory='restaurant';
-    setActiveCategory('restaurant');
-  }
-
-  else if(
-    input.includes('كافيه') ||
-    input.includes('كافيهات') ||
-    input.includes('قهوة') ||
-    input.includes('coffee') ||
-    input.includes('cafe')
-  ){
-    selectedCategory='cafe';
-    setActiveCategory('cafe');
-  }
-
-  else if(
-    input.includes('صيدلية') ||
-    input.includes('صيدليات') ||
-    input.includes('pharmacy')
-  ){
-    selectedCategory='pharmacy';
-    setActiveCategory('pharmacy');
-  }
-
-  else if(
-    input.includes('بنزين') ||
-    input.includes('محطة') ||
-    input.includes('fuel') ||
-    input.includes('gas')
-  ){
-    selectedCategory='fuel';
-    setActiveCategory('fuel');
-  }
-
-  else if(
-    input.includes('سوبر') ||
-    input.includes('سوبرماركت') ||
-    input.includes('ماركت') ||
-    input.includes('supermarket')
-  ){
-    selectedCategory='supermarket';
-    setActiveCategory('supermarket');
-  }
-
-  else if(
-    input.includes('atm') ||
-    input.includes('صراف') ||
-    input.includes('صراف آلي')
-  ){
-    selectedCategory='atm';
-    setActiveCategory('atm');
-  }
-
-  /*
-   إذا كانت كلمة عامة أو اسم مكان،
-   نستخدم البحث النصي فقط.
-  */
-
   if(!userLocation){
 
-    statusEl.textContent =
-      '📍 حدد موقعك أولاً.';
+    locateUser();
 
-    getLocation();
+    toast("📍 حدد موقعك أولاً");
 
     return;
   }
 
-  loadPlaces(input);
+  const text =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
 
+  let type = detectCategory(text);
+
+  if(!type){
+
+    toast("اختر فئة مثل مطاعم أو صيدليات");
+
+    return;
+  }
+
+  loadPlaces(type);
 }
 
 
 /* =========================
-   تفعيل زر الفئة
+   DETECT CATEGORY
 ========================= */
 
-function setActiveCategory(category){
+function detectCategory(text){
 
-  document
-    .querySelectorAll('.category')
-    .forEach(btn => {
+  if(
+    text.includes("مطعم") ||
+    text.includes("مطاعم") ||
+    text.includes("restaurant") ||
+    text.includes("burger") ||
+    text.includes("برغر")
+  )
+    return "restaurant";
 
-      btn.classList.toggle(
-        'active',
-        btn.dataset.category === category
-      );
+  if(
+    text.includes("كافيه") ||
+    text.includes("كافيهات") ||
+    text.includes("قهوة") ||
+    text.includes("coffee") ||
+    text.includes("cafe")
+  )
+    return "cafe";
 
-    });
+  if(
+    text.includes("صيدلية") ||
+    text.includes("صيدليات") ||
+    text.includes("pharmacy")
+  )
+    return "pharmacy";
 
+  if(
+    text.includes("بنزين") ||
+    text.includes("محطة") ||
+    text.includes("محطات") ||
+    text.includes("fuel")
+  )
+    return "fuel";
+
+  if(
+    text.includes("سوبرماركت") ||
+    text.includes("ماركت") ||
+    text.includes("supermarket")
+  )
+    return "supermarket";
+
+  if(
+    text.includes("atm") ||
+    text.includes("صراف") ||
+    text.includes("صراف آلي")
+  )
+    return "atm";
+
+  if(
+    text.includes("مستشفى") ||
+    text.includes("مستشفيات") ||
+    text.includes("hospital")
+  )
+    return "hospital";
+
+  return null;
 }
 
 
 /* =========================
-   تنظيف الماركرات
+   LOAD PLACES
 ========================= */
 
-function clearMarkers(){
+async function loadPlaces(type){
 
-  markers.forEach(marker => {
+  const category =
+    categories[type];
 
-    try{
-      map.removeLayer(marker);
-    }catch(e){}
-
-  });
-
-  markers=[];
-}
-
-
-/* =========================
-   إعداد بحث Overpass
-========================= */
-
-function getOverpassFilter(category,searchText){
-
-  /*
-   أهم جزء:
-   كل فئة لها فلتر خاص بها.
-   لذلك المطاعم لن ترجع صيدليات
-   أو مستشفيات.
-  */
-
-  if(category === 'restaurant'){
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["amenity"="restaurant"];
-    `;
-  }
-
-  if(category === 'cafe'){
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["amenity"="cafe"];
-    `;
-  }
-
-  if(category === 'pharmacy'){
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["amenity"="pharmacy"];
-    `;
-  }
-
-  if(category === 'fuel'){
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["amenity"="fuel"];
-    `;
-  }
-
-  if(category === 'supermarket'){
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["shop"="supermarket"];
-    `;
-  }
-
-  if(category === 'atm'){
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["amenity"="atm"];
-    `;
-  }
-
-  /*
-   البحث العام:
-   نبحث عن الأماكن التي لها اسم.
-  */
-
-  if(searchText){
-
-    return `
-      nwr(
-        around:5000,
-        LAT,
-        LON
-      )["name"];
-    `;
-  }
-
-  /*
-   الكل:
-   مجموعة أماكن محددة فقط،
-   وليس كل شيء على الخريطة.
-  */
-
-  return `
-    nwr(
-      around:5000,
-      LAT,
-      LON
-    )["amenity"~"restaurant|cafe|pharmacy|fuel|atm"];
-
-    nwr(
-      around:5000,
-      LAT,
-      LON
-    )["shop"="supermarket"];
-  `;
-}
-
-
-/* =========================
-   تحميل الأماكن
-========================= */
-
-async function loadPlaces(searchText=''){
+  if(!category) return;
 
   statusEl.textContent =
-    '🔎 جاري البحث عن الأماكن...';
+    "🔎 جاري البحث عن " +
+    category.text +
+    " القريبة...";
 
   resultsEl.innerHTML =
-    '<div class="empty">جاري البحث...</div>';
-
-  countEl.textContent='';
+    `<div class="empty">
+      🔎 جاري البحث عن ${category.text}...
+    </div>`;
 
   clearMarkers();
 
-  /*
-   إعادة وضع موقع المستخدم
-  */
+  const lat =
+    userLocation[0];
 
-  if(userLocation){
+  const lon =
+    userLocation[1];
 
-    const userMarker =
-      L.circleMarker(
-        userLocation,
-        {
-          radius:9,
-          color:'#071d19',
-          weight:4,
-          fillColor:'#21e6a0',
-          fillOpacity:1
-        }
-      )
-      .addTo(map)
-      .bindPopup('📍 موقعك');
-
-    markers.push(userMarker);
-  }
-
-
-  const lat=userLocation[0];
-  const lon=userLocation[1];
-
-  let queryFilter =
-    getOverpassFilter(
-      selectedCategory,
-      searchText
-    );
-
-  queryFilter =
-    queryFilter
-      .replaceAll('LAT',lat)
-      .replaceAll('LON',lon);
-
-  /*
-   إذا كتب المستخدم اسم محدد،
-   نضيف فلترة محلية بعد جلب النتائج.
-  */
-
-  const overpassQuery = `
-    [out:json][timeout:25];
+  const query = `
+    [out:json][timeout:20];
 
     (
-      ${queryFilter}
+      nwr(
+        around:5000,
+        ${lat},
+        ${lon}
+      )
+      ${category.tag};
     );
 
     out center tags;
   `;
 
+  const endpoints = [
 
-  const endpoints=[
-    'https://overpass-api.de/api/interpreter',
-    'https://overpass.kumi.systems/api/interpreter'
+    "https://overpass-api.de/api/interpreter",
+
+    "https://overpass.kumi.systems/api/interpreter"
+
   ];
 
+  let data = null;
 
-  try{
+  for(const endpoint of endpoints){
 
-    let data=null;
+    try{
 
-    for(const endpoint of endpoints){
-
-      try{
-
-        const response =
-          await fetch(
-            endpoint +
-            '?data=' +
-            encodeURIComponent(overpassQuery)
-          );
-
-        if(!response.ok){
-          throw new Error(
-            'HTTP '+response.status
-          );
-        }
-
-        data=await response.json();
-
-        break;
-
-      }catch(error){
-
-        console.log(
-          'Overpass endpoint failed:',
-          error
+      const response =
+        await fetch(
+          endpoint +
+          "?data=" +
+          encodeURIComponent(query)
         );
 
-      }
+      if(!response.ok)
+        throw new Error("HTTP error");
+
+      data =
+        await response.json();
+
+      break;
+
+    }catch(error){
+
+      console.log(error);
 
     }
-
-
-    if(!data){
-      throw new Error('No data');
-    }
-
-
-    let places =
-      (data.elements || [])
-      .map(element => {
-
-        const latitude =
-          element.lat ??
-          element.center?.lat;
-
-        const longitude =
-          element.lon ??
-          element.center?.lon;
-
-        const tags =
-          element.tags || {};
-
-        return {
-
-          lat:latitude,
-
-          lon:longitude,
-
-          name:
-            tags['name:ar'] ||
-            tags.name ||
-            tags['name:en'] ||
-            'مكان بدون اسم',
-
-          type:
-            tags.amenity ||
-            tags.shop ||
-            '',
-
-          phone:
-            tags.phone ||
-            '',
-
-          distance:
-            calculateDistance(
-              lat,
-              lon,
-              latitude,
-              longitude
-            )
-
-        };
-
-      })
-      .filter(place =>
-        Number.isFinite(place.lat) &&
-        Number.isFinite(place.lon)
-      );
-
-
-    /*
-     فلترة البحث بالاسم إذا كتب المستخدم
-     شيئاً غير اسم الفئة.
-    */
-
-    if(searchText){
-
-      const text =
-        searchText
-          .toLowerCase()
-          .trim();
-
-      const isCategoryWord =
-        [
-          'مطعم',
-          'مطاعم',
-          'restaurant',
-          'burger',
-          'برغر',
-          'كافيه',
-          'كافيهات',
-          'قهوة',
-          'coffee',
-          'cafe',
-          'صيدلية',
-          'صيدليات',
-          'pharmacy',
-          'بنزين',
-          'محطة',
-          'fuel',
-          'gas',
-          'سوبر',
-          'سوبرماركت',
-          'ماركت',
-          'supermarket',
-          'atm',
-          'صراف',
-          'صراف آلي'
-        ].includes(text);
-
-      if(!isCategoryWord){
-
-        places =
-          places.filter(place =>
-            place.name
-              .toLowerCase()
-              .includes(text)
-          );
-
-      }
-
-    }
-
-
-    /*
-     ترتيب من الأقرب للأبعد
-    */
-
-    places.sort(
-      (a,b) =>
-        a.distance-b.distance
-    );
-
-
-    /*
-     إزالة التكرار
-    */
-
-    const unique=[];
-
-    const seen=new Set();
-
-    for(const place of places){
-
-      const key =
-        place.name +
-        '|' +
-        place.lat.toFixed(5) +
-        '|' +
-        place.lon.toFixed(5);
-
-      if(!seen.has(key)){
-
-        seen.add(key);
-        unique.push(place);
-
-      }
-
-    }
-
-
-    places =
-      unique.slice(0,30);
-
-
-    renderResults(places);
-
-
-    if(places.length){
-
-      statusEl.textContent =
-        '✅ تم العثور على ' +
-        places.length +
-        ' مكان قريب';
-
-      countEl.textContent =
-        places.length + ' نتيجة';
-
-    }else{
-
-      statusEl.textContent =
-        'لم نجد نتائج مناسبة.';
-
-      countEl.textContent =
-        'لا نتائج';
-
-      resultsEl.innerHTML =
-        `
-        <div class="empty">
-          😕 ما لقينا أماكن مطابقة.
-          <br>
-          جرّب فئة ثانية أو كلمة بحث مختلفة.
-        </div>
-        `;
-
-    }
-
-
-  }catch(error){
-
-    console.error(
-      'Wenah search error:',
-      error
-    );
-
-    statusEl.textContent =
-      '⚠️ تعذر تحميل النتائج حالياً.';
-
-    countEl.textContent='';
-
-    resultsEl.innerHTML =
-      `
-      <div class="empty">
-        ⚠️ صار خطأ أثناء تحميل الأماكن.
-        <br>
-        جرّب مرة ثانية بعد ثوانٍ.
-      </div>
-      `;
 
   }
+
+  if(!data){
+
+    resultsEl.innerHTML =
+      `<div class="empty">
+        ⚠️ تعذر تحميل النتائج حالياً.<br>
+        جرّب مرة ثانية بعد قليل.
+      </div>`;
+
+    statusEl.textContent =
+      "تعذر تحميل النتائج";
+
+    return;
+  }
+
+
+  let places =
+    (data.elements || [])
+    .map(element => {
+
+      const lat =
+        element.lat ??
+        element.center?.lat;
+
+      const lon =
+        element.lon ??
+        element.center?.lon;
+
+      const tags =
+        element.tags || {};
+
+      return {
+
+        lat,
+        lon,
+
+        name:
+          tags["name:ar"] ||
+          tags.name ||
+          tags["name:en"] ||
+          "مكان بدون اسم",
+
+        type,
+
+        phone:
+          tags.phone ||
+          tags["contact:phone"] ||
+          "",
+
+        distance:
+          distanceKm(
+            userLocation[0],
+            userLocation[1],
+            lat,
+            lon
+          )
+
+      };
+
+    })
+    .filter(
+      place =>
+        Number.isFinite(place.lat) &&
+        Number.isFinite(place.lon)
+    )
+    .sort(
+      (a,b) =>
+        a.distance -
+        b.distance
+    )
+    .slice(0,20);
+
+
+  renderPlaces(
+    places,
+    category
+  );
+
+  countEl.textContent =
+    places.length +
+    " نتيجة";
+
+  statusEl.textContent =
+    places.length
+      ? `✅ تم العثور على ${places.length} ${category.text}`
+      : `لم نجد ${category.text} قريبة ضمن 5 كم`;
 
 }
 
 
 /* =========================
-   عرض النتائج
+   DISTANCE
 ========================= */
 
-function renderResults(places){
+function distanceKm(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+){
 
-  resultsEl.innerHTML='';
+  const R = 6371;
 
+  const dLat =
+    (lat2-lat1) *
+    Math.PI/180;
+
+  const dLon =
+    (lon2-lon1) *
+    Math.PI/180;
+
+  const a =
+    Math.sin(dLat/2)**2 +
+
+    Math.cos(lat1*Math.PI/180) *
+    Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2)**2;
+
+  return R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderPlaces(
+  places,
+  category
+){
+
+  resultsEl.innerHTML = "";
+
+  if(!places.length){
+
+    resultsEl.innerHTML =
+      `<div class="empty">
+        😕 ما لقينا ${category.text} قريبة منك.
+      </div>`;
+
+    return;
+  }
 
   places.forEach(place => {
-
-    const icon =
-      getIcon(
-        place.name,
-        place.type
-      );
-
 
     const marker =
       L.marker([
@@ -1346,25 +1199,22 @@ function renderResults(places){
       ])
       .addTo(map)
       .bindPopup(
-        `<b>${escapeHtml(place.name)}</b>
-         <br>
+        `<b>${escapeHtml(place.name)}</b><br>
          ${formatDistance(place.distance)}`
       );
 
-
     markers.push(marker);
 
+    const item =
+      document.createElement("div");
 
-    const element =
-      document.createElement('div');
+    item.className =
+      "result";
 
-    element.className='result';
-
-
-    element.innerHTML=`
+    item.innerHTML = `
 
       <div class="result-icon">
-        ${icon}
+        ${category.icon}
       </div>
 
       <div class="result-info">
@@ -1374,8 +1224,10 @@ function renderResults(places){
         </strong>
 
         <small>
-          ${getTypeName(place.type)}
-          ${place.phone ? ' • '+escapeHtml(place.phone) : ''}
+          ${category.text}
+          ${place.phone
+            ? " • " + escapeHtml(place.phone)
+            : ""}
         </small>
 
       </div>
@@ -1386,18 +1238,14 @@ function renderResults(places){
 
     `;
 
-
-    element.onclick=()=>{
-
+    item.onclick = () =>
       openDetail(
         place,
-        marker
+        marker,
+        category
       );
 
-    };
-
-
-    resultsEl.appendChild(element);
+    resultsEl.appendChild(item);
 
   });
 
@@ -1405,209 +1253,76 @@ function renderResults(places){
 
 
 /* =========================
-   أيقونات الأماكن
+   DETAIL
 ========================= */
 
-function getIcon(name,type){
-
-  if(type==='restaurant')
-    return '🍔';
-
-  if(type==='cafe')
-    return '☕';
-
-  if(type==='pharmacy')
-    return '💊';
-
-  if(type==='fuel')
-    return '⛽';
-
-  if(type==='supermarket')
-    return '🛒';
-
-  if(type==='atm')
-    return '🏧';
-
-  if(type==='hospital')
-    return '🏥';
-
-  return '📍';
-
-}
-
-
-/* =========================
-   أسماء الفئات
-========================= */
-
-function getTypeName(type){
-
-  const names={
-
-    restaurant:'مطعم',
-
-    cafe:'كافيه',
-
-    pharmacy:'صيدلية',
-
-    fuel:'محطة بنزين',
-
-    supermarket:'سوبرماركت',
-
-    atm:'صراف آلي',
-
-    hospital:'مستشفى',
-
-    clinic:'عيادة'
-
-  };
-
-  return names[type] || 'مكان قريب';
-
-}
-
-
-/* =========================
-   المسافة
-========================= */
-
-function calculateDistance(
-  lat1,
-  lon1,
-  lat2,
-  lon2
+function openDetail(
+  place,
+  marker,
+  category
 ){
 
-  if(
-    !Number.isFinite(lat2) ||
-    !Number.isFinite(lon2)
-  ){
-    return Infinity;
-  }
-
-
-  const R=6371;
-
-  const dLat =
-    (lat2-lat1) *
-    Math.PI/180;
-
-  const dLon =
-    (lon2-lon1) *
-    Math.PI/180;
-
-
-  const a =
-    Math.sin(dLat/2)**2 +
-    Math.cos(lat1*Math.PI/180) *
-    Math.cos(lat2*Math.PI/180) *
-    Math.sin(dLon/2)**2;
-
-
-  return R *
-    2 *
-    Math.atan2(
-      Math.sqrt(a),
-      Math.sqrt(1-a)
-    );
-
-}
-
-
-function formatDistance(distance){
-
-  if(distance < 1){
-
-    return Math.round(
-      distance*1000
-    )+' م';
-
-  }
-
-  return distance.toFixed(1)+' كم';
-
-}
-
-
-/* =========================
-   تفاصيل المكان
-========================= */
-
-function openDetail(place,marker){
-
-  selectedPlace=place;
+  selectedPlace =
+    place;
 
   document.getElementById(
-    'detailIcon'
+    "detailIcon"
   ).textContent =
-    getIcon(
-      place.name,
-      place.type
-    );
+    category.icon;
 
   document.getElementById(
-    'detailName'
+    "detailName"
   ).textContent =
     place.name;
 
   document.getElementById(
-    'detailDistance'
+    "detailDistance"
   ).textContent =
-    formatDistance(
-      place.distance
-    )+' منك';
+    formatDistance(place.distance) +
+    " منك";
 
   document.getElementById(
-    'detailType'
+    "detailType"
   ).textContent =
-    getTypeName(place.type) +
+    category.text +
     (place.phone
-      ? ' • '+place.phone
-      : ''
-    );
-
+      ? " • " + place.phone
+      : "");
 
   const saved =
     isFavorite(place);
 
+  const saveButton =
+    document.getElementById(
+      "saveButton"
+    );
 
-  document.getElementById(
-    'favoriteButton'
-  ).textContent =
+  saveButton.textContent =
     saved
-      ? '♥️ محفوظ'
-      : '♡ حفظ بالمفضلة';
+      ? "♥ محفوظ بالمفضلة"
+      : "♡ حفظ بالمفضلة";
 
+  saveButton.classList.toggle(
+    "saved",
+    saved
+  );
 
-  document.getElementById(
-    'detail'
-  ).classList.add('show');
-
+  document
+    .getElementById("detail")
+    .classList.add("show");
 
   map.setView(
     [place.lat,place.lon],
     17
   );
 
-
-  if(marker){
-    marker.openPopup();
-  }
-
-}
-
-
-function closeDetail(){
-
-  document
-    .getElementById('detail')
-    .classList.remove('show');
+  marker.openPopup();
 
 }
 
 
 /* =========================
-   الاتجاهات
+   DIRECTIONS
 ========================= */
 
 function openDirections(){
@@ -1617,48 +1332,40 @@ function openDirections(){
     !userLocation
   ){
 
-    toast(
-      '📍 حدد موقعك أولاً'
-    );
+    toast("📍 حدد موقعك أولاً");
 
     return;
   }
 
-
   const url =
-    'https://www.google.com/maps/dir/?api=1' +
-    '&origin=' +
+    "https://www.google.com/maps/dir/?api=1" +
+    "&origin=" +
     userLocation[0] +
-    ',' +
+    "," +
     userLocation[1] +
-    '&destination=' +
+    "&destination=" +
     selectedPlace.lat +
-    ',' +
+    "," +
     selectedPlace.lon;
-
 
   window.open(
     url,
-    '_blank'
+    "_blank"
   );
-
 }
 
 
 /* =========================
-   المفضلة
+   FAVORITES
 ========================= */
 
 function isFavorite(place){
 
   return favorites.some(
     item =>
-      item.name===place.name &&
+      item.name === place.name &&
       Math.abs(
         item.lat-place.lat
-      ) < .0001 &&
-      Math.abs(
-        item.lon-place.lon
       ) < .0001
   );
 
@@ -1670,21 +1377,18 @@ function toggleFavorite(){
   if(!selectedPlace)
     return;
 
-
   const index =
     favorites.findIndex(
       item =>
-        item.name===selectedPlace.name &&
+        item.name ===
+        selectedPlace.name &&
         Math.abs(
-          item.lat-selectedPlace.lat
-        ) < .0001 &&
-        Math.abs(
-          item.lon-selectedPlace.lon
+          item.lat -
+          selectedPlace.lat
         ) < .0001
     );
 
-
-  if(index>=0){
+  if(index >= 0){
 
     favorites.splice(
       index,
@@ -1692,7 +1396,7 @@ function toggleFavorite(){
     );
 
     toast(
-      'تمت إزالة المكان من المفضلة'
+      "تمت الإزالة من المفضلة"
     );
 
   }else{
@@ -1702,71 +1406,71 @@ function toggleFavorite(){
     );
 
     toast(
-      '❤️ تمت إضافة المكان للمفضلة'
+      "❤️ تمت الإضافة للمفضلة"
     );
 
   }
 
-
   localStorage.setItem(
-    'wenahFavorites',
-    JSON.stringify(favorites)
+    "wenahFavorites",
+    JSON.stringify(
+      favorites
+    )
   );
 
-
   openDetail(
-    selectedPlace
+    selectedPlace,
+    L.marker([
+      selectedPlace.lat,
+      selectedPlace.lon
+    ]),
+    categories[
+      selectedPlace.type
+    ]
   );
 
 }
 
 
-/* =========================
-   عرض المفضلة
-========================= */
-
 function showFavorites(){
-
-  closeDetail();
 
   if(!favorites.length){
 
     toast(
-      '❤️ المفضلة فاضية حالياً'
+      "المفضلة فاضية حالياً ❤️"
     );
 
     return;
   }
 
+  closeDetail();
 
-  clearMarkers();
-
-  resultsEl.innerHTML='';
-
+  resultsEl.innerHTML = "";
 
   countEl.textContent =
-    favorites.length+' محفوظ';
-
+    favorites.length +
+    " محفوظ";
 
   statusEl.textContent =
-    '❤️ الأماكن المحفوظة';
-
+    "❤️ الأماكن المحفوظة";
 
   favorites.forEach(place => {
 
-    const element =
-      document.createElement('div');
+    const category =
+      categories[
+        place.type
+      ] || categories.restaurant;
 
-    element.className='result';
+    const item =
+      document.createElement("div");
 
+    item.className =
+      "result";
 
-    element.innerHTML=`
+    item.innerHTML = `
 
       <div class="result-icon">
-        ${getIcon(
-          place.name,
-          place.type
-        )}
+        ${category.icon}
       </div>
 
       <div class="result-info">
@@ -1776,89 +1480,163 @@ function showFavorites(){
         </strong>
 
         <small>
-          ${getTypeName(place.type)}
+          ${category.text}
         </small>
 
       </div>
 
       <div class="distance">
-        ♥️
+        ♥
       </div>
 
     `;
 
-
-    element.onclick=()=>{
+    item.onclick = () => {
 
       const marker =
         L.marker([
           place.lat,
           place.lon
-        ])
-        .addTo(map);
-
-      markers.push(marker);
+        ]);
 
       openDetail(
         place,
-        marker
+        marker,
+        category
       );
 
     };
 
-
-    resultsEl.appendChild(element);
+    resultsEl.appendChild(item);
 
   });
 
-
   document
-    .querySelector('.section-head')
+    .querySelector(".section-head")
     .scrollIntoView({
-      behavior:'smooth'
+      behavior:"smooth"
     });
 
 }
 
 
 /* =========================
-   رسالة صغيرة
+   HELPERS
 ========================= */
+
+function clearMarkers(){
+
+  markers.forEach(
+    marker =>
+      map.removeLayer(marker)
+  );
+
+  markers = [];
+
+}
+
+
+function closeDetail(){
+
+  document
+    .getElementById("detail")
+    .classList.remove("show");
+
+}
+
+
+function formatDistance(distance){
+
+  if(distance < 1){
+
+    return Math.round(
+      distance * 1000
+    ) + " م";
+
+  }
+
+  return distance.toFixed(1) +
+    " كم";
+
+}
+
+
+function focusSearch(){
+
+  document
+    .getElementById("searchInput")
+    .focus();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function goHome(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
 
 function toast(message){
 
   const element =
     document.getElementById(
-      'toast'
+      "toast"
     );
 
-  element.textContent=message;
+  element.textContent =
+    message;
 
-  element.classList.add('show');
+  element.classList.add(
+    "show"
+  );
 
   setTimeout(
     () =>
-      element.classList.remove('show'),
+      element.classList.remove(
+        "show"
+      ),
     1800
   );
 
 }
 
 
-/* =========================
-   حماية أسماء الأماكن
-========================= */
-
 function escapeHtml(text){
 
   return String(text)
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 
 }
+
+
+/* =========================
+   STARTUP
+========================= */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    setTimeout(
+      () => map.invalidateSize(),
+      300
+    );
+
+  }
+);
 
 </script>
 
