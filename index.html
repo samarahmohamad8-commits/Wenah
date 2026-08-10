@@ -1,1418 +1,1866 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071d19">
+<title>Wenah | وينه؟</title>
 
-    <meta name="theme-color" content="#071d19">
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-    <title>Wenah | وينه؟</title>
+<style>
+:root{
+  --bg:#061b17;
+  --card:#0d2923;
+  --card2:#103129;
+  --green:#21e6a0;
+  --text:#f4fffb;
+  --muted:#91aaa3;
+  --line:rgba(255,255,255,.09);
+}
 
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
+*{
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
 
-    <link rel="manifest" href="manifest.json">
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 85% 0,#115944,transparent 30%),
+    var(--bg);
+  color:var(--text);
+}
 
-    <style>
+.app{
+  max-width:760px;
+  margin:auto;
+  padding:16px 16px 35px;
+}
 
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background:
-                radial-gradient(
-                    circle at 85% 0,
-                    #0b4c3a,
-                    transparent 35%
-                ),
-                #071d19;
-            color: white;
-        }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:23px;
+  font-weight:900;
+}
 
-        .app {
-            width: 100%;
-            max-width: 750px;
-            margin: auto;
-            padding: 18px;
-        }
+.mark{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#27f0aa,#07906b);
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 24px;
-            font-weight: bold;
-        }
+.badge{
+  color:var(--green);
+  border:1px solid rgba(33,230,160,.2);
+  background:rgba(33,230,160,.08);
+  padding:8px 11px;
+  border-radius:99px;
+  font-size:11px;
+  font-weight:800;
+}
 
-        .logo-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 14px;
-            background: #21e6a0;
-            color: #05281f;
-            display: grid;
-            place-items: center;
-            font-size: 22px;
-        }
+.hero{
+  padding:25px 0 10px;
+}
 
-        .hero {
-            padding: 30px 0 15px;
-        }
+.eyebrow{
+  color:var(--green);
+  font-weight:800;
+  font-size:14px;
+}
 
-        .hero-small {
-            color: #21e6a0;
-            font-weight: bold;
-        }
+.hero h1{
+  font-size:44px;
+  line-height:1;
+  margin:9px 0 12px;
+}
 
-        h1 {
-            font-size: 48px;
-            margin: 8px 0;
-        }
+.hero h1 span{
+  color:var(--green);
+}
 
-        h1 span {
-            color: #21e6a0;
-        }
+.hero p{
+  color:var(--muted);
+  line-height:1.8;
+  font-size:14px;
+  margin:0 0 18px;
+}
 
-        .description {
-            color: #9db9b1;
-            line-height: 1.8;
-            font-size: 15px;
-        }
+.search{
+  display:flex;
+  gap:8px;
+  padding:7px;
+  background:#0a2721;
+  border:1px solid var(--line);
+  border-radius:17px;
+}
 
-        .search {
-            display: flex;
-            gap: 8px;
-            background: #0a2721;
-            border: 1px solid #ffffff18;
-            padding: 7px;
-            border-radius: 17px;
-            margin-top: 18px;
-        }
+.search input{
+  flex:1;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  padding:11px;
+  font-size:15px;
+}
 
-        .search input {
-            flex: 1;
-            min-width: 0;
-            border: none;
-            outline: none;
-            background: transparent;
-            color: white;
-            padding: 11px;
-            font-size: 16px;
-        }
+.btn{
+  border:0;
+  border-radius:13px;
+  background:var(--green);
+  color:#05281f;
+  font-weight:900;
+  padding:11px 17px;
+  cursor:pointer;
+}
 
-        .search input::placeholder {
-            color: #77958d;
-        }
+.location-btn{
+  width:100%;
+  margin:10px 0 8px;
+  padding:14px;
+  border:0;
+  border-radius:15px;
+  background:#10362e;
+  color:#eafff8;
+  font-weight:850;
+  cursor:pointer;
+}
 
-        .search button {
-            border: none;
-            border-radius: 13px;
-            background: #21e6a0;
-            color: #05281f;
-            padding: 11px 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.status{
+  min-height:22px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin:7px;
+}
 
-        .location {
-            width: 100%;
-            margin: 12px 0;
-            padding: 15px;
-            border: none;
-            border-radius: 16px;
-            background: #10362e;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.categories{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding:5px 0 12px;
+  scrollbar-width:none;
+}
 
-        .status {
-            text-align: center;
-            min-height: 24px;
-            color: #9db9b1;
-            font-size: 14px;
-            margin: 10px 0;
-        }
+.categories::-webkit-scrollbar{
+  display:none;
+}
 
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 9px;
-            margin: 18px 0;
-        }
+.category{
+  flex:none;
+  border:1px solid var(--line);
+  background:#0b2721;
+  color:#e5f7f2;
+  border-radius:999px;
+  padding:9px 13px;
+  cursor:pointer;
+  font-size:12px;
+}
 
-        .category {
-            border: 1px solid #ffffff12;
-            border-radius: 16px;
-            padding: 16px 8px;
-            background: #0b2922;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-        }
+.category.active{
+  background:var(--green);
+  color:#05281f;
+  border-color:var(--green);
+  font-weight:900;
+}
 
-        .category:hover {
-            background: #123d32;
-        }
+.map{
+  height:330px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:0 20px 60px #0005;
+}
 
-        .category-icon {
-            display: block;
-            font-size: 25px;
-            margin-bottom: 7px;
-        }
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0 10px;
+}
 
-        .map-title {
-            margin: 20px 0 10px;
-            font-size: 19px;
-            font-weight: bold;
-        }
+.section-head h2{
+  margin:0;
+  font-size:19px;
+}
 
-        #map {
-            width: 100%;
-            height: 360px;
-            border-radius: 22px;
-            overflow: hidden;
-            border: 1px solid #ffffff12;
-        }
+.count{
+  color:var(--muted);
+  font-size:11px;
+}
 
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 22px 0 10px;
-        }
+.results{
+  display:grid;
+  gap:9px;
+}
 
-        .results-header h2 {
-            margin: 0;
-            font-size: 20px;
-        }
+.result{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:12px;
+  border-radius:17px;
+  background:linear-gradient(145deg,#103129,#0a241f);
+  border:1px solid var(--line);
+  cursor:pointer;
+}
 
-        #count {
-            color: #21e6a0;
-            font-size: 13px;
-        }
+.result-icon{
+  width:50px;
+  height:50px;
+  flex:none;
+  border-radius:14px;
+  background:#0b241f;
+  display:grid;
+  place-items:center;
+  font-size:24px;
+}
 
-        .results {
-            display: grid;
-            gap: 10px;
-        }
+.result-info{
+  flex:1;
+  min-width:0;
+}
 
-        .result {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #0d2923;
-            border: 1px solid #ffffff10;
-            border-radius: 17px;
-            padding: 13px;
-            cursor: pointer;
-        }
+.result-info strong{
+  display:block;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 
-        .result:hover {
-            background: #12382f;
-        }
+.result-info small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  font-size:11px;
+}
 
-        .result-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: #15382f;
-            display: grid;
-            place-items: center;
-            font-size: 23px;
-            flex-shrink: 0;
-        }
+.distance{
+  color:var(--green);
+  font-weight:900;
+  font-size:11px;
+  white-space:nowrap;
+}
 
-        .result-info {
-            flex: 1;
-            min-width: 0;
-        }
+.empty{
+  padding:28px 15px;
+  text-align:center;
+  color:var(--muted);
+  background:#0b2721;
+  border-radius:17px;
+  line-height:1.7;
+}
 
-        .result-info strong {
-            display: block;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+.detail{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  max-width:736px;
+  margin:auto;
+  background:#0b2721;
+  border:1px solid var(--line);
+  border-radius:23px;
+  padding:17px;
+  box-shadow:0 25px 90px #0009;
+  display:none;
+  z-index:5000;
+}
 
-        .result-info small {
-            display: block;
-            color: #91aca4;
-            margin-top: 5px;
-        }
+.detail.show{
+  display:block;
+}
 
-        .distance {
-            color: #21e6a0;
-            font-weight: bold;
-            font-size: 12px;
-            white-space: nowrap;
-        }
+.detail-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
 
-        .empty {
-            text-align: center;
-            color: #91aca4;
-            padding: 25px;
-            background: #0b2922;
-            border-radius: 17px;
-        }
+.detail-icon{
+  font-size:30px;
+}
 
-        footer {
-            text-align: center;
-            color: #66847c;
-            font-size: 12px;
-            padding: 30px 0 10px;
-        }
+.detail h3{
+  margin:4px 0 7px;
+  font-size:21px;
+}
 
-        @media (max-width: 500px) {
+.detail-distance{
+  color:var(--green);
+  font-weight:900;
+}
 
-            .app {
-                padding: 14px;
-            }
+.detail-type{
+  color:var(--muted);
+  font-size:12px;
+  margin:12px 0;
+}
 
-            h1 {
-                font-size: 40px;
-            }
+.close{
+  width:40px;
+  height:40px;
+  border:0;
+  border-radius:12px;
+  background:#ffffff10;
+  color:#fff;
+  cursor:pointer;
+}
 
-            #map {
-                height: 310px;
-            }
+.detail-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
 
-            .categories {
-                grid-template-columns: repeat(3, 1fr);
-            }
+.detail-actions button{
+  border:0;
+  border-radius:13px;
+  padding:12px;
+  font-weight:900;
+  cursor:pointer;
+}
 
-            .category {
-                font-size: 12px;
-            }
+.primary{
+  background:var(--green);
+  color:#05281f;
+}
 
-        }
+.secondary{
+  background:#15382f;
+  color:#dff8f0;
+}
 
-    </style>
+footer{
+  text-align:center;
+  color:#6f8d85;
+  font-size:11px;
+  padding:25px 0 8px;
+}
 
+.bottom-nav{
+  position:sticky;
+  bottom:8px;
+  margin-top:17px;
+  background:rgba(7,29,25,.93);
+  backdrop-filter:blur(15px);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:6px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:8px;
+  border-radius:13px;
+  cursor:pointer;
+  font-size:11px;
+}
+
+.nav-btn.active{
+  color:var(--green);
+  background:#21e6a018;
+  font-weight:900;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:85px;
+  transform:translateX(-50%);
+  background:#102f28;
+  border:1px solid var(--line);
+  padding:11px 15px;
+  border-radius:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:9999;
+  font-size:12px;
+}
+
+.toast.show{
+  opacity:1;
+}
+
+@media(max-width:500px){
+  .hero h1{
+    font-size:38px;
+  }
+
+  .map{
+    height:300px;
+  }
+
+  .result{
+    padding:10px;
+  }
+
+  .result-icon{
+    width:45px;
+    height:45px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <main class="app">
 
-    <!-- الشعار -->
-
+  <div class="top">
     <div class="logo">
-
-        <div class="logo-icon">
-            📍
-        </div>
-
-        <div>
-            Wenah
-            <span style="color:#21e6a0;">
-                | وينه؟
-            </span>
-        </div>
-
+      <div class="mark">📍</div>
+      Wenah <span style="color:var(--green)">| وينه؟</span>
     </div>
 
+    <div class="badge">● قريب منك</div>
+  </div>
 
-    <!-- الصفحة الرئيسية -->
+  <section class="hero">
 
-    <section class="hero">
+    <div class="eyebrow">كل شيء قريب منك.</div>
 
-        <div class="hero-small">
-            كل شيء قريب منك.
-        </div>
+    <h1>
+      وينه؟ <span>لقيته.</span>
+    </h1>
 
-        <h1>
-            وينه؟ <span>لقيته.</span>
-        </h1>
+    <p>
+      حدد موقعك وابحث عن المكان الذي تريده.
+      Wenah يعرض لك الأماكن القريبة مرتبة من الأقرب إلى الأبعد.
+    </p>
 
-        <p class="description">
-            حدد موقعك وابحث عن المكان الذي تريده.
-            Wenah يساعدك في العثور على أقرب الأماكن حولك.
-        </p>
+    <div class="search">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="مثلاً: مطعم، قهوة، صيدلية..."
+        onkeydown="if(event.key==='Enter') searchPlaces()"
+      >
 
-
-        <!-- البحث -->
-
-        <div class="search">
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="مثلاً: مطعم، كافيه، صيدلية..."
-                onkeydown="if(event.key === 'Enter') searchPlaces()"
-            >
-
-            <button onclick="searchPlaces()">
-                بحث
-            </button>
-
-        </div>
-
-
-        <!-- تحديد الموقع -->
-
-        <button
-            class="location"
-            onclick="getLocation()"
-        >
-            📍 استخدم موقعي
-        </button>
-
-
-        <div
-            id="status"
-            class="status"
-        >
-            حدد موقعك أولاً حتى نبحث عن الأماكن القريبة.
-        </div>
-
-    </section>
-
-
-    <!-- التصنيفات -->
-
-    <div class="categories">
-
-        <button
-            class="category"
-            onclick="searchCategory('restaurant')"
-        >
-            <span class="category-icon">🍔</span>
-            مطاعم
-        </button>
-
-
-        <button
-            class="category"
-            onclick="searchCategory('cafe')"
-        >
-            <span class="category-icon">☕</span>
-            كافيهات
-        </button>
-
-
-        <button
-            class="category"
-            onclick="searchCategory('pharmacy')"
-        >
-            <span class="category-icon">💊</span>
-            صيدليات
-        </button>
-
+      <button class="btn" onclick="searchPlaces()">
+        بحث
+      </button>
     </div>
 
+    <button class="location-btn" onclick="getLocation()">
+      📍 استخدم موقعي
+    </button>
 
-    <!-- الخريطة -->
+    <div id="status" class="status"></div>
 
-    <div class="map-title">
-        🗺️ خريطة الأماكن القريبة
+  </section>
+
+  <!-- الفئات -->
+  <div class="categories">
+
+    <button
+      class="category active"
+      data-category="all"
+      onclick="selectCategory(this,'all')">
+      ✨ الكل
+    </button>
+
+    <button
+      class="category"
+      data-category="restaurant"
+      onclick="selectCategory(this,'restaurant')">
+      🍔 مطاعم
+    </button>
+
+    <button
+      class="category"
+      data-category="cafe"
+      onclick="selectCategory(this,'cafe')">
+      ☕ كافيهات
+    </button>
+
+    <button
+      class="category"
+      data-category="pharmacy"
+      onclick="selectCategory(this,'pharmacy')">
+      💊 صيدليات
+    </button>
+
+    <button
+      class="category"
+      data-category="fuel"
+      onclick="selectCategory(this,'fuel')">
+      ⛽ بنزين
+    </button>
+
+    <button
+      class="category"
+      data-category="supermarket"
+      onclick="selectCategory(this,'supermarket')">
+      🛒 سوبرماركت
+    </button>
+
+    <button
+      class="category"
+      data-category="atm"
+      onclick="selectCategory(this,'atm')">
+      🏧 ATM
+    </button>
+
+  </div>
+
+  <!-- الخريطة -->
+  <div id="map" class="map"></div>
+
+  <div class="section-head">
+    <h2>الأماكن القريبة</h2>
+    <span id="count" class="count">حدد موقعك أولاً</span>
+  </div>
+
+  <div id="results" class="results">
+    <div class="empty">
+      📍 اضغط «استخدم موقعي» حتى نعرض الأماكن حولك.
     </div>
+  </div>
 
-    <div id="map"></div>
+  <footer>
+    Wenah — وينه؟ • اكتشف أقرب مكان بسهولة.
+  </footer>
 
+  <div class="bottom-nav">
 
-    <!-- النتائج -->
+    <button class="nav-btn active"
+      onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      🏠<br>الرئيسية
+    </button>
 
-    <div class="results-header">
+    <button class="nav-btn"
+      onclick="document.getElementById('searchInput').focus()">
+      🔎<br>بحث
+    </button>
 
-        <h2>
-            الأماكن القريبة
-        </h2>
+    <button class="nav-btn"
+      onclick="showFavorites()">
+      ❤️<br>المفضلة
+    </button>
 
-        <span id="count">
-            0 نتائج
-        </span>
-
-    </div>
-
-
-    <div
-        id="results"
-        class="results"
-    >
-
-        <div class="empty">
-            📍 حدد موقعك لعرض الأماكن حولك.
-        </div>
-
-    </div>
-
-
-    <footer>
-        Wenah — وينه؟ • اكتشف أقرب مكان بسهولة 📍
-    </footer>
+  </div>
 
 </main>
 
+<!-- نافذة التفاصيل -->
+<div id="detail" class="detail">
 
-<!-- Leaflet -->
+  <div class="detail-head">
+
+    <div>
+      <div id="detailIcon" class="detail-icon">📍</div>
+
+      <h3 id="detailName">
+        مكان قريب
+      </h3>
+
+      <div id="detailDistance" class="detail-distance"></div>
+    </div>
+
+    <button class="close" onclick="closeDetail()">
+      ✕
+    </button>
+
+  </div>
+
+  <div id="detailType" class="detail-type"></div>
+
+  <div class="detail-actions">
+
+    <button class="primary" onclick="openDirections()">
+      🧭 الاتجاهات
+    </button>
+
+    <button
+      id="favoriteButton"
+      class="secondary"
+      onclick="toggleFavorite()">
+      ♡ حفظ بالمفضلة
+    </button>
+
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-
 <script>
 
-    /* =========================
-       المتغيرات
-    ========================= */
+/* =========================
+   إعداد الخريطة
+========================= */
 
-    let map;
+const map = L.map('map').setView([32.05,35.93],12);
 
-    let userLocation = null;
+L.control.zoom({
+  position:'bottomright'
+}).addTo(map);
 
-    let userMarker = null;
-
-    let placeMarkers = [];
-
-
-    const status =
-        document.getElementById("status");
-
-    const results =
-        document.getElementById("results");
-
-    const count =
-        document.getElementById("count");
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    maxZoom:19,
+    attribution:'© OpenStreetMap'
+  }
+).addTo(map);
 
 
-    /* =========================
-       إنشاء الخريطة
-    ========================= */
+/* =========================
+   المتغيرات
+========================= */
 
-    map = L.map("map").setView(
-        [31.9539, 35.9106],
-        12
+let userLocation = null;
+let markers = [];
+let selectedPlace = null;
+
+let favorites = JSON.parse(
+  localStorage.getItem('wenahFavorites') || '[]'
+);
+
+let selectedCategory = 'all';
+
+const statusEl = document.getElementById('status');
+const resultsEl = document.getElementById('results');
+const countEl = document.getElementById('count');
+
+
+/* =========================
+   تحديد الموقع
+========================= */
+
+function getLocation(){
+
+  statusEl.textContent =
+    '📍 جاري تحديد موقعك...';
+
+  if(!navigator.geolocation){
+
+    statusEl.textContent =
+      '❌ المتصفح لا يدعم تحديد الموقع.';
+
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    position => {
+
+      userLocation = [
+        position.coords.latitude,
+        position.coords.longitude
+      ];
+
+      map.setView(userLocation,15);
+
+      clearMarkers();
+
+      const userMarker =
+        L.circleMarker(
+          userLocation,
+          {
+            radius:9,
+            color:'#071d19',
+            weight:4,
+            fillColor:'#21e6a0',
+            fillOpacity:1
+          }
+        )
+        .addTo(map)
+        .bindPopup('📍 موقعك');
+
+      markers.push(userMarker);
+
+      statusEl.textContent =
+        '✅ تم تحديد موقعك';
+
+      loadPlaces();
+
+    },
+
+    () => {
+
+      statusEl.textContent =
+        '❌ اسمح للموقع من Edge حتى نقدر نحدد الأماكن القريبة.';
+
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:15000,
+      maximumAge:0
+    }
+
+  );
+}
+
+
+/* =========================
+   اختيار الفئة
+========================= */
+
+function selectCategory(button,category){
+
+  document
+    .querySelectorAll('.category')
+    .forEach(btn => btn.classList.remove('active'));
+
+  button.classList.add('active');
+
+  selectedCategory = category;
+
+  if(!userLocation){
+
+    statusEl.textContent =
+      '📍 حدد موقعك أولاً.';
+
+    getLocation();
+
+    return;
+  }
+
+  loadPlaces();
+
+}
+
+
+/* =========================
+   البحث
+========================= */
+
+function searchPlaces(){
+
+  const input =
+    document
+      .getElementById('searchInput')
+      .value
+      .trim()
+      .toLowerCase();
+
+  /*
+   إذا كتب المستخدم كلمة معروفة
+   نحدد الفئة تلقائياً.
+  */
+
+  if(
+    input.includes('مطعم') ||
+    input.includes('مطاعم') ||
+    input.includes('restaurant') ||
+    input.includes('burger') ||
+    input.includes('برغر')
+  ){
+    selectedCategory='restaurant';
+    setActiveCategory('restaurant');
+  }
+
+  else if(
+    input.includes('كافيه') ||
+    input.includes('كافيهات') ||
+    input.includes('قهوة') ||
+    input.includes('coffee') ||
+    input.includes('cafe')
+  ){
+    selectedCategory='cafe';
+    setActiveCategory('cafe');
+  }
+
+  else if(
+    input.includes('صيدلية') ||
+    input.includes('صيدليات') ||
+    input.includes('pharmacy')
+  ){
+    selectedCategory='pharmacy';
+    setActiveCategory('pharmacy');
+  }
+
+  else if(
+    input.includes('بنزين') ||
+    input.includes('محطة') ||
+    input.includes('fuel') ||
+    input.includes('gas')
+  ){
+    selectedCategory='fuel';
+    setActiveCategory('fuel');
+  }
+
+  else if(
+    input.includes('سوبر') ||
+    input.includes('سوبرماركت') ||
+    input.includes('ماركت') ||
+    input.includes('supermarket')
+  ){
+    selectedCategory='supermarket';
+    setActiveCategory('supermarket');
+  }
+
+  else if(
+    input.includes('atm') ||
+    input.includes('صراف') ||
+    input.includes('صراف آلي')
+  ){
+    selectedCategory='atm';
+    setActiveCategory('atm');
+  }
+
+  /*
+   إذا كانت كلمة عامة أو اسم مكان،
+   نستخدم البحث النصي فقط.
+  */
+
+  if(!userLocation){
+
+    statusEl.textContent =
+      '📍 حدد موقعك أولاً.';
+
+    getLocation();
+
+    return;
+  }
+
+  loadPlaces(input);
+
+}
+
+
+/* =========================
+   تفعيل زر الفئة
+========================= */
+
+function setActiveCategory(category){
+
+  document
+    .querySelectorAll('.category')
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        'active',
+        btn.dataset.category === category
+      );
+
+    });
+
+}
+
+
+/* =========================
+   تنظيف الماركرات
+========================= */
+
+function clearMarkers(){
+
+  markers.forEach(marker => {
+
+    try{
+      map.removeLayer(marker);
+    }catch(e){}
+
+  });
+
+  markers=[];
+}
+
+
+/* =========================
+   إعداد بحث Overpass
+========================= */
+
+function getOverpassFilter(category,searchText){
+
+  /*
+   أهم جزء:
+   كل فئة لها فلتر خاص بها.
+   لذلك المطاعم لن ترجع صيدليات
+   أو مستشفيات.
+  */
+
+  if(category === 'restaurant'){
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["amenity"="restaurant"];
+    `;
+  }
+
+  if(category === 'cafe'){
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["amenity"="cafe"];
+    `;
+  }
+
+  if(category === 'pharmacy'){
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["amenity"="pharmacy"];
+    `;
+  }
+
+  if(category === 'fuel'){
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["amenity"="fuel"];
+    `;
+  }
+
+  if(category === 'supermarket'){
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["shop"="supermarket"];
+    `;
+  }
+
+  if(category === 'atm'){
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["amenity"="atm"];
+    `;
+  }
+
+  /*
+   البحث العام:
+   نبحث عن الأماكن التي لها اسم.
+  */
+
+  if(searchText){
+
+    return `
+      nwr(
+        around:5000,
+        LAT,
+        LON
+      )["name"];
+    `;
+  }
+
+  /*
+   الكل:
+   مجموعة أماكن محددة فقط،
+   وليس كل شيء على الخريطة.
+  */
+
+  return `
+    nwr(
+      around:5000,
+      LAT,
+      LON
+    )["amenity"~"restaurant|cafe|pharmacy|fuel|atm"];
+
+    nwr(
+      around:5000,
+      LAT,
+      LON
+    )["shop"="supermarket"];
+  `;
+}
+
+
+/* =========================
+   تحميل الأماكن
+========================= */
+
+async function loadPlaces(searchText=''){
+
+  statusEl.textContent =
+    '🔎 جاري البحث عن الأماكن...';
+
+  resultsEl.innerHTML =
+    '<div class="empty">جاري البحث...</div>';
+
+  countEl.textContent='';
+
+  clearMarkers();
+
+  /*
+   إعادة وضع موقع المستخدم
+  */
+
+  if(userLocation){
+
+    const userMarker =
+      L.circleMarker(
+        userLocation,
+        {
+          radius:9,
+          color:'#071d19',
+          weight:4,
+          fillColor:'#21e6a0',
+          fillOpacity:1
+        }
+      )
+      .addTo(map)
+      .bindPopup('📍 موقعك');
+
+    markers.push(userMarker);
+  }
+
+
+  const lat=userLocation[0];
+  const lon=userLocation[1];
+
+  let queryFilter =
+    getOverpassFilter(
+      selectedCategory,
+      searchText
+    );
+
+  queryFilter =
+    queryFilter
+      .replaceAll('LAT',lat)
+      .replaceAll('LON',lon);
+
+  /*
+   إذا كتب المستخدم اسم محدد،
+   نضيف فلترة محلية بعد جلب النتائج.
+  */
+
+  const overpassQuery = `
+    [out:json][timeout:25];
+
+    (
+      ${queryFilter}
+    );
+
+    out center tags;
+  `;
+
+
+  const endpoints=[
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter'
+  ];
+
+
+  try{
+
+    let data=null;
+
+    for(const endpoint of endpoints){
+
+      try{
+
+        const response =
+          await fetch(
+            endpoint +
+            '?data=' +
+            encodeURIComponent(overpassQuery)
+          );
+
+        if(!response.ok){
+          throw new Error(
+            'HTTP '+response.status
+          );
+        }
+
+        data=await response.json();
+
+        break;
+
+      }catch(error){
+
+        console.log(
+          'Overpass endpoint failed:',
+          error
+        );
+
+      }
+
+    }
+
+
+    if(!data){
+      throw new Error('No data');
+    }
+
+
+    let places =
+      (data.elements || [])
+      .map(element => {
+
+        const latitude =
+          element.lat ??
+          element.center?.lat;
+
+        const longitude =
+          element.lon ??
+          element.center?.lon;
+
+        const tags =
+          element.tags || {};
+
+        return {
+
+          lat:latitude,
+
+          lon:longitude,
+
+          name:
+            tags['name:ar'] ||
+            tags.name ||
+            tags['name:en'] ||
+            'مكان بدون اسم',
+
+          type:
+            tags.amenity ||
+            tags.shop ||
+            '',
+
+          phone:
+            tags.phone ||
+            '',
+
+          distance:
+            calculateDistance(
+              lat,
+              lon,
+              latitude,
+              longitude
+            )
+
+        };
+
+      })
+      .filter(place =>
+        Number.isFinite(place.lat) &&
+        Number.isFinite(place.lon)
+      );
+
+
+    /*
+     فلترة البحث بالاسم إذا كتب المستخدم
+     شيئاً غير اسم الفئة.
+    */
+
+    if(searchText){
+
+      const text =
+        searchText
+          .toLowerCase()
+          .trim();
+
+      const isCategoryWord =
+        [
+          'مطعم',
+          'مطاعم',
+          'restaurant',
+          'burger',
+          'برغر',
+          'كافيه',
+          'كافيهات',
+          'قهوة',
+          'coffee',
+          'cafe',
+          'صيدلية',
+          'صيدليات',
+          'pharmacy',
+          'بنزين',
+          'محطة',
+          'fuel',
+          'gas',
+          'سوبر',
+          'سوبرماركت',
+          'ماركت',
+          'supermarket',
+          'atm',
+          'صراف',
+          'صراف آلي'
+        ].includes(text);
+
+      if(!isCategoryWord){
+
+        places =
+          places.filter(place =>
+            place.name
+              .toLowerCase()
+              .includes(text)
+          );
+
+      }
+
+    }
+
+
+    /*
+     ترتيب من الأقرب للأبعد
+    */
+
+    places.sort(
+      (a,b) =>
+        a.distance-b.distance
     );
 
 
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            maxZoom: 19,
-            attribution:
-                "&copy; OpenStreetMap"
-        }
-    ).addTo(map);
+    /*
+     إزالة التكرار
+    */
 
+    const unique=[];
 
-    /* =========================
-       تحديد الموقع
-    ========================= */
+    const seen=new Set();
 
-    function getLocation() {
+    for(const place of places){
 
-        status.textContent =
-            "📍 جاري تحديد موقعك...";
+      const key =
+        place.name +
+        '|' +
+        place.lat.toFixed(5) +
+        '|' +
+        place.lon.toFixed(5);
 
+      if(!seen.has(key)){
 
-        if (!navigator.geolocation) {
+        seen.add(key);
+        unique.push(place);
 
-            status.textContent =
-                "❌ المتصفح لا يدعم تحديد الموقع.";
-
-            return;
-        }
-
-
-        navigator.geolocation.getCurrentPosition(
-
-            function(position) {
-
-                const lat =
-                    position.coords.latitude;
-
-                const lon =
-                    position.coords.longitude;
-
-
-                userLocation = {
-                    lat: lat,
-                    lon: lon
-                };
-
-
-                map.setView(
-                    [lat, lon],
-                    15
-                );
-
-
-                /* حذف علامة الموقع القديمة */
-
-                if (userMarker) {
-
-                    map.removeLayer(
-                        userMarker
-                    );
-
-                }
-
-
-                /* علامة المستخدم */
-
-                userMarker =
-                    L.circleMarker(
-                        [lat, lon],
-                        {
-                            radius: 9,
-                            color: "#071d19",
-                            weight: 4,
-                            fillColor: "#21e6a0",
-                            fillOpacity: 1
-                        }
-                    )
-                    .addTo(map)
-                    .bindPopup(
-                        "📍 موقعك الحالي"
-                    )
-                    .openPopup();
-
-
-                status.textContent =
-                    "✅ تم تحديد موقعك بنجاح";
-
-
-                /* تحميل الأماكن */
-
-                searchCategory(
-                    "restaurant"
-                );
-
-            },
-
-
-            function(error) {
-
-                if (error.code === 1) {
-
-                    status.textContent =
-                        "❌ اسمح للموقع بالوصول إلى موقعك.";
-
-                }
-
-                else if (error.code === 2) {
-
-                    status.textContent =
-                        "❌ تعذر تحديد موقعك.";
-
-                }
-
-                else if (error.code === 3) {
-
-                    status.textContent =
-                        "❌ انتهى وقت تحديد الموقع.";
-
-                }
-
-                else {
-
-                    status.textContent =
-                        "❌ حدث خطأ أثناء تحديد الموقع.";
-
-                }
-
-            },
-
-            {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 0
-            }
-
-        );
+      }
 
     }
 
 
-    /* =========================
-       التصنيفات
-    ========================= */
-
-    function searchCategory(category) {
-
-        if (!userLocation) {
-
-            status.textContent =
-                "📍 حدد موقعك أولاً.";
-
-            getLocation();
-
-            return;
-        }
+    places =
+      unique.slice(0,30);
 
 
-        loadPlaces(category);
-
-    }
+    renderResults(places);
 
 
-    /* =========================
-       البحث النصي
-    ========================= */
+    if(places.length){
 
-    function searchPlaces() {
+      statusEl.textContent =
+        '✅ تم العثور على ' +
+        places.length +
+        ' مكان قريب';
 
-        if (!userLocation) {
+      countEl.textContent =
+        places.length + ' نتيجة';
 
-            status.textContent =
-                "📍 حدد موقعك أولاً.";
+    }else{
 
-            getLocation();
+      statusEl.textContent =
+        'لم نجد نتائج مناسبة.';
 
-            return;
-        }
+      countEl.textContent =
+        'لا نتائج';
 
-
-        const text =
-            document
-                .getElementById("searchInput")
-                .value
-                .trim()
-                .toLowerCase();
-
-
-        let category = "all";
-
-
-        if (
-            text.includes("مطعم") ||
-            text.includes("مطاعم") ||
-            text.includes("restaurant") ||
-            text.includes("burger")
-        ) {
-
-            category = "restaurant";
-
-        }
-
-        else if (
-            text.includes("كافيه") ||
-            text.includes("كافيهات") ||
-            text.includes("قهوة") ||
-            text.includes("coffee") ||
-            text.includes("cafe")
-        ) {
-
-            category = "cafe";
-
-        }
-
-        else if (
-            text.includes("صيدلية") ||
-            text.includes("صيدليات") ||
-            text.includes("pharmacy")
-        ) {
-
-            category = "pharmacy";
-
-        }
-
-
-        loadPlaces(category);
+      resultsEl.innerHTML =
+        `
+        <div class="empty">
+          😕 ما لقينا أماكن مطابقة.
+          <br>
+          جرّب فئة ثانية أو كلمة بحث مختلفة.
+        </div>
+        `;
 
     }
 
 
-    /* =========================
-       تحميل الأماكن
-    ========================= */
+  }catch(error){
 
-    async function loadPlaces(category) {
+    console.error(
+      'Wenah search error:',
+      error
+    );
 
-        status.textContent =
-            "🔎 جاري البحث عن الأماكن القريبة...";
+    statusEl.textContent =
+      '⚠️ تعذر تحميل النتائج حالياً.';
 
+    countEl.textContent='';
 
-        results.innerHTML =
-            '<div class="empty">جاري البحث...</div>';
+    resultsEl.innerHTML =
+      `
+      <div class="empty">
+        ⚠️ صار خطأ أثناء تحميل الأماكن.
+        <br>
+        جرّب مرة ثانية بعد ثوانٍ.
+      </div>
+      `;
 
+  }
 
-        clearPlaceMarkers();
+}
 
 
-        const lat =
-            userLocation.lat;
+/* =========================
+   عرض النتائج
+========================= */
 
-        const lon =
-            userLocation.lon;
+function renderResults(places){
 
+  resultsEl.innerHTML='';
 
-        let tag;
 
+  places.forEach(place => {
 
-        /*
-           هنا أهم جزء:
+    const icon =
+      getIcon(
+        place.name,
+        place.type
+      );
 
-           كل زر يبحث عن نوع المكان
-           الصحيح فقط.
-        */
 
+    const marker =
+      L.marker([
+        place.lat,
+        place.lon
+      ])
+      .addTo(map)
+      .bindPopup(
+        `<b>${escapeHtml(place.name)}</b>
+         <br>
+         ${formatDistance(place.distance)}`
+      );
 
-        if (category === "restaurant") {
 
-            tag =
-                '["amenity"="restaurant"]';
+    markers.push(marker);
 
-        }
 
-        else if (category === "cafe") {
+    const element =
+      document.createElement('div');
 
-            tag =
-                '["amenity"="cafe"]';
+    element.className='result';
 
-        }
 
-        else if (category === "pharmacy") {
+    element.innerHTML=`
 
-            tag =
-                '["amenity"="pharmacy"]';
+      <div class="result-icon">
+        ${icon}
+      </div>
 
-        }
+      <div class="result-info">
 
-        else {
+        <strong>
+          ${escapeHtml(place.name)}
+        </strong>
 
-            tag =
-                '["name"]';
+        <small>
+          ${getTypeName(place.type)}
+          ${place.phone ? ' • '+escapeHtml(place.phone) : ''}
+        </small>
 
-        }
+      </div>
 
+      <div class="distance">
+        ${formatDistance(place.distance)}
+      </div>
 
-        const query =
+    `;
 
-            `[out:json][timeout:25];
-            (
-                nwr(
-                    around:5000,
-                    ${lat},
-                    ${lon}
-                )
-                ${tag};
-            );
-            out center tags;`;
 
+    element.onclick=()=>{
 
-        const servers = [
+      openDetail(
+        place,
+        marker
+      );
 
-            "https://overpass-api.de/api/interpreter",
+    };
 
-            "https://overpass.kumi.systems/api/interpreter"
 
-        ];
+    resultsEl.appendChild(element);
 
+  });
 
-        let data = null;
+}
 
 
-        try {
+/* =========================
+   أيقونات الأماكن
+========================= */
 
-            for (
-                const server of servers
-            ) {
+function getIcon(name,type){
 
-                try {
+  if(type==='restaurant')
+    return '🍔';
 
-                    const response =
-                        await fetch(
-                            server +
-                            "?data=" +
-                            encodeURIComponent(
-                                query
-                            )
-                        );
+  if(type==='cafe')
+    return '☕';
 
+  if(type==='pharmacy')
+    return '💊';
 
-                    if (
-                        !response.ok
-                    ) {
+  if(type==='fuel')
+    return '⛽';
 
-                        continue;
+  if(type==='supermarket')
+    return '🛒';
 
-                    }
+  if(type==='atm')
+    return '🏧';
 
+  if(type==='hospital')
+    return '🏥';
 
-                    data =
-                        await response.json();
+  return '📍';
 
-                    break;
+}
 
-                }
 
-                catch (error) {
+/* =========================
+   أسماء الفئات
+========================= */
 
-                    console.log(
-                        "Server failed:",
-                        server
-                    );
+function getTypeName(type){
 
-                }
+  const names={
 
-            }
+    restaurant:'مطعم',
 
+    cafe:'كافيه',
 
-            if (!data) {
+    pharmacy:'صيدلية',
 
-                throw new Error(
-                    "No data"
-                );
+    fuel:'محطة بنزين',
 
-            }
+    supermarket:'سوبرماركت',
 
+    atm:'صراف آلي',
 
-            let places =
-                (data.elements || [])
-                .map(function(place) {
+    hospital:'مستشفى',
 
-                    const placeLat =
-                        place.lat ??
-                        place.center?.lat;
+    clinic:'عيادة'
 
-                    const placeLon =
-                        place.lon ??
-                        place.center?.lon;
+  };
 
+  return names[type] || 'مكان قريب';
 
-                    const tags =
-                        place.tags || {};
+}
 
 
-                    return {
+/* =========================
+   المسافة
+========================= */
 
-                        lat: placeLat,
+function calculateDistance(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+){
 
-                        lon: placeLon,
+  if(
+    !Number.isFinite(lat2) ||
+    !Number.isFinite(lon2)
+  ){
+    return Infinity;
+  }
 
-                        name:
-                            tags["name:ar"] ||
-                            tags.name ||
-                            tags["name:en"] ||
-                            "مكان بدون اسم",
 
-                        type:
-                            tags.amenity ||
-                            tags.shop ||
-                            "",
+  const R=6371;
 
-                        phone:
-                            tags.phone ||
-                            "",
+  const dLat =
+    (lat2-lat1) *
+    Math.PI/180;
 
-                        distance:
-                            calculateDistance(
-                                lat,
-                                lon,
-                                placeLat,
-                                placeLon
-                            )
+  const dLon =
+    (lon2-lon1) *
+    Math.PI/180;
 
-                    };
 
-                })
-                .filter(function(place) {
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(lat1*Math.PI/180) *
+    Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2)**2;
 
-                    return (
-                        Number.isFinite(
-                            place.lat
-                        ) &&
-                        Number.isFinite(
-                            place.lon
-                        )
-                    );
 
-                });
+  return R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
 
+}
 
-            /* الأقرب أولاً */
 
-            places.sort(
-                function(a, b) {
+function formatDistance(distance){
 
-                    return (
-                        a.distance -
-                        b.distance
-                    );
+  if(distance < 1){
 
-                }
-            );
+    return Math.round(
+      distance*1000
+    )+' م';
 
+  }
 
-            /* أول 20 نتيجة */
+  return distance.toFixed(1)+' كم';
 
-            places =
-                places.slice(
-                    0,
-                    20
-                );
+}
 
 
-            renderPlaces(
-                places,
-                category
-            );
+/* =========================
+   تفاصيل المكان
+========================= */
 
+function openDetail(place,marker){
 
-        }
+  selectedPlace=place;
 
-        catch (error) {
+  document.getElementById(
+    'detailIcon'
+  ).textContent =
+    getIcon(
+      place.name,
+      place.type
+    );
 
-            console.error(
-                error
-            );
+  document.getElementById(
+    'detailName'
+  ).textContent =
+    place.name;
 
+  document.getElementById(
+    'detailDistance'
+  ).textContent =
+    formatDistance(
+      place.distance
+    )+' منك';
 
-            results.innerHTML =
-                `
-                <div class="empty">
-                    ⚠️ تعذر تحميل الأماكن حالياً.
-                    <br>
-                    حاول مرة ثانية.
-                </div>
-                `;
+  document.getElementById(
+    'detailType'
+  ).textContent =
+    getTypeName(place.type) +
+    (place.phone
+      ? ' • '+place.phone
+      : ''
+    );
 
 
-            status.textContent =
-                "❌ تعذر تحميل النتائج.";
+  const saved =
+    isFavorite(place);
 
-            count.textContent =
-                "0 نتائج";
 
-        }
+  document.getElementById(
+    'favoriteButton'
+  ).textContent =
+    saved
+      ? '♥️ محفوظ'
+      : '♡ حفظ بالمفضلة';
 
-    }
 
+  document.getElementById(
+    'detail'
+  ).classList.add('show');
 
-    /* =========================
-       عرض النتائج
-    ========================= */
 
-    function renderPlaces(
-        places,
-        category
-    ) {
+  map.setView(
+    [place.lat,place.lon],
+    17
+  );
 
-        results.innerHTML = "";
 
+  if(marker){
+    marker.openPopup();
+  }
 
-        if (!places.length) {
+}
 
-            results.innerHTML =
-                `
-                <div class="empty">
-                    😕 ما لقينا أماكن من هذا النوع
-                    ضمن 5 كم منك.
-                </div>
-                `;
 
-            count.textContent =
-                "0 نتائج";
+function closeDetail(){
 
-            status.textContent =
-                "لم نجد نتائج كافية.";
+  document
+    .getElementById('detail')
+    .classList.remove('show');
 
-            return;
+}
 
-        }
 
+/* =========================
+   الاتجاهات
+========================= */
 
-        count.textContent =
-            places.length +
-            " نتائج";
+function openDirections(){
 
+  if(
+    !selectedPlace ||
+    !userLocation
+  ){
 
-        status.textContent =
-            "✅ تم العثور على الأماكن الأقرب لك";
+    toast(
+      '📍 حدد موقعك أولاً'
+    );
 
+    return;
+  }
 
-        places.forEach(
-            function(place) {
 
+  const url =
+    'https://www.google.com/maps/dir/?api=1' +
+    '&origin=' +
+    userLocation[0] +
+    ',' +
+    userLocation[1] +
+    '&destination=' +
+    selectedPlace.lat +
+    ',' +
+    selectedPlace.lon;
 
-                /* علامة على الخريطة */
 
-                const marker =
-                    L.marker(
-                        [
-                            place.lat,
-                            place.lon
-                        ]
-                    )
-                    .addTo(map);
+  window.open(
+    url,
+    '_blank'
+  );
 
+}
 
-                marker.bindPopup(
-                    `
-                    <strong>
-                        ${escapeHTML(
-                            place.name
-                        )}
-                    </strong>
-                    <br>
-                    ${formatDistance(
-                        place.distance
-                    )}
-                    `
-                );
 
+/* =========================
+   المفضلة
+========================= */
 
-                placeMarkers.push(
-                    marker
-                );
+function isFavorite(place){
 
+  return favorites.some(
+    item =>
+      item.name===place.name &&
+      Math.abs(
+        item.lat-place.lat
+      ) < .0001 &&
+      Math.abs(
+        item.lon-place.lon
+      ) < .0001
+  );
 
-                /* بطاقة النتيجة */
+}
 
-                const card =
-                    document.createElement(
-                        "div"
-                    );
 
+function toggleFavorite(){
 
-                card.className =
-                    "result";
+  if(!selectedPlace)
+    return;
 
 
-                card.innerHTML =
-                    `
-                    <div class="result-icon">
-                        ${getIcon(
-                            category
-                        )}
-                    </div>
+  const index =
+    favorites.findIndex(
+      item =>
+        item.name===selectedPlace.name &&
+        Math.abs(
+          item.lat-selectedPlace.lat
+        ) < .0001 &&
+        Math.abs(
+          item.lon-selectedPlace.lon
+        ) < .0001
+    );
 
-                    <div class="result-info">
 
-                        <strong>
-                            ${escapeHTML(
-                                place.name
-                            )}
-                        </strong>
+  if(index>=0){
 
-                        <small>
-                            ${getTypeName(
-                                category
-                            )}
-                            ${
-                                place.phone
-                                ? " • " +
-                                  escapeHTML(
-                                      place.phone
-                                  )
-                                : ""
-                            }
-                        </small>
+    favorites.splice(
+      index,
+      1
+    );
 
-                    </div>
+    toast(
+      'تمت إزالة المكان من المفضلة'
+    );
 
-                    <div class="distance">
-                        ${formatDistance(
-                            place.distance
-                        )}
-                    </div>
-                    `;
+  }else{
 
+    favorites.push(
+      selectedPlace
+    );
 
-                card.onclick =
-                    function() {
+    toast(
+      '❤️ تمت إضافة المكان للمفضلة'
+    );
 
-                        map.setView(
-                            [
-                                place.lat,
-                                place.lon
-                            ],
-                            17
-                        );
+  }
 
 
-                        marker
-                            .openPopup();
+  localStorage.setItem(
+    'wenahFavorites',
+    JSON.stringify(favorites)
+  );
 
-                    };
 
+  openDetail(
+    selectedPlace
+  );
 
-                results.appendChild(
-                    card
-                );
+}
 
-            }
-        );
 
-    }
+/* =========================
+   عرض المفضلة
+========================= */
 
+function showFavorites(){
 
-    /* =========================
-       تنظيف علامات الخريطة
-    ========================= */
+  closeDetail();
 
-    function clearPlaceMarkers() {
+  if(!favorites.length){
 
-        placeMarkers.forEach(
-            function(marker) {
+    toast(
+      '❤️ المفضلة فاضية حالياً'
+    );
 
-                map.removeLayer(
-                    marker
-                );
+    return;
+  }
 
-            }
-        );
 
+  clearMarkers();
 
-        placeMarkers = [];
+  resultsEl.innerHTML='';
 
-    }
 
+  countEl.textContent =
+    favorites.length+' محفوظ';
 
-    /* =========================
-       حساب المسافة
-    ========================= */
 
-    function calculateDistance(
-        lat1,
-        lon1,
-        lat2,
-        lon2
-    ) {
+  statusEl.textContent =
+    '❤️ الأماكن المحفوظة';
 
-        const R = 6371;
 
+  favorites.forEach(place => {
 
-        const dLat =
-            (
-                lat2 -
-                lat1
-            ) *
-            Math.PI /
-            180;
+    const element =
+      document.createElement('div');
 
+    element.className='result';
 
-        const dLon =
-            (
-                lon2 -
-                lon1
-            ) *
-            Math.PI /
-            180;
 
+    element.innerHTML=`
 
-        const a =
+      <div class="result-icon">
+        ${getIcon(
+          place.name,
+          place.type
+        )}
+      </div>
 
-            Math.sin(
-                dLat / 2
-            ) ** 2 +
+      <div class="result-info">
 
-            Math.cos(
-                lat1 *
-                Math.PI /
-                180
-            ) *
+        <strong>
+          ${escapeHtml(place.name)}
+        </strong>
 
-            Math.cos(
-                lat2 *
-                Math.PI /
-                180
-            ) *
+        <small>
+          ${getTypeName(place.type)}
+        </small>
 
-            Math.sin(
-                dLon / 2
-            ) ** 2;
+      </div>
 
+      <div class="distance">
+        ♥️
+      </div>
 
-        return (
-            R *
-            2 *
-            Math.atan2(
-                Math.sqrt(a),
-                Math.sqrt(1 - a)
-            )
-        );
+    `;
 
-    }
 
+    element.onclick=()=>{
 
-    /* =========================
-       شكل المسافة
-    ========================= */
+      const marker =
+        L.marker([
+          place.lat,
+          place.lon
+        ])
+        .addTo(map);
 
-    function formatDistance(
-        distance
-    ) {
+      markers.push(marker);
 
-        if (
-            distance < 1
-        ) {
+      openDetail(
+        place,
+        marker
+      );
 
-            return (
-                Math.round(
-                    distance * 1000
-                ) +
-                " م"
-            );
+    };
 
-        }
 
+    resultsEl.appendChild(element);
 
-        return (
-            distance.toFixed(1) +
-            " كم"
-        );
+  });
 
-    }
 
+  document
+    .querySelector('.section-head')
+    .scrollIntoView({
+      behavior:'smooth'
+    });
 
-    /* =========================
-       الأيقونات
-    ========================= */
+}
 
-    function getIcon(
-        category
-    ) {
 
-        if (
-            category ===
-            "restaurant"
-        ) {
+/* =========================
+   رسالة صغيرة
+========================= */
 
-            return "🍔";
+function toast(message){
 
-        }
+  const element =
+    document.getElementById(
+      'toast'
+    );
 
+  element.textContent=message;
 
-        if (
-            category ===
-            "cafe"
-        ) {
+  element.classList.add('show');
 
-            return "☕";
+  setTimeout(
+    () =>
+      element.classList.remove('show'),
+    1800
+  );
 
-        }
+}
 
 
-        if (
-            category ===
-            "pharmacy"
-        ) {
+/* =========================
+   حماية أسماء الأماكن
+========================= */
 
-            return "💊";
+function escapeHtml(text){
 
-        }
+  return String(text)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
 
-
-        return "📍";
-
-    }
-
-
-    /* =========================
-       اسم النوع
-    ========================= */
-
-    function getTypeName(
-        category
-    ) {
-
-        if (
-            category ===
-            "restaurant"
-        ) {
-
-            return "مطعم";
-
-        }
-
-
-        if (
-            category ===
-            "cafe"
-        ) {
-
-            return "كافيه";
-
-        }
-
-
-        if (
-            category ===
-            "pharmacy"
-        ) {
-
-            return "صيدلية";
-
-        }
-
-
-        return "مكان قريب";
-
-    }
-
-
-    /* =========================
-       حماية النص
-    ========================= */
-
-    function escapeHTML(
-        text
-    ) {
-
-        return String(text)
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-    }
-
+}
 
 </script>
-
-
-<!-- تسجيل التطبيق -->
-
-<script>
-
-    if (
-        "serviceWorker"
-        in navigator
-    ) {
-
-        navigator.serviceWorker
-            .register("sw.js")
-            .catch(
-                function(error) {
-
-                    console.log(
-                        "Service Worker:",
-                        error
-                    );
-
-                }
-            );
-
-    }
-
-</script>
-
 
 </body>
-
 </html>
