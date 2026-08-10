@@ -1,0 +1,287 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071d19"><title>Wenah | وينه؟</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
+:root{--bg:#071d19;--card:#0d2923;--g:#21e6a0;--t:#f4fffb;--m:#9db9b1;--line:#ffffff14}*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}body{margin:0;background:radial-gradient(circle at 85% 0,#0b4c3a,transparent 34%),var(--bg);color:var(--t)}.app{max-width:850px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center}.logo{font-weight:950;font-size:25px;display:flex;align-items:center;gap:9px}.mark{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#27f0aa,#07906b);display:grid;place-items:center}.hero{padding:25px 0 12px}.ey{color:var(--g);font-weight:800}.hero h1{font-size:clamp(36px,8vw,58px);line-height:1;margin:8px 0 12px}.hero h1 span{color:var(--g)}.hero p{color:var(--m);line-height:1.8;margin:0 0 18px}.search{display:flex;gap:8px;background:#0a2721;border:1px solid var(--line);padding:8px;border-radius:18px}.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:10px;font-size:16px}.btn{border:0;border-radius:13px;background:var(--g);color:#03281e;font-weight:900;padding:11px 16px}.loc{width:100%;margin:10px 0 18px;padding:15px;border:0;border-radius:16px;background:#10362e;color:#eafff8;font-weight:850}.chips{display:flex;gap:8px;overflow:auto;padding:3px 0 15px}.chip{white-space:nowrap;border:1px solid var(--line);background:#0b2721;color:#e5f7f2;border-radius:999px;padding:9px 13px}.map{height:360px;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px #0005}.below{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}.below h2{margin:0;font-size:21px}.count{color:var(--m);font-size:13px}.results{display:grid;gap:10px}.result{background:linear-gradient(145deg,#103129,#0a241f);border:1px solid var(--line);border-radius:18px;padding:15px;display:flex;gap:12px;align-items:center;cursor:pointer}.ri{width:45px;height:45px;border-radius:14px;background:#21e6a018;display:grid;place-items:center;font-size:23px;flex:none}.result strong{display:block}.result small{color:var(--m);display:block;margin-top:5px;line-height:1.5}.dist{margin-right:auto;color:var(--g);font-weight:800;font-size:12px;white-space:nowrap}.status{text-align:center;min-height:22px;color:var(--m);font-size:13px;margin:7px}.empty{padding:30px;text-align:center;color:var(--m);background:#0b2721;border-radius:18px}footer{text-align:center;color:#6f8d85;font-size:12px;padding:25px 0 8px}@media(max-width:560px){.map{height:320px}.result{padding:13px}.dist{font-size:11px}}
+.top-actions{display:flex;gap:8px;align-items:center}.fav-btn{border:1px solid var(--line);background:#0b2721;color:#fff;border-radius:12px;padding:9px 11px;cursor:pointer}.bottom-nav{position:sticky;bottom:12px;margin:22px auto 0;max-width:520px;background:rgba(7,29,25,.92);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;padding:7px;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;box-shadow:0 18px 50px #0008}.nav-item{border:0;background:transparent;color:var(--m);padding:9px;border-radius:14px;cursor:pointer;font-size:12px}.nav-item.active{background:#21e6a018;color:var(--g);font-weight:900}.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#102f28;border:1px solid var(--line);padding:12px 16px;border-radius:14px;opacity:0;pointer-events:none;transition:.2s;z-index:9999}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.detail{position:fixed;inset:auto 12px 12px;max-width:826px;margin:auto;background:#0b2721;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 25px 90px #0009;display:none;z-index:5000}.detail.show{display:block}.detail-head{display:flex;justify-content:space-between;gap:12px}.close{border:0;background:#ffffff10;color:#fff;border-radius:12px;width:40px;height:40px}.detail h3{margin:4px 0 8px;font-size:23px}.detail p{color:var(--m);line-height:1.7;margin:5px 0 15px}.detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-actions button{border:0;border-radius:14px;padding:13px;font-weight:900;cursor:pointer}.primary{background:var(--g);color:#05281f}.secondary{background:#ffffff10;color:#fff}.fav-on{color:var(--g)!important}@media(max-width:560px){.detail-actions{grid-template-columns:1fr 1fr}}
+</style>
+<style>
+.v5-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0 18px}
+.v5-greeting small{display:block;color:#8fa9a1;font-size:12px;margin-bottom:3px}.v5-greeting strong{font-size:20px}
+.v5-live{border:1px solid rgba(33,230,160,.22);background:rgba(33,230,160,.08);color:#62f1bc;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:800}
+.v5-filters{display:flex;gap:8px;overflow:auto;padding:3px 0 10px;scrollbar-width:none}.v5-filters::-webkit-scrollbar{display:none}
+.v5-filter{white-space:nowrap;border:1px solid rgba(255,255,255,.09);background:#0b2620;color:#cce2dc;border-radius:999px;padding:9px 13px;cursor:pointer}
+.v5-filter.active{background:#21e6a0;color:#05281f;border-color:#21e6a0;font-weight:900}
+.v5-section{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}
+.v5-section h3{margin:0;font-size:18px}.v5-section span{font-size:12px;color:#718e86}
+.v5-cards{display:grid;grid-template-columns:1fr;gap:10px}
+.v5-place{display:flex;gap:12px;align-items:center;background:linear-gradient(145deg,#103129,#0b241f);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:12px;cursor:pointer}
+.v5-photo{width:66px;height:66px;border-radius:15px;display:grid;place-items:center;font-size:29px;background:linear-gradient(135deg,#174d3f,#0c2923);flex:none}
+.v5-info{min-width:0;flex:1}.v5-info strong{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v5-meta{font-size:12px;color:#93ada5;margin-top:5px}.v5-open{font-size:11px;color:#63edb7;margin-top:5px}
+.v5-distance{font-size:12px;color:#dff8f0;font-weight:800;white-space:nowrap}
+.v5-bottom{position:sticky;bottom:10px;margin-top:22px;background:rgba(7,29,25,.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:8px;display:flex;justify-content:space-around;box-shadow:0 14px 45px rgba(0,0,0,.35)}
+.v5-nav{background:none;border:0;color:#78968e;padding:8px 14px;font-size:11px;cursor:pointer}.v5-nav b{display:block;font-size:20px;margin-bottom:2px}.v5-nav.active{color:#21e6a0}
+</style>
+
+<style>
+.v6-livebox{margin:14px 0;padding:14px;border:1px solid rgba(33,230,160,.18);background:linear-gradient(135deg,rgba(33,230,160,.09),rgba(255,255,255,.025));border-radius:18px}
+.v6-livebox b{display:block;margin-bottom:4px}.v6-livebox span{color:#9ab7ae;font-size:12px}
+.v6-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.v6-actions button{border:1px solid rgba(255,255,255,.08);background:#0b2922;color:#e9fff8;border-radius:14px;padding:12px;cursor:pointer;font-weight:800}.v6-actions button:first-child{background:#21e6a0;color:#05281f}
+.v6-note{color:#708e86;font-size:11px;line-height:1.7;margin-top:8px}
+</style>
+
+<style>
+.v7-panel{margin-top:16px;background:#0b2721;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:15px}
+.v7-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.v7-head h3{margin:0;font-size:18px}.v7-head span{font-size:11px;color:#7e9a92}
+.v7-results{display:grid;gap:9px}.v7-result{display:flex;align-items:center;gap:11px;padding:11px;border-radius:15px;background:#103129;border:1px solid rgba(255,255,255,.05)}
+.v7-emoji{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;font-size:24px;background:#0b241f}
+.v7-rinfo{flex:1;min-width:0}.v7-rinfo strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v7-rinfo small{display:block;color:#91aca4;margin-top:4px}
+.v7-rating{font-size:12px;color:#ffd76a;white-space:nowrap}.v7-open{font-size:11px;color:#58edb4;margin-top:4px}
+.v7-dir{border:0;background:#21e6a0;color:#05281f;border-radius:11px;padding:9px 10px;font-weight:900;cursor:pointer}
+.v7-empty{text-align:center;color:#8da9a1;font-size:13px;padding:18px 5px}
+</style>
+
+<style>
+/* Wenah v8 — cleaner visual hierarchy */
+body{background:radial-gradient(circle at 88% -5%,#115944 0,transparent 30%),#061b17}
+.app{max-width:720px;padding:16px 16px 34px}
+header{margin-bottom:10px}
+.logo{font-size:23px}.logo-mark{width:40px;height:40px;border-radius:13px}
+.hero{padding:15px 0 8px}.hero h1{font-size:42px;margin:8px 0 10px}.hero p{font-size:15px;line-height:1.65;margin-bottom:16px}
+.search{border-radius:16px;padding:6px}.search input{padding:11px}.search button{padding:11px 15px}
+.location{margin:10px 0 12px;padding:14px;border-radius:15px}
+.v8-title{display:flex;justify-content:space-between;align-items:end;margin:22px 0 10px}.v8-title h2{margin:0;font-size:19px}.v8-title span{font-size:11px;color:#6f8d84}
+.grid{grid-template-columns:repeat(3,1fr);gap:8px}.card{min-height:98px;padding:13px;border-radius:16px}.icon{font-size:23px;margin-bottom:9px}.card strong{font-size:13px}.card small{font-size:10px}
+.v5-topbar{margin:8px 0 12px}.v5-greeting strong{font-size:18px}.v5-live{padding:7px 10px}
+.v5-filters{padding-bottom:6px}
+.v5-filter{font-size:12px;padding:8px 12px}
+.v5-section{margin:17px 0 9px}.v5-section h3{font-size:17px}
+.v5-cards{gap:8px}.v5-place{padding:10px;border-radius:16px;gap:10px}.v5-photo{width:52px;height:52px;border-radius:13px;font-size:23px}.v5-info strong{font-size:14px}.v5-meta{font-size:11px;margin-top:3px}.v5-open{font-size:10px;margin-top:3px}.v5-distance{font-size:11px}
+.v7-panel{margin-top:12px;border-radius:18px;padding:12px}.v7-head{margin-bottom:9px}.v7-head h3{font-size:16px}
+.v7-result{padding:9px;border-radius:14px;gap:9px}.v7-emoji{width:44px;height:44px;font-size:21px}.v7-rinfo strong{font-size:13px}.v7-rinfo small{font-size:10px;margin-top:3px}.v7-open{font-size:10px}.v7-dir{padding:8px 9px;font-size:11px}
+.v6-livebox{padding:11px;border-radius:16px}.v6-actions button{padding:10px;font-size:12px}
+.v5-bottom{bottom:7px;margin-top:16px;border-radius:17px;padding:5px}.v5-nav{padding:7px 12px;font-size:10px}.v5-nav b{font-size:18px}
+footer{margin-top:18px}
+@media(max-width:420px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:38px}}
+</style>
+
+<style>
+.v9-map{height:260px;margin:14px 0;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.09);position:relative;background:
+radial-gradient(circle at 30% 35%,rgba(33,230,160,.18) 0 3px,transparent 4px),
+radial-gradient(circle at 72% 62%,rgba(33,230,160,.15) 0 3px,transparent 4px),
+linear-gradient(135deg,#102e28,#0a211c)}
+.v9-map:before{content:"";position:absolute;inset:-30%;background:repeating-linear-gradient(22deg,transparent 0 35px,rgba(255,255,255,.035) 36px 38px),repeating-linear-gradient(112deg,transparent 0 48px,rgba(255,255,255,.025) 49px 51px);transform:rotate(-4deg)}
+.v9-road{position:absolute;height:9px;background:rgba(255,255,255,.07);border-radius:99px;transform:rotate(-18deg);width:110%;top:48%;left:-5%}
+.v9-road.two{transform:rotate(58deg);top:15%;left:-10%;width:120%}
+.v9-pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50% 50% 50% 8px;background:#21e6a0;rotate:-45deg;display:grid;place-items:center;box-shadow:0 0 0 9px rgba(33,230,160,.12),0 12px 30px rgba(0,0,0,.35)}
+.v9-pin span{rotate:45deg;font-size:21px}
+.v9-maplabel{position:absolute;left:14px;top:13px;background:rgba(6,27,23,.86);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08);padding:8px 11px;border-radius:12px;font-size:11px;color:#bcd6cf}
+.v9-mapbutton{position:absolute;right:13px;bottom:13px;border:0;background:#21e6a0;color:#05281f;border-radius:12px;padding:10px 13px;font-weight:900;cursor:pointer}
+.v9-detail{display:none;margin-top:12px;padding:15px;border-radius:18px;background:#0d2923;border:1px solid rgba(255,255,255,.08)}
+.v9-detail.show{display:block}.v9-detail-head{display:flex;gap:11px;align-items:center}.v9-detail-icon{width:55px;height:55px;border-radius:15px;background:#15382f;display:grid;place-items:center;font-size:25px}
+.v9-detail h3{margin:0 0 4px}.v9-detail p{margin:0;color:#8fa9a1;font-size:12px}
+.v9-detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}.v9-detail-actions button{border:0;border-radius:12px;padding:11px;font-weight:900;cursor:pointer;background:#21e6a0;color:#05281f}.v9-detail-actions button:last-child{background:#15382f;color:#dff8f0;border:1px solid rgba(255,255,255,.08)}
+</style>
+<link rel="manifest" href="manifest.json">
+</head><body><main class="app"><div class="top"><div class="logo"><div class="mark">📍</div>Wenah <span style="color:var(--g)">| وينه؟</span></div><div class="top-actions"><button class="fav-btn" onclick="showFavorites()">♡ المفضلة</button><span style="font-size:12px;color:var(--m);border:1px solid var(--line);padding:8px 10px;border-radius:99px">قريب منك</span></div></div><section class="hero"><div class="ey">كل شيء قريب منك.</div><h1>وينه؟ <span>لقيته.</span></h1><p>حدد موقعك وابحث عن المكان اللي بدك إياه. Wenah يعرض لك الأماكن القريبة على الخريطة وبترتيب الأقرب.</p><div class="search"><input id="q" placeholder="مثلاً: مطعم، قهوة، صيدلية..." onkeydown="if(event.key==='Enter')search()"><button class="btn" onclick="search()">بحث</button></div><button class="loc" onclick="locate()">📍 استخدم موقعي</button><div id="status" class="status"></div></section>
+<div class="v9-map" id="v9Map">
+  <div class="v9-road"></div><div class="v9-road two"></div>
+  <div class="v9-maplabel">🗺️ خريطة Wenah • معاينة</div>
+  <div class="v9-pin"><span>📍</span></div>
+  <button class="v9-mapbutton" onclick="v9MapAction()">عرض الأماكن القريبة</button>
+</div>
+<div class="v9-detail" id="v9Detail">
+  <div class="v9-detail-head">
+    <div class="v9-detail-icon" id="v9Icon">🍔</div>
+    <div><h3 id="v9Name">مكان قريب</h3><p id="v9Meta">⭐ 4.8 · مفتوح الآن</p></div>
+  </div>
+  <div class="v9-detail-actions">
+    <button onclick="v9Directions()">🧭 الاتجاهات</button>
+    <button onclick="v9Close()">إغلاق</button>
+  </div>
+</div>
+<script>
+function v9Show(name,icon,meta,type){
+ document.getElementById('v9Detail').classList.add('show');
+ document.getElementById('v9Name').textContent=name;
+ document.getElementById('v9Icon').textContent=icon;
+ document.getElementById('v9Meta').textContent=meta;
+ window.v9Type=type||'places';
+}
+function v9Directions(){
+ if(window.v6lat!=null) window.open(`https://www.google.com/maps/search/${encodeURIComponent(window.v9Type||'places')}/@${window.v6lat},${window.v6lon},15z`,'_blank');
+ else { findLocation(); document.getElementById('v6State').textContent='حدد موقعك ثم اضغط الاتجاهات مرة ثانية 📍'; }
+}
+function v9MapAction(){
+ if(window.v6lat!=null) v9Directions();
+ else { findLocation(); document.getElementById('v6State').textContent='حدد موقعك أولاً، وبعدها نعرض الأماكن القريبة 📍'; }
+}
+function v9Close(){document.getElementById('v9Detail').classList.remove('show')}
+</script>
+<div class="chips"><button class="chip" onclick="quick('مطاعم')">🍔 مطاعم</button><button class="chip" onclick="quick('كافيهات')">☕ كافيهات</button><button class="chip" onclick="quick('صيدليات')">💊 صيدليات</button><button class="chip" onclick="quick('محطات بنزين')">⛽ بنزين</button><button class="chip" onclick="quick('سوبرماركت')">🛒 سوبرماركت</button><button class="chip" onclick="quick('صراف آلي')">🏧 ATM</button></div><div id="map" class="map"></div><div class="below"><h2>الأماكن القريبة</h2><span id="count" class="count">حدد موقعك أولاً</span></div><div id="results" class="results"><div class="empty">📍 اضغط «استخدم موقعي» حتى نعرض الأماكن حولك.</div></div><footer>Wenah — وينه؟ • اكتشف أقرب مكان، بسهولة.</footer><nav class="bottom-nav"><button class="nav-item active" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂<br>الرئيسية</button><button class="nav-item" onclick="showFavorites()">♡<br>المفضلة</button><button class="nav-item" onclick="locate()">📍<br>موقعي</button></nav><div id="toast" class="toast"></div><div id="detail" class="detail"><div class="detail-head"><div><div id="dicon" style="font-size:30px">📍</div><h3 id="dname"></h3><div id="ddistance" style="color:var(--g);font-weight:800"></div></div><button class="close" onclick="closeDetail()">✕</button></div><p id="dtype"></p><div class="detail-actions"><button class="primary" onclick="directions()">🧭 الاتجاهات</button><button id="saveBtn" class="secondary" onclick="toggleFavorite()">♡ حفظ بالمفضلة</button></div></div></main><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+let map=L.map('map',{zoomControl:false}).setView([31.95,35.91],12);L.control.zoom({position:'bottomright'}).addTo(map);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);let user=null,markers=[];
+const status=document.getElementById('status'),results=document.getElementById('results'),count=document.getElementById('count');
+function locate(){status.textContent='📍 جاري تحديد موقعك...';if(!navigator.geolocation){status.textContent='المتصفح لا يدعم الموقع.';return}navigator.geolocation.getCurrentPosition(p=>{user=[p.coords.latitude,p.coords.longitude];map.setView(user,15);L.circleMarker(user,{radius:9,color:'#071d19',weight:4,fillColor:'#21e6a0',fillOpacity:1}).addTo(map).bindPopup('📍 موقعك').openPopup();status.textContent='✅ تم تحديد موقعك';loadPlaces('');},()=>status.textContent='❌ اسمح بالوصول للموقع حتى نكمل.',{enableHighAccuracy:true,timeout:15000});}
+function quick(x){document.getElementById('q').value=x;search()}
+function search(){if(!user){locate();return}loadPlaces(document.getElementById('q').value.trim())}
+function clearMarkers(){markers.forEach(m=>map.removeLayer(m));markers=[]}
+function iconFor(n,t){n=(n||'').toLowerCase();if(t.includes('cafe')||n.includes('coffee'))return'☕';if(t.includes('pharm'))return'💊';if(t.includes('fuel'))return'⛽';if(t.includes('super'))return'🛒';if(t.includes('restaurant')||t.includes('fast_food'))return'🍔';if(t.includes('hospital')||t.includes('clinic'))return'🏥';return'📍'}
+async function loadPlaces(query){
+ status.textContent='🔎 جاري البحث عن الأماكن القريبة...';
+ results.innerHTML='<div class="empty">جاري البحث...</div>';
+ clearMarkers();
+ let tag='';
+ let q=(query||'').toLowerCase();
+ if(q.includes('صيد')||q.includes('pharm')) tag='["amenity"="pharmacy"]';
+ else if(q.includes('بنزين')||q.includes('fuel')) tag='["amenity"="fuel"]';
+ else if(q.includes('كاف')||q.includes('cafe')||q.includes('قهوة')) tag='["amenity"="cafe"]';
+ else if(q.includes('سوبر')||q.includes('market')) tag='["shop"="supermarket"]';
+ else if(q.includes('مطعم')||q.includes('restaurant')||q.includes('برغر')) tag='["amenity"="restaurant"]';
+ else if(q.includes('مستشفى')||q.includes('hospital')) tag='["amenity"="hospital"]';
+ else tag='["name"]';
+
+ let lat=user[0],lon=user[1];
+ let queryOver=`[out:json][timeout:20];(nwr(around:5000,${lat},${lon})${tag};);out center tags;`;
+ const endpoints=[
+   'https://overpass-api.de/api/interpreter',
+   'https://overpass.kumi.systems/api/interpreter'
+ ];
+ try{
+   let data=null,lastError=null;
+   for(const endpoint of endpoints){
+     try{
+       const url=endpoint+'?data='+encodeURIComponent(queryOver);
+       const r=await fetch(url,{method:'GET'});
+       if(!r.ok) throw new Error('HTTP '+r.status);
+       data=await r.json();
+       break;
+     }catch(e){lastError=e;}
+   }
+   if(!data) throw lastError||new Error('No data');
+   let arr=(data.elements||[]).map(e=>{
+     let a=e.lat??e.center?.lat,b=e.lon??e.center?.lon,t=e.tags||{};
+     return {
+       lat:a,lon:b,
+       name:t.name||t['name:ar']||t['name:en']||'مكان بدون اسم',
+       type:t.amenity||t.shop||'',
+       phone:t.phone||'',
+       distance:dist(lat,lon,a,b)
+     };
+   }).filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lon))
+     .sort((a,b)=>a.distance-b.distance).slice(0,20);
+
+   render(arr);
+   status.textContent=arr.length?'✅ تم العثور على أماكن قريبة':'لم نجد نتائج كافية ضمن 5 كم، جرّب فئة أخرى.';
+   count.textContent=arr.length?`${arr.length} نتيجة`:'لا نتائج';
+ }catch(e){
+   console.error('Wenah places error:',e);
+   results.innerHTML='<div class="empty">⚠️ تعذر تحميل الأماكن حالياً. جرّب مرة ثانية بعد ثوانٍ.</div>';
+   status.textContent='تعذر تحميل النتائج';
+   count.textContent='';
+ }
+}
+function dist(a,b,c,d){let R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180;let z=Math.sin(x/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(z),Math.sqrt(1-z))}
+let selected=null;let favorites=JSON.parse(localStorage.getItem('wenahFavorites')||'[]');
+function render(arr){results.innerHTML='';arr.forEach((x,i)=>{let m=L.marker([x.lat,x.lon]).addTo(map).bindPopup(`<b>${x.name}</b><br>${x.distance.toFixed(1)} كم`);markers.push(m);let el=document.createElement('div');el.className='result';el.innerHTML=`<div class="ri">${iconFor(x.name,x.type)}</div><div><strong>${x.name}</strong><small>${x.type||'مكان قريب'}${x.phone?' • '+x.phone:''}</small></div><div class="dist">${x.distance<1?Math.round(x.distance*1000)+' م':x.distance.toFixed(1)+' كم'}</div>`;el.onclick=()=>openDetail(x,m);results.appendChild(el)})}
+function openDetail(x,m){selected=x;document.getElementById('dicon').textContent=iconFor(x.name,x.type);document.getElementById('dname').textContent=x.name;document.getElementById('dtype').textContent=(x.type||'مكان قريب')+(x.phone?' • '+x.phone:'');document.getElementById('ddistance').textContent=x.distance<1?Math.round(x.distance*1000)+' متر منك':x.distance.toFixed(1)+' كم منك';document.getElementById('saveBtn').textContent=favorites.some(f=>f.name===x.name&&Math.abs(f.lat-x.lat)<.0001)?'♥ محفوظ':'♡ حفظ بالمفضلة';document.getElementById('saveBtn').classList.toggle('fav-on',favorites.some(f=>f.name===x.name));document.getElementById('detail').classList.add('show');map.setView([x.lat,x.lon],17);m.openPopup()}
+function closeDetail(){document.getElementById('detail').classList.remove('show')}
+function directions(){if(!selected||!user)return;window.open(`https://www.google.com/maps/dir/?api=1&origin=${user[0]},${user[1]}&destination=${selected.lat},${selected.lon}`,'_blank')}
+function toggleFavorite(){if(!selected)return;let i=favorites.findIndex(f=>f.name===selected.name&&Math.abs(f.lat-selected.lat)<.0001);if(i>=0){favorites.splice(i,1);toast('تمت الإزالة من المفضلة')}else{favorites.push(selected);toast('❤️ تمت الإضافة للمفضلة')}localStorage.setItem('wenahFavorites',JSON.stringify(favorites));openDetail(selected,markers[0])}
+function showFavorites(){if(!favorites.length){toast('المفضلة فاضية حالياً ❤️');return}results.innerHTML='';count.textContent=`${favorites.length} محفوظ`;favorites.forEach(x=>{let el=document.createElement('div');el.className='result';el.innerHTML=`<div class="ri">${iconFor(x.name,x.type)}</div><div><strong>${x.name}</strong><small>${x.type||'مكان محفوظ'}</small></div><div class="dist">♥</div>`;el.onclick=()=>openDetail(x,L.marker([x.lat,x.lon]));results.appendChild(el)});document.querySelector('.below').scrollIntoView({behavior:'smooth'})}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
+</script>
+<div class="v5-topbar">
+  <div class="v5-greeting"><small>مرحباً 👋</small><strong>شو بدك تلاقي اليوم؟</strong></div>
+  <div class="v5-live">● قريب منك</div>
+</div>
+<div class="v5-filters" id="v5Filters">
+  <button class="v5-filter active" onclick="v5Filter(this,'all')">الكل</button>
+  <button class="v5-filter" onclick="v5Filter(this,'open')">🟢 مفتوح الآن</button>
+  <button class="v5-filter" onclick="v5Filter(this,'near')">📍 الأقرب</button>
+  <button class="v5-filter" onclick="v5Filter(this,'top')">⭐ الأعلى تقييماً</button>
+</div>
+<div class="v5-section"><h3>أماكن مقترحة</h3><span id="v5Count">3 أماكن</span></div>
+<div class="v5-cards" id="v5Cards">
+  <div class="v5-place" data-type="top open" onclick="searchPlace('restaurant')"><div class="v5-photo">🍔</div><div class="v5-info"><strong>مطاعم قريبة منك</strong><div class="v5-meta">⭐ 4.8 · وجبات سريعة</div><div class="v5-open">● مفتوح الآن</div></div><div class="v5-distance">قريب</div></div>
+  <div class="v5-place" data-type="top near open" onclick="searchPlace('cafe')"><div class="v5-photo">☕</div><div class="v5-info"><strong>كافيهات حولك</strong><div class="v5-meta">⭐ 4.7 · قهوة وجلسات</div><div class="v5-open">● مفتوح الآن</div></div><div class="v5-distance">الأقرب</div></div>
+  <div class="v5-place" data-type="near" onclick="searchPlace('pharmacy')"><div class="v5-photo">💊</div><div class="v5-info"><strong>صيدليات قريبة</strong><div class="v5-meta">متاح · أدوية وخدمات</div><div class="v5-open">● مفتوح الآن</div></div><div class="v5-distance">قريب</div></div>
+</div>
+<div class="v5-bottom">
+  <button class="v5-nav active"><b>⌂</b>الرئيسية</button>
+  <button class="v5-nav" onclick="document.querySelector('.search')?.scrollIntoView({behavior:'smooth'})"><b>⌕</b>بحث</button>
+  <button class="v5-nav" onclick="alert('المفضلة ستظهر هنا ❤️')"><b>♡</b>المفضلة</button>
+  <button class="v5-nav" onclick="findLocation()"><b>⌖</b>موقعي</button>
+</div>
+<script>
+function v5Filter(btn,type){
+  document.querySelectorAll('.v5-filter').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  let n=0;
+  document.querySelectorAll('.v5-place').forEach(card=>{
+    const show=type==='all'||card.dataset.type.includes(type);
+    card.style.display=show?'flex':'none';
+    if(show)n++;
+  });
+  document.getElementById('v5Count').textContent=n+' أماكن';
+}
+</script>
+
+<div class="v6-livebox">
+  <b>📡 النتائج الحقيقية حسب موقعك</b>
+  <span id="v6State">اسمح بالموقع حتى نقدر نفتح نتائج الأماكن حولك.</span>
+  <div class="v6-actions">
+    <button onclick="v6Locate()">📍 تحديد موقعي</button>
+    <button onclick="v6Nearby()">🔎 أماكن قريبة</button>
+  </div>
+  <div class="v6-note">Wenah يستخدم موقعك فقط عند طلبك، والنتائج تُفتح على خريطة الأماكن القريبة.</div>
+</div>
+<script>
+function v6Locate(){
+ const el=document.getElementById('v6State');
+ if(!navigator.geolocation){el.textContent='متصفحك لا يدعم تحديد الموقع.';return}
+ el.textContent='جاري تحديد موقعك...';
+ navigator.geolocation.getCurrentPosition(p=>{
+   window.v6lat=p.coords.latitude; window.v6lon=p.coords.longitude;
+   el.textContent='تم تحديد موقعك ✅ الآن نقدر نجيب الأماكن الأقرب.';
+ },()=>el.textContent='تعذر تحديد الموقع. تأكد من صلاحية الموقع وحاول مرة ثانية.',{enableHighAccuracy:true,timeout:15000});
+}
+function v6Nearby(){
+ if(window.v6lat==null){v6Locate();return}
+ const q=encodeURIComponent(document.getElementById('searchInput')?.value.trim()||'places');
+ window.open(`https://www.google.com/maps/search/${q}/@${window.v6lat},${window.v6lon},15z`,'_blank');
+}
+</script>
+
+<div class="v7-panel">
+  <div class="v7-head"><h3>📍 نتائج حولك</h3><span id="v7Source">جاهز للبحث</span></div>
+  <div id="v7Results" class="v7-results"><div class="v7-empty">اضغط «تحديد موقعي» ثم ابحث عن أي مكان.</div></div>
+</div>
+<script>
+const v7Data=[
+ {name:'مطاعم قريبة',emoji:'🍔',rating:'4.8',type:'restaurant',open:true},
+ {name:'كافيهات قريبة',emoji:'☕',rating:'4.7',type:'cafe',open:true},
+ {name:'صيدليات قريبة',emoji:'💊',rating:'4.6',type:'pharmacy',open:true},
+ {name:'سوبرماركت قريب',emoji:'🛒',rating:'4.5',type:'supermarket',open:true}
+];
+function v7Render(query=''){
+ const q=query.toLowerCase();
+ const list=v7Data.filter(x=>!q||x.name.toLowerCase().includes(q)||x.type.includes(q)||['مطعم','مطاعم','burger','برغر'].some(k=>q.includes(k)&&x.type==='restaurant')||['كافيه','قهوة','coffee'].some(k=>q.includes(k)&&x.type==='cafe')||['صيدلية','pharmacy'].some(k=>q.includes(k)&&x.type==='pharmacy'));
+ const box=document.getElementById('v7Results');
+ document.getElementById('v7Source').textContent=list.length+' نتائج';
+ box.innerHTML=list.length?list.map(x=>`<div class="v7-result"><div class="v7-emoji">${x.emoji}</div><div class="v7-rinfo"><strong>${x.name}</strong><small><span class="v7-rating">★ ${x.rating}</span> · ${x.type}</small><div class="v7-open">${x.open?'● مفتوح الآن':'○ مغلق'}</div></div><button class="v7-dir" onclick="v7Open('${x.type}')">اتجاهات</button></div>`).join(''):'<div class="v7-empty">ما لقينا نتيجة بهذا البحث. جرّب كلمة ثانية.</div>';
+}
+function v7Open(type){
+ if(window.v6lat==null){document.getElementById('v6State').textContent='حدد موقعك أولاً 📍';return}
+ window.open(`https://www.google.com/maps/search/${encodeURIComponent(type)}/@${window.v6lat},${window.v6lon},15z`,'_blank');
+}
+const oldSmart=window.smartSearch;
+window.smartSearch=function(){
+ const q=document.getElementById('searchInput')?.value.trim()||'';
+ v7Render(q);
+ if(window.v6lat!=null && q) window.open(`https://www.google.com/maps/search/${encodeURIComponent(q)}/@${window.v6lat},${window.v6lon},15z`,'_blank');
+};
+v7Render();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+}
+</script>
+</body></html>
