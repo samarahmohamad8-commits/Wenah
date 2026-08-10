@@ -634,7 +634,12 @@
     </div>
 
   </section>
-
+<div class="favorites-bar">
+  <button class="favorites-button" onclick="showFavorites()">
+    ❤️ المفضلة
+    <span id="favoritesCount">0</span>
+  </button>
+</div>
   <div class="categories-wrap">
 
     <div class="categories">
@@ -1540,11 +1545,67 @@ function openDirections() {
 
 }
 
+function getSavedPlaces() {
+  return JSON.parse(
+    localStorage.getItem("wenahSaved") || "[]"
+  );
+}
+
+function updateFavoritesCount() {
+  const saved = getSavedPlaces();
+
+  const count = document.getElementById("favoritesCount");
+
+  if (count) {
+    count.textContent = saved.length;
+  }
+}
+
 function savePlace() {
 
-  if(!selectedPlace) {
+  if (!selectedPlace) {
     return;
   }
+
+  let saved = getSavedPlaces();
+
+  const exists = saved.some(place =>
+    place.name === selectedPlace.name &&
+    Math.abs(place.lat - selectedPlace.lat) < 0.0001 &&
+    Math.abs(place.lon - selectedPlace.lon) < 0.0001
+  );
+
+  if (exists) {
+
+    saved = saved.filter(place =>
+      !(
+        place.name === selectedPlace.name &&
+        Math.abs(place.lat - selectedPlace.lat) < 0.0001 &&
+        Math.abs(place.lon - selectedPlace.lon) < 0.0001
+      )
+    );
+
+    localStorage.setItem(
+      "wenahSaved",
+      JSON.stringify(saved)
+    );
+
+    alert("تمت إزالة المكان من المفضلة ❤️");
+
+  } else {
+
+    saved.push(selectedPlace);
+
+    localStorage.setItem(
+      "wenahSaved",
+      JSON.stringify(saved)
+    );
+
+    alert("تمت إضافة المكان إلى المفضلة ❤️");
+  }
+
+  updateFavoritesCount();
+}
 
   let saved =
     JSON.parse(
