@@ -1,512 +1,370 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071d19">
-<title>Wenah | وينه؟</title>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
-<style>
-:root{
-  --bg:#061b17;
-  --card:#0c2821;
-  --card2:#10332a;
-  --green:#21e6a0;
-  --text:#f3fffb;
-  --muted:#91aaa3;
-  --line:rgba(255,255,255,.09);
-}
-
-*{
-  box-sizing:border-box;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(circle at 85% -5%,#116047 0,transparent 32%),
-    var(--bg);
-  color:var(--text);
-}
-
-button,input{
-  font:inherit;
-}
-
-.app{
-  max-width:760px;
-  margin:auto;
-  padding:16px 16px 35px;
-}
-
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:22px;
-  font-weight:950;
-}
-
-.logo-icon{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#2af2aa,#078c69);
-  box-shadow:0 8px 25px rgba(33,230,160,.18);
-}
-
-.logo span{
-  color:var(--green);
-}
-
-.favorite-top{
-  border:1px solid var(--line);
-  background:#0b2922;
-  color:#fff;
-  border-radius:13px;
-  padding:9px 12px;
-  cursor:pointer;
-}
-
-/* HERO */
-.hero{
-  padding:30px 0 15px;
-}
-
-.eyebrow{
-  color:var(--green);
-  font-size:13px;
-  font-weight:900;
-}
-
-.hero h1{
-  font-size:46px;
-  line-height:1.05;
-  margin:8px 0 10px;
-  letter-spacing:-1px;
-}
-
-.hero h1 span{
-  color:var(--green);
-}
-
-.hero p{
-  color:var(--muted);
-  line-height:1.8;
-  font-size:14px;
-  margin:0 0 18px;
-}
-
-/* SEARCH */
-.search-box{
-  display:flex;
-  gap:8px;
-  padding:7px;
-  border-radius:18px;
-  background:#0a2721;
-  border:1px solid var(--line);
-  box-shadow:0 12px 35px rgba(0,0,0,.15);
-}
-
-.search-box input{
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:#fff;
-  padding:11px 12px;
-}
-
-.search-box input::placeholder{
-  color:#6f8b84;
-}
-
-.search-btn{
-  border:0;
-  border-radius:13px;
-  padding:11px 18px;
-  background:var(--green);
-  color:#05281f;
-  font-weight:950;
-  cursor:pointer;
-}
-
-/* LOCATION */
-.location-btn{
-  width:100%;
-  margin:10px 0 14px;
-  padding:14px;
-  border:1px solid rgba(33,230,160,.14);
-  border-radius:15px;
-  background:#0d3027;
-  color:#eafff7;
-  font-weight:850;
-  cursor:pointer;
-}
-
-/* CATEGORIES */
-.categories{
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  padding:2px 0 15px;
-  scrollbar-width:none;
-}
-
-.categories::-webkit-scrollbar{
-  display:none;
-}
-
-.category{
-  flex:none;
-  border:1px solid var(--line);
-  background:#0b2721;
-  color:#d8eee8;
-  border-radius:999px;
-  padding:9px 14px;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.category:hover,
-.category.active{
-  background:var(--green);
-  color:#05281f;
-  border-color:var(--green);
-  font-weight:900;
-}
-
-/* STATUS */
-.status{
-  min-height:20px;
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  margin:5px 0 10px;
-}
-
-/* MAP */
-.map-wrap{
-  position:relative;
-  overflow:hidden;
-  border-radius:24px;
-  border:1px solid var(--line);
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-}
-
-#map{
-  height:350px;
-  width:100%;
-}
-
-.map-label{
-  position:absolute;
-  z-index:500;
-  top:12px;
-  right:12px;
-  background:rgba(6,27,23,.9);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--line);
-  padding:8px 11px;
-  border-radius:12px;
-  font-size:11px;
-  color:#c6ddd7;
-}
-
-/* SECTION */
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:22px 0 10px;
-}
-
-.section-head h2{
-  margin:0;
-  font-size:19px;
-}
-
-.section-head span{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* RESULTS */
-.results{
-  display:grid;
-  gap:9px;
-}
-
-.empty{
-  text-align:center;
-  padding:28px 15px;
-  border-radius:18px;
-  background:#0b2721;
-  border:1px solid var(--line);
-  color:var(--muted);
-  line-height:1.8;
-}
-
-.result{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:12px;
-  border-radius:18px;
-  background:linear-gradient(145deg,#10332a,#0a241e);
-  border:1px solid var(--line);
-  cursor:pointer;
-  transition:.18s;
-}
-
-.result:hover{
-  transform:translateY(-1px);
-  border-color:rgba(33,230,160,.25);
-}
-
-.result-icon{
-  width:50px;
-  height:50px;
-  border-radius:15px;
-  display:grid;
-  place-items:center;
-  font-size:23px;
-  background:#0b241f;
-  flex:none;
-}
-
-.result-info{
-  flex:1;
-  min-width:0;
-}
-
-.result-info strong{
-  display:block;
-  font-size:14px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.result-info small{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-top:5px;
-}
-
-.distance{
-  color:var(--green);
-  font-size:11px;
-  font-weight:900;
-  white-space:nowrap;
-}
-
-/* DETAIL */
-.detail{
-  position:fixed;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  max-width:736px;
-  margin:auto;
-  background:#0b2922;
-  border:1px solid var(--line);
-  border-radius:23px;
-  padding:17px;
-  box-shadow:0 25px 90px rgba(0,0,0,.75);
-  z-index:3000;
-  display:none;
-}
-
-.detail.show{
-  display:block;
-}
-
-.detail-head{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.detail-icon{
-  font-size:31px;
-}
-
-.detail h3{
-  margin:4px 0 6px;
-  font-size:21px;
-}
-
-.detail-distance{
-  color:var(--green);
-  font-weight:900;
-  font-size:12px;
-}
-
-.close{
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:12px;
-  background:#ffffff10;
-  color:#fff;
-  cursor:pointer;
-}
-
-.detail-type{
-  color:var(--muted);
-  line-height:1.7;
-  margin:8px 0 14px;
-  font-size:13px;
-}
-
-.detail-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.detail-actions button{
-  border:0;
-  border-radius:13px;
-  padding:12px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.direction{
-  background:var(--green);
-  color:#05281f;
-}
-
-.save{
-  background:#ffffff10;
-  color:#fff;
-}
-
-.save.saved{
-  color:var(--green);
-}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  transform:translateX(-50%) translateY(20px);
-  background:#12362d;
-  border:1px solid var(--line);
-  padding:11px 15px;
-  border-radius:14px;
-  opacity:0;
-  pointer-events:none;
-  transition:.2s;
-  z-index:9999;
-  font-size:13px;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-/* BOTTOM NAV */
-.bottom-nav{
-  position:sticky;
-  bottom:8px;
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:5px;
-  padding:6px;
-  border-radius:19px;
-  background:rgba(7,29,25,.94);
-  backdrop-filter:blur(15px);
-  border:1px solid var(--line);
-  box-shadow:0 15px 45px rgba(0,0,0,.4);
-}
-
-.nav-btn{
-  border:0;
-  background:transparent;
-  color:#78958d;
-  padding:8px;
-  border-radius:13px;
-  cursor:pointer;
-  font-size:11px;
-}
-
-.nav-btn b{
-  display:block;
-  font-size:19px;
-  margin-bottom:2px;
-}
-
-.nav-btn.active{
-  background:#21e6a014;
-  color:var(--green);
-  font-weight:900;
-}
-
-footer{
-  text-align:center;
-  color:#617d76;
-  font-size:11px;
-  padding:20px 0 5px;
-}
-
-@media(max-width:500px){
-  .app{
-    padding:14px 13px 28px;
-  }
-
-  .hero h1{
-    font-size:40px;
-  }
-
-  #map{
-    height:315px;
-  }
-
-  .search-btn{
-    padding:11px 14px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071d19">
+
+  <title>Wenah | وينه؟</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 90% 0%, #0d5a45 0%, transparent 32%),
+        #061b17;
+      color: #f4fffb;
+    }
+
+    .app {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px 16px 35px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #29efaa, #078d68);
+      font-size: 22px;
+    }
+
+    .near {
+      color: #5ff0ba;
+      background: rgba(33,230,160,.08);
+      border: 1px solid rgba(33,230,160,.2);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero {
+      padding: 30px 0 15px;
+    }
+
+    .eyebrow {
+      color: #21e6a0;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 10vw, 58px);
+      line-height: 1;
+      margin: 9px 0 14px;
+    }
+
+    h1 span {
+      color: #21e6a0;
+    }
+
+    .hero p {
+      color: #9db9b1;
+      line-height: 1.8;
+      margin: 0 0 20px;
+      font-size: 14px;
+    }
+
+    .search {
+      display: flex;
+      gap: 8px;
+      padding: 7px;
+      background: #0a2721;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 17px;
+    }
+
+    .search input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      padding: 11px;
+      font-size: 15px;
+    }
+
+    .search button {
+      border: 0;
+      border-radius: 13px;
+      background: #21e6a0;
+      color: #05281f;
+      font-weight: 900;
+      padding: 11px 17px;
+      cursor: pointer;
+    }
+
+    .location {
+      width: 100%;
+      margin: 10px 0 15px;
+      padding: 14px;
+      border: 0;
+      border-radius: 15px;
+      background: #10372f;
+      color: #eafff8;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .status {
+      min-height: 22px;
+      text-align: center;
+      color: #9db9b1;
+      font-size: 12px;
+      margin: 6px;
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 5px 0 16px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category {
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,.08);
+      background: #0b2721;
+      color: #e5f7f2;
+      border-radius: 999px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .category.active {
+      background: #21e6a0;
+      color: #05281f;
+      border-color: #21e6a0;
+    }
+
+    #map {
+      height: 330px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 22px 0 10px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .count {
+      color: #718e86;
+      font-size: 11px;
+    }
+
+    .results {
+      display: grid;
+      gap: 9px;
+    }
+
+    .result {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: linear-gradient(145deg,#103129,#0a241f);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 17px;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    .result-icon {
+      width: 50px;
+      height: 50px;
+      flex: none;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #15382f;
+      font-size: 23px;
+    }
+
+    .result-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .result-info strong {
+      display: block;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .result-info small {
+      display: block;
+      color: #8fa9a1;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .distance {
+      color: #21e6a0;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .empty {
+      padding: 28px 15px;
+      text-align: center;
+      color: #8da9a1;
+      background: #0b2721;
+      border-radius: 17px;
+      font-size: 13px;
+    }
+
+    .detail {
+      display: none;
+      margin-top: 12px;
+      padding: 16px;
+      background: #0b2721;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+    }
+
+    .detail.show {
+      display: block;
+    }
+
+    .detail-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .detail-icon {
+      font-size: 30px;
+    }
+
+    .detail h3 {
+      margin: 5px 0;
+      font-size: 20px;
+    }
+
+    .detail p {
+      color: #91aca4;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .close {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 12px;
+      background: #ffffff10;
+      color: white;
+      cursor: pointer;
+    }
+
+    .detail-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .detail-actions button {
+      border: 0;
+      border-radius: 13px;
+      padding: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .directions {
+      background: #21e6a0;
+      color: #05281f;
+    }
+
+    .save {
+      background: #15382f;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      color: #607e76;
+      font-size: 11px;
+      padding: 25px 0 10px;
+    }
+
+    @media (max-width: 450px) {
+      #map {
+        height: 300px;
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .detail-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <main class="app">
 
-  <!-- HEADER -->
-  <header class="header">
+  <header>
     <div class="logo">
       <div class="logo-icon">📍</div>
-      Wenah <span>| وينه؟</span>
+      Wenah <span style="color:#21e6a0">| وينه؟</span>
     </div>
 
-    <button class="favorite-top" onclick="showFavorites()">
-      ♡ المفضلة
-    </button>
+    <div class="near">● قريب منك</div>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
 
     <div class="eyebrow">كل شيء قريب منك.</div>
@@ -516,11 +374,11 @@ footer{
     </h1>
 
     <p>
-      ابحث عن أي مكان قريب منك، وشوف النتائج مرتبة حسب المسافة على الخريطة.
+      حدد موقعك وابحث عن المكان الذي تريده.
+      Wenah يعرض لك الأماكن القريبة منك حسب الفئة.
     </p>
 
-    <!-- SEARCH -->
-    <div class="search-box">
+    <div class="search">
       <input
         id="searchInput"
         type="text"
@@ -528,96 +386,90 @@ footer{
         onkeydown="if(event.key==='Enter') searchPlaces()"
       >
 
-      <button class="search-btn" onclick="searchPlaces()">
-        بحث
-      </button>
+      <button onclick="searchPlaces()">بحث</button>
     </div>
 
-    <button class="location-btn" onclick="locateUser()">
+    <button class="location" onclick="getLocation()">
       📍 استخدم موقعي
     </button>
 
     <div id="status" class="status"></div>
 
-    <!-- CATEGORIES -->
-    <div class="categories">
-
-      <button class="category" onclick="categorySearch('restaurant',this)">
-        🍔 مطاعم
-      </button>
-
-      <button class="category" onclick="categorySearch('cafe',this)">
-        ☕ كافيهات
-      </button>
-
-      <button class="category" onclick="categorySearch('pharmacy',this)">
-        💊 صيدليات
-      </button>
-
-      <button class="category" onclick="categorySearch('fuel',this)">
-        ⛽ بنزين
-      </button>
-
-      <button class="category" onclick="categorySearch('supermarket',this)">
-        🛒 سوبرماركت
-      </button>
-
-      <button class="category" onclick="categorySearch('atm',this)">
-        🏧 ATM
-      </button>
-
-      <button class="category" onclick="categorySearch('hospital',this)">
-        🏥 مستشفيات
-      </button>
-
-    </div>
-
   </section>
 
-  <!-- MAP -->
-  <div class="map-wrap">
+  <div class="categories">
 
-    <div class="map-label">
-      🗺️ Wenah | الأماكن حولك
-    </div>
+    <button class="category active" data-type="" onclick="chooseCategory(this,'')">
+      الكل
+    </button>
 
-    <div id="map"></div>
+    <button class="category" data-type="restaurant" onclick="chooseCategory(this,'restaurant')">
+      🍔 مطاعم
+    </button>
+
+    <button class="category" data-type="cafe" onclick="chooseCategory(this,'cafe')">
+      ☕ كافيهات
+    </button>
+
+    <button class="category" data-type="pharmacy" onclick="chooseCategory(this,'pharmacy')">
+      💊 صيدليات
+    </button>
+
+    <button class="category" data-type="fuel" onclick="chooseCategory(this,'fuel')">
+      ⛽ بنزين
+    </button>
+
+    <button class="category" data-type="supermarket" onclick="chooseCategory(this,'supermarket')">
+      🛒 سوبرماركت
+    </button>
+
+    <button class="category" data-type="atm" onclick="chooseCategory(this,'atm')">
+      🏧 ATM
+    </button>
 
   </div>
 
-  <!-- RESULTS -->
-  <div class="section-head">
+  <div id="map"></div>
+
+  <div class="section-title">
     <h2>الأماكن القريبة</h2>
-    <span id="count">حدد موقعك أولاً</span>
+    <span id="count" class="count">حدد موقعك أولاً</span>
   </div>
 
   <div id="results" class="results">
-
     <div class="empty">
-      📍 اضغط «استخدم موقعي» ثم اختر الفئة التي تريدها.
+      📍 اضغط «استخدم موقعي» حتى نعرض الأماكن حولك.
+    </div>
+  </div>
+
+  <div id="detail" class="detail">
+
+    <div class="detail-top">
+
+      <div>
+        <div id="detailIcon" class="detail-icon">📍</div>
+        <h3 id="detailName"></h3>
+        <p id="detailType"></p>
+        <strong id="detailDistance" style="color:#21e6a0"></strong>
+      </div>
+
+      <button class="close" onclick="closeDetail()">✕</button>
+
+    </div>
+
+    <div class="detail-actions">
+
+      <button class="directions" onclick="openDirections()">
+        🧭 الاتجاهات
+      </button>
+
+      <button class="save" onclick="savePlace()">
+        ♡ حفظ
+      </button>
+
     </div>
 
   </div>
-
-  <!-- BOTTOM -->
-  <nav class="bottom-nav">
-
-    <button class="nav-btn active" onclick="goHome()">
-      <b>⌂</b>
-      الرئيسية
-    </button>
-
-    <button class="nav-btn" onclick="focusSearch()">
-      <b>⌕</b>
-      بحث
-    </button>
-
-    <button class="nav-btn" onclick="showFavorites()">
-      <b>♡</b>
-      المفضلة
-    </button>
-
-  </nav>
 
   <footer>
     Wenah — وينه؟ • اكتشف أقرب مكان بسهولة.
@@ -625,374 +477,214 @@ footer{
 
 </main>
 
-<!-- DETAIL -->
-<div id="detail" class="detail">
-
-  <div class="detail-head">
-
-    <div>
-      <div id="detailIcon" class="detail-icon">📍</div>
-
-      <h3 id="detailName">مكان قريب</h3>
-
-      <div id="detailDistance" class="detail-distance"></div>
-    </div>
-
-    <button class="close" onclick="closeDetail()">
-      ✕
-    </button>
-
-  </div>
-
-  <div id="detailType" class="detail-type"></div>
-
-  <div class="detail-actions">
-
-    <button class="direction" onclick="openDirections()">
-      🧭 الاتجاهات
-    </button>
-
-    <button id="saveButton" class="save" onclick="toggleFavorite()">
-      ♡ حفظ بالمفضلة
-    </button>
-
-  </div>
-
-</div>
-
-<div id="toast" class="toast"></div>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* =========================
-   MAP
-========================= */
-
-const map = L.map("map", {
-  zoomControl:false
-}).setView([31.95,35.91],12);
-
-L.control.zoom({
-  position:"bottomright"
-}).addTo(map);
+let map = L.map("map").setView([31.95, 35.91], 12);
 
 L.tileLayer(
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {
-    maxZoom:19,
-    attribution:"© OpenStreetMap"
+    maxZoom: 19,
+    attribution: "© OpenStreetMap"
   }
 ).addTo(map);
 
-
-/* =========================
-   VARIABLES
-========================= */
-
 let userLocation = null;
 let markers = [];
+let currentCategory = "";
 let selectedPlace = null;
 
-let favorites =
-  JSON.parse(
-    localStorage.getItem("wenahFavorites") || "[]"
-  );
+const statusEl = document.getElementById("status");
+const resultsEl = document.getElementById("results");
+const countEl = document.getElementById("count");
 
-const statusEl =
-  document.getElementById("status");
+function setStatus(text) {
+  statusEl.textContent = text;
+}
 
-const resultsEl =
-  document.getElementById("results");
+function getLocation() {
 
-const countEl =
-  document.getElementById("count");
-
-
-/* =========================
-   CATEGORY SETTINGS
-========================= */
-
-const categories = {
-
-  restaurant:{
-    tag:'["amenity"="restaurant"]',
-    text:"مطاعم",
-    icon:"🍔"
-  },
-
-  cafe:{
-    tag:'["amenity"="cafe"]',
-    text:"كافيهات",
-    icon:"☕"
-  },
-
-  pharmacy:{
-    tag:'["amenity"="pharmacy"]',
-    text:"صيدليات",
-    icon:"💊"
-  },
-
-  fuel:{
-    tag:'["amenity"="fuel"]',
-    text:"محطات بنزين",
-    icon:"⛽"
-  },
-
-  supermarket:{
-    tag:'["shop"="supermarket"]',
-    text:"سوبرماركت",
-    icon:"🛒"
-  },
-
-  atm:{
-    tag:'["amenity"="atm"]',
-    text:"صراف آلي",
-    icon:"🏧"
-  },
-
-  hospital:{
-    tag:'["amenity"="hospital"]',
-    text:"مستشفيات",
-    icon:"🏥"
-  }
-
-};
-
-
-/* =========================
-   LOCATION
-========================= */
-
-function locateUser(){
-
-  statusEl.textContent =
-    "📍 جاري تحديد موقعك...";
-
-  if(!navigator.geolocation){
-
-    statusEl.textContent =
-      "❌ المتصفح لا يدعم تحديد الموقع.";
-
+  if (!navigator.geolocation) {
+    setStatus("❌ المتصفح لا يدعم تحديد الموقع.");
     return;
   }
 
+  setStatus("📍 جاري تحديد موقعك...");
+
   navigator.geolocation.getCurrentPosition(
 
-    position => {
+    function(position) {
 
-      userLocation = [
-        position.coords.latitude,
-        position.coords.longitude
-      ];
+      userLocation = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+      };
 
       map.setView(
-        userLocation,
+        [userLocation.lat, userLocation.lon],
         15
       );
 
       L.circleMarker(
-        userLocation,
+        [userLocation.lat, userLocation.lon],
         {
-          radius:9,
-          color:"#071d19",
-          weight:4,
-          fillColor:"#21e6a0",
-          fillOpacity:1
+          radius: 9,
+          color: "#071d19",
+          weight: 4,
+          fillColor: "#21e6a0",
+          fillOpacity: 1
         }
       )
       .addTo(map)
       .bindPopup("📍 موقعك")
       .openPopup();
 
-      statusEl.textContent =
-        "✅ تم تحديد موقعك";
+      setStatus("✅ تم تحديد موقعك");
 
-      countEl.textContent =
-        "اختر فئة للبحث";
+      loadPlaces();
 
     },
 
-    () => {
-
-      statusEl.textContent =
-        "❌ اسمح بالوصول للموقع حتى نكمل.";
-
+    function() {
+      setStatus(
+        "❌ اسمح للموقع من إعدادات Edge ثم حاول مرة ثانية."
+      );
     },
 
     {
-      enableHighAccuracy:true,
-      timeout:15000
+      enableHighAccuracy: true,
+      timeout: 15000
     }
 
   );
 }
 
-
-/* =========================
-   CATEGORY SEARCH
-========================= */
-
-function categorySearch(type,button){
-
-  if(!userLocation){
-
-    locateUser();
-
-    toast("📍 حدد موقعك أولاً");
-
-    return;
-  }
+function chooseCategory(button, category) {
 
   document
     .querySelectorAll(".category")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
+    .forEach(btn => btn.classList.remove("active"));
 
-  if(button){
-    button.classList.add("active");
-  }
+  button.classList.add("active");
 
-  document.getElementById("searchInput").value =
-    categories[type].text;
+  currentCategory = category;
 
-  loadPlaces(type);
-
-}
-
-
-/* =========================
-   TEXT SEARCH
-========================= */
-
-function searchPlaces(){
-
-  if(!userLocation){
-
-    locateUser();
-
-    toast("📍 حدد موقعك أولاً");
-
+  if (!userLocation) {
+    getLocation();
     return;
   }
 
-  const text =
-    document
-      .getElementById("searchInput")
+  loadPlaces();
+}
+
+function searchPlaces() {
+
+  const input =
+    document.getElementById("searchInput")
       .value
       .trim()
       .toLowerCase();
 
-  let type = detectCategory(text);
+  if (input.includes("مطعم") || input.includes("برغر") || input.includes("burger")) {
+    currentCategory = "restaurant";
+  }
 
-  if(!type){
+  else if (
+    input.includes("كافيه") ||
+    input.includes("قهوة") ||
+    input.includes("coffee")
+  ) {
+    currentCategory = "cafe";
+  }
 
-    toast("اختر فئة مثل مطاعم أو صيدليات");
+  else if (
+    input.includes("صيدلية") ||
+    input.includes("صيدليات") ||
+    input.includes("pharmacy")
+  ) {
+    currentCategory = "pharmacy";
+  }
 
+  else if (
+    input.includes("بنزين") ||
+    input.includes("محطة") ||
+    input.includes("fuel")
+  ) {
+    currentCategory = "fuel";
+  }
+
+  else if (
+    input.includes("سوبر") ||
+    input.includes("ماركت") ||
+    input.includes("supermarket")
+  ) {
+    currentCategory = "supermarket";
+  }
+
+  else if (
+    input.includes("atm") ||
+    input.includes("صراف")
+  ) {
+    currentCategory = "atm";
+  }
+
+  if (!userLocation) {
+    getLocation();
     return;
   }
 
-  loadPlaces(type);
+  loadPlaces();
 }
 
+function getOverpassTag() {
 
-/* =========================
-   DETECT CATEGORY
-========================= */
+  switch (currentCategory) {
 
-function detectCategory(text){
+    case "restaurant":
+      return '[amenity="restaurant"]';
 
-  if(
-    text.includes("مطعم") ||
-    text.includes("مطاعم") ||
-    text.includes("restaurant") ||
-    text.includes("burger") ||
-    text.includes("برغر")
-  )
-    return "restaurant";
+    case "cafe":
+      return '[amenity="cafe"]';
 
-  if(
-    text.includes("كافيه") ||
-    text.includes("كافيهات") ||
-    text.includes("قهوة") ||
-    text.includes("coffee") ||
-    text.includes("cafe")
-  )
-    return "cafe";
+    case "pharmacy":
+      return '[amenity="pharmacy"]';
 
-  if(
-    text.includes("صيدلية") ||
-    text.includes("صيدليات") ||
-    text.includes("pharmacy")
-  )
-    return "pharmacy";
+    case "fuel":
+      return '[amenity="fuel"]';
 
-  if(
-    text.includes("بنزين") ||
-    text.includes("محطة") ||
-    text.includes("محطات") ||
-    text.includes("fuel")
-  )
-    return "fuel";
+    case "supermarket":
+      return '[shop="supermarket"]';
 
-  if(
-    text.includes("سوبرماركت") ||
-    text.includes("ماركت") ||
-    text.includes("supermarket")
-  )
-    return "supermarket";
+    case "atm":
+      return '[amenity="atm"]';
 
-  if(
-    text.includes("atm") ||
-    text.includes("صراف") ||
-    text.includes("صراف آلي")
-  )
-    return "atm";
-
-  if(
-    text.includes("مستشفى") ||
-    text.includes("مستشفيات") ||
-    text.includes("hospital")
-  )
-    return "hospital";
-
-  return null;
+    default:
+      return '["name"]';
+  }
 }
 
+async function loadPlaces() {
 
-/* =========================
-   LOAD PLACES
-========================= */
+  if (!userLocation) {
+    return;
+  }
 
-async function loadPlaces(type){
-
-  const category =
-    categories[type];
-
-  if(!category) return;
-
-  statusEl.textContent =
-    "🔎 جاري البحث عن " +
-    category.text +
-    " القريبة...";
+  setStatus("🔎 جاري البحث عن الأماكن القريبة...");
 
   resultsEl.innerHTML =
-    `<div class="empty">
-      🔎 جاري البحث عن ${category.text}...
-    </div>`;
+    '<div class="empty">جاري البحث...</div>';
 
   clearMarkers();
 
-  const lat =
-    userLocation[0];
+  const tag = getOverpassTag();
 
-  const lon =
-    userLocation[1];
+  const lat = userLocation.lat;
+  const lon = userLocation.lon;
 
   const query = `
-    [out:json][timeout:20];
+    [out:json][timeout:25];
 
     (
       nwr(
@@ -1000,165 +692,141 @@ async function loadPlaces(type){
         ${lat},
         ${lon}
       )
-      ${category.tag};
+      ${tag};
     );
 
     out center tags;
   `;
 
   const endpoints = [
-
     "https://overpass-api.de/api/interpreter",
-
     "https://overpass.kumi.systems/api/interpreter"
-
   ];
 
   let data = null;
 
-  for(const endpoint of endpoints){
+  for (const endpoint of endpoints) {
 
-    try{
+    try {
 
-      const response =
-        await fetch(
-          endpoint +
-          "?data=" +
-          encodeURIComponent(query)
-        );
+      const response = await fetch(
+        endpoint + "?data=" + encodeURIComponent(query)
+      );
 
-      if(!response.ok)
-        throw new Error("HTTP error");
+      if (!response.ok) {
+        continue;
+      }
 
-      data =
-        await response.json();
+      data = await response.json();
 
       break;
 
-    }catch(error){
-
+    } catch (error) {
       console.log(error);
-
     }
-
   }
 
-  if(!data){
+  if (!data) {
+
+    setStatus("❌ تعذر تحميل الأماكن حالياً.");
 
     resultsEl.innerHTML =
-      `<div class="empty">
-        ⚠️ تعذر تحميل النتائج حالياً.<br>
-        جرّب مرة ثانية بعد قليل.
-      </div>`;
-
-    statusEl.textContent =
-      "تعذر تحميل النتائج";
+      '<div class="empty">⚠️ حاول مرة ثانية بعد قليل.</div>';
 
     return;
   }
 
-
-  let places =
+  const places =
     (data.elements || [])
-    .map(element => {
+      .map(item => {
 
-      const lat =
-        element.lat ??
-        element.center?.lat;
+        const lat =
+          item.lat ??
+          item.center?.lat;
 
-      const lon =
-        element.lon ??
-        element.center?.lon;
+        const lon =
+          item.lon ??
+          item.center?.lon;
 
-      const tags =
-        element.tags || {};
+        const tags = item.tags || {};
 
-      return {
+        return {
 
-        lat,
-        lon,
+          lat,
+          lon,
 
-        name:
-          tags["name:ar"] ||
-          tags.name ||
-          tags["name:en"] ||
-          "مكان بدون اسم",
+          name:
+            tags["name:ar"] ||
+            tags.name ||
+            tags["name:en"] ||
+            "مكان بدون اسم",
 
-        type,
+          type:
+            currentCategory,
 
-        phone:
-          tags.phone ||
-          tags["contact:phone"] ||
-          "",
+          phone:
+            tags.phone || "",
 
-        distance:
-          distanceKm(
-            userLocation[0],
-            userLocation[1],
-            lat,
-            lon
-          )
+          distance:
+            calculateDistance(
+              userLocation.lat,
+              userLocation.lon,
+              lat,
+              lon
+            )
 
-      };
+        };
 
-    })
-    .filter(
-      place =>
+      })
+
+      .filter(place =>
         Number.isFinite(place.lat) &&
         Number.isFinite(place.lon)
-    )
-    .sort(
-      (a,b) =>
-        a.distance -
-        b.distance
-    )
-    .slice(0,20);
+      )
 
+      .sort(
+        (a,b) =>
+          a.distance - b.distance
+      )
 
-  renderPlaces(
-    places,
-    category
-  );
+      .slice(0,20);
+
+  renderPlaces(places);
 
   countEl.textContent =
-    places.length +
-    " نتيجة";
-
-  statusEl.textContent =
     places.length
-      ? `✅ تم العثور على ${places.length} ${category.text}`
-      : `لم نجد ${category.text} قريبة ضمن 5 كم`;
+      ? `${places.length} نتيجة`
+      : "لا نتائج";
 
+  setStatus(
+    places.length
+      ? "✅ تم العثور على الأماكن القريبة"
+      : "لم نجد نتائج ضمن 5 كم."
+  );
 }
 
-
-/* =========================
-   DISTANCE
-========================= */
-
-function distanceKm(
+function calculateDistance(
   lat1,
   lon1,
   lat2,
   lon2
-){
+) {
 
   const R = 6371;
 
   const dLat =
     (lat2-lat1) *
-    Math.PI/180;
+    Math.PI / 180;
 
   const dLon =
     (lon2-lon1) *
-    Math.PI/180;
+    Math.PI / 180;
 
   const a =
-    Math.sin(dLat/2)**2 +
-
+    Math.sin(dLat/2) ** 2 +
     Math.cos(lat1*Math.PI/180) *
     Math.cos(lat2*Math.PI/180) *
-    Math.sin(dLon/2)**2;
+    Math.sin(dLon/2) ** 2;
 
   return R *
     2 *
@@ -1168,24 +836,50 @@ function distanceKm(
     );
 }
 
+function iconFor(type) {
 
-/* =========================
-   RENDER
-========================= */
+  switch(type) {
 
-function renderPlaces(
-  places,
-  category
-){
+    case "restaurant":
+      return "🍔";
+
+    case "cafe":
+      return "☕";
+
+    case "pharmacy":
+      return "💊";
+
+    case "fuel":
+      return "⛽";
+
+    case "supermarket":
+      return "🛒";
+
+    case "atm":
+      return "🏧";
+
+    default:
+      return "📍";
+  }
+}
+
+function clearMarkers() {
+
+  markers.forEach(marker =>
+    map.removeLayer(marker)
+  );
+
+  markers = [];
+}
+
+function renderPlaces(places) {
 
   resultsEl.innerHTML = "";
 
-  if(!places.length){
+  if (!places.length) {
 
     resultsEl.innerHTML =
-      `<div class="empty">
-        😕 ما لقينا ${category.text} قريبة منك.
-      </div>`;
+      '<div class="empty">لم نجد أماكن بهذه الفئة قريبة منك.</div>';
 
     return;
   }
@@ -1208,13 +902,12 @@ function renderPlaces(
     const item =
       document.createElement("div");
 
-    item.className =
-      "result";
+    item.className = "result";
 
     item.innerHTML = `
 
       <div class="result-icon">
-        ${category.icon}
+        ${iconFor(place.type)}
       </div>
 
       <div class="result-info">
@@ -1224,10 +917,8 @@ function renderPlaces(
         </strong>
 
         <small>
-          ${category.text}
-          ${place.phone
-            ? " • " + escapeHtml(place.phone)
-            : ""}
+          ${categoryName(place.type)}
+          ${place.phone ? " • " + escapeHtml(place.phone) : ""}
         </small>
 
       </div>
@@ -1239,114 +930,96 @@ function renderPlaces(
     `;
 
     item.onclick = () =>
-      openDetail(
-        place,
-        marker,
-        category
-      );
+      showDetail(place, marker);
 
     resultsEl.appendChild(item);
 
   });
-
 }
 
+function categoryName(type) {
 
-/* =========================
-   DETAIL
-========================= */
+  const names = {
 
-function openDetail(
-  place,
-  marker,
-  category
-){
+    restaurant: "مطعم",
 
-  selectedPlace =
-    place;
+    cafe: "كافيه",
 
-  document.getElementById(
-    "detailIcon"
-  ).textContent =
-    category.icon;
+    pharmacy: "صيدلية",
 
-  document.getElementById(
-    "detailName"
-  ).textContent =
+    fuel: "محطة بنزين",
+
+    supermarket: "سوبرماركت",
+
+    atm: "صراف آلي"
+
+  };
+
+  return names[type] || "مكان قريب";
+}
+
+function formatDistance(distance) {
+
+  if (distance < 1) {
+    return Math.round(distance * 1000) + " م";
+  }
+
+  return distance.toFixed(1) + " كم";
+}
+
+function showDetail(place, marker) {
+
+  selectedPlace = place;
+
+  document.getElementById("detailIcon")
+    .textContent =
+    iconFor(place.type);
+
+  document.getElementById("detailName")
+    .textContent =
     place.name;
 
-  document.getElementById(
-    "detailDistance"
-  ).textContent =
-    formatDistance(place.distance) +
-    " منك";
-
-  document.getElementById(
-    "detailType"
-  ).textContent =
-    category.text +
+  document.getElementById("detailType")
+    .textContent =
+    categoryName(place.type) +
     (place.phone
       ? " • " + place.phone
       : "");
 
-  const saved =
-    isFavorite(place);
+  document.getElementById("detailDistance")
+    .textContent =
+    formatDistance(place.distance) +
+    " منك";
 
-  const saveButton =
-    document.getElementById(
-      "saveButton"
-    );
-
-  saveButton.textContent =
-    saved
-      ? "♥ محفوظ بالمفضلة"
-      : "♡ حفظ بالمفضلة";
-
-  saveButton.classList.toggle(
-    "saved",
-    saved
-  );
-
-  document
-    .getElementById("detail")
+  document.getElementById("detail")
     .classList.add("show");
 
   map.setView(
-    [place.lat,place.lon],
+    [place.lat, place.lon],
     17
   );
 
   marker.openPopup();
-
 }
 
+function closeDetail() {
 
-/* =========================
-   DIRECTIONS
-========================= */
+  document.getElementById("detail")
+    .classList.remove("show");
 
-function openDirections(){
+  selectedPlace = null;
+}
 
-  if(
-    !selectedPlace ||
-    !userLocation
-  ){
+function openDirections() {
 
-    toast("📍 حدد موقعك أولاً");
-
+  if (!selectedPlace || !userLocation) {
     return;
   }
 
   const url =
-    "https://www.google.com/maps/dir/?api=1" +
-    "&origin=" +
-    userLocation[0] +
-    "," +
-    userLocation[1] +
-    "&destination=" +
-    selectedPlace.lat +
-    "," +
-    selectedPlace.lon;
+    `https://www.google.com/maps/dir/?api=1` +
+    `&origin=${userLocation.lat},${userLocation.lon}` +
+    `&destination=${selectedPlace.lat},${selectedPlace.lon}`;
 
   window.open(
     url,
@@ -1354,263 +1027,54 @@ function openDirections(){
   );
 }
 
+function savePlace() {
 
-/* =========================
-   FAVORITES
-========================= */
-
-function isFavorite(place){
-
-  return favorites.some(
-    item =>
-      item.name === place.name &&
-      Math.abs(
-        item.lat-place.lat
-      ) < .0001
-  );
-
-}
-
-
-function toggleFavorite(){
-
-  if(!selectedPlace)
-    return;
-
-  const index =
-    favorites.findIndex(
-      item =>
-        item.name ===
-        selectedPlace.name &&
-        Math.abs(
-          item.lat -
-          selectedPlace.lat
-        ) < .0001
-    );
-
-  if(index >= 0){
-
-    favorites.splice(
-      index,
-      1
-    );
-
-    toast(
-      "تمت الإزالة من المفضلة"
-    );
-
-  }else{
-
-    favorites.push(
-      selectedPlace
-    );
-
-    toast(
-      "❤️ تمت الإضافة للمفضلة"
-    );
-
-  }
-
-  localStorage.setItem(
-    "wenahFavorites",
-    JSON.stringify(
-      favorites
-    )
-  );
-
-  openDetail(
-    selectedPlace,
-    L.marker([
-      selectedPlace.lat,
-      selectedPlace.lon
-    ]),
-    categories[
-      selectedPlace.type
-    ]
-  );
-
-}
-
-
-function showFavorites(){
-
-  if(!favorites.length){
-
-    toast(
-      "المفضلة فاضية حالياً ❤️"
-    );
-
+  if (!selectedPlace) {
     return;
   }
 
-  closeDetail();
+  let saved =
+    JSON.parse(
+      localStorage.getItem("wenahSaved") || "[]"
+    );
 
-  resultsEl.innerHTML = "";
+  const exists =
+    saved.some(place =>
+      place.name === selectedPlace.name &&
+      Math.abs(place.lat - selectedPlace.lat) < 0.0001
+    );
 
-  countEl.textContent =
-    favorites.length +
-    " محفوظ";
+  if (exists) {
 
-  statusEl.textContent =
-    "❤️ الأماكن المحفوظة";
-
-  favorites.forEach(place => {
-
-    const category =
-      categories[
-        place.type
-      ] || categories.restaurant;
-
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "result";
-
-    item.innerHTML = `
-
-      <div class="result-icon">
-        ${category.icon}
-      </div>
-
-      <div class="result-info">
-
-        <strong>
-          ${escapeHtml(place.name)}
-        </strong>
-
-        <small>
-          ${category.text}
-        </small>
-
-      </div>
-
-      <div class="distance">
-        ♥
-      </div>
-
-    `;
-
-    item.onclick = () => {
-
-      const marker =
-        L.marker([
-          place.lat,
-          place.lon
-        ]);
-
-      openDetail(
-        place,
-        marker,
-        category
+    saved =
+      saved.filter(place =>
+        !(
+          place.name === selectedPlace.name &&
+          Math.abs(place.lat - selectedPlace.lat) < 0.0001
+        )
       );
 
-    };
-
-    resultsEl.appendChild(item);
-
-  });
-
-  document
-    .querySelector(".section-head")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
-
-}
-
-
-/* =========================
-   HELPERS
-========================= */
-
-function clearMarkers(){
-
-  markers.forEach(
-    marker =>
-      map.removeLayer(marker)
-  );
-
-  markers = [];
-
-}
-
-
-function closeDetail(){
-
-  document
-    .getElementById("detail")
-    .classList.remove("show");
-
-}
-
-
-function formatDistance(distance){
-
-  if(distance < 1){
-
-    return Math.round(
-      distance * 1000
-    ) + " م";
-
-  }
-
-  return distance.toFixed(1) +
-    " كم";
-
-}
-
-
-function focusSearch(){
-
-  document
-    .getElementById("searchInput")
-    .focus();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function goHome(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function toast(message){
-
-  const element =
-    document.getElementById(
-      "toast"
+    localStorage.setItem(
+      "wenahSaved",
+      JSON.stringify(saved)
     );
 
-  element.textContent =
-    message;
+    alert("تمت إزالة المكان من المفضلة ❤️");
 
-  element.classList.add(
-    "show"
-  );
+  } else {
 
-  setTimeout(
-    () =>
-      element.classList.remove(
-        "show"
-      ),
-    1800
-  );
+    saved.push(selectedPlace);
 
+    localStorage.setItem(
+      "wenahSaved",
+      JSON.stringify(saved)
+    );
+
+    alert("تم حفظ المكان بالمفضلة ❤️");
+  }
 }
 
-
-function escapeHtml(text){
+function escapeHtml(text) {
 
   return String(text)
     .replaceAll("&","&amp;")
@@ -1618,25 +1082,7 @@ function escapeHtml(text){
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
-
 }
-
-
-/* =========================
-   STARTUP
-========================= */
-
-window.addEventListener(
-  "load",
-  () => {
-
-    setTimeout(
-      () => map.invalidateSize(),
-      300
-    );
-
-  }
-);
 
 </script>
 
