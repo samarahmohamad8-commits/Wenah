@@ -10,5 +10,12 @@
   "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
-  "icons": []
+  "icons": [
+  {
+    "src": "./icon.svg",
+    "sizes": "any",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
+  }
+]
 }
