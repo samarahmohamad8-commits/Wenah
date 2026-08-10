@@ -1,11 +1,13 @@
 {
   "name": "Wenah - وينه؟",
   "short_name": "Wenah",
-  "description": "اكتشف الأماكن القريبة منك بسهولة",
+  "description": "اكتشف أقرب المطاعم والكافيهات والصيدليات والأماكن من حولك بسهولة.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#061f1c",
-  "theme_color": "#008878",
+  "background_color": "#061b17",
+  "theme_color": "#21e6a0",
+  "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
   "icons": []
