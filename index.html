@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#071d19">
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon.svg">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#061b17">
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <title>Wenah | وينه؟</title>
 
   <link
@@ -21,19 +25,37 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
+      min-height: 100vh;
       background:
-        radial-gradient(circle at 90% 0%, #0d5a45 0%, transparent 32%),
+        radial-gradient(circle at 85% -5%, rgba(19, 126, 91, .42), transparent 30%),
+        radial-gradient(circle at 0% 30%, rgba(11, 81, 65, .22), transparent 28%),
         #061b17;
       color: #f4fffb;
     }
 
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     .app {
+      width: 100%;
       max-width: 760px;
       margin: auto;
-      padding: 18px 16px 35px;
+      padding: 18px 16px 38px;
     }
+
+    /* HEADER */
 
     header {
       display: flex;
@@ -46,44 +68,73 @@
       display: flex;
       align-items: center;
       gap: 9px;
-      font-size: 23px;
+      font-size: 21px;
       font-weight: 900;
+      letter-spacing: -.4px;
     }
 
     .logo-icon {
-      width: 42px;
-      height: 42px;
+      width: 43px;
+      height: 43px;
       display: grid;
       place-items: center;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #29efaa, #078d68);
-      font-size: 22px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #32f4b0, #078b68);
+      box-shadow: 0 8px 25px rgba(33, 230, 160, .16);
+      font-size: 21px;
     }
 
     .near {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       color: #5ff0ba;
-      background: rgba(33,230,160,.08);
-      border: 1px solid rgba(33,230,160,.2);
+      background: rgba(33, 230, 160, .07);
+      border: 1px solid rgba(33, 230, 160, .18);
       border-radius: 999px;
       padding: 8px 11px;
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
     }
 
+    .near-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #21e6a0;
+      box-shadow: 0 0 10px #21e6a0;
+    }
+
+    /* HERO */
+
     .hero {
-      padding: 30px 0 15px;
+      padding: 34px 0 18px;
     }
 
     .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: #21e6a0;
       font-weight: 900;
-      font-size: 14px;
+      font-size: 13px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #21e6a0;
+      box-shadow: 0 0 12px #21e6a0;
     }
 
     h1 {
-      font-size: clamp(40px, 10vw, 58px);
-      line-height: 1;
-      margin: 9px 0 14px;
+      font-size: clamp(42px, 11vw, 62px);
+      line-height: .98;
+      letter-spacing: -2px;
+      margin: 10px 0 15px;
     }
 
     h1 span {
@@ -91,19 +142,36 @@
     }
 
     .hero p {
-      color: #9db9b1;
+      color: #96b4ab;
       line-height: 1.8;
-      margin: 0 0 20px;
+      margin: 0 0 21px;
       font-size: 14px;
+      max-width: 560px;
     }
+
+    /* SEARCH */
 
     .search {
       display: flex;
-      gap: 8px;
+      gap: 7px;
       padding: 7px;
-      background: #0a2721;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 17px;
+      background: rgba(10, 39, 33, .92);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, .16);
+    }
+
+    .search:focus-within {
+      border-color: rgba(33, 230, 160, .35);
+      box-shadow: 0 0 0 3px rgba(33, 230, 160, .06);
+    }
+
+    .search-icon {
+      width: 40px;
+      display: grid;
+      place-items: center;
+      color: #6d9288;
+      font-size: 17px;
     }
 
     .search input {
@@ -113,45 +181,67 @@
       outline: 0;
       background: transparent;
       color: white;
-      padding: 11px;
-      font-size: 15px;
+      padding: 10px 2px;
+      font-size: 14px;
+    }
+
+    .search input::placeholder {
+      color: #66857c;
     }
 
     .search button {
       border: 0;
-      border-radius: 13px;
-      background: #21e6a0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2bf0aa, #18d99a);
       color: #05281f;
       font-weight: 900;
-      padding: 11px 17px;
+      padding: 10px 17px;
       cursor: pointer;
+      box-shadow: 0 6px 18px rgba(33, 230, 160, .12);
     }
+
+    .search button:active {
+      transform: scale(.97);
+    }
+
+    /* LOCATION */
 
     .location {
       width: 100%;
-      margin: 10px 0 15px;
+      margin: 10px 0 8px;
       padding: 14px;
-      border: 0;
-      border-radius: 15px;
-      background: #10372f;
+      border: 1px solid rgba(33, 230, 160, .12);
+      border-radius: 16px;
+      background: linear-gradient(135deg, #103b31, #0c2c25);
       color: #eafff8;
       font-weight: 900;
       cursor: pointer;
     }
 
+    .location:active {
+      transform: scale(.99);
+    }
+
     .status {
       min-height: 22px;
       text-align: center;
-      color: #9db9b1;
-      font-size: 12px;
-      margin: 6px;
+      color: #8daaa2;
+      font-size: 11px;
+      margin: 7px 4px;
+    }
+
+    /* CATEGORIES */
+
+    .categories-wrap {
+      position: relative;
+      margin-bottom: 13px;
     }
 
     .categories {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding: 5px 0 16px;
+      padding: 4px 1px 8px;
       scrollbar-width: none;
     }
 
@@ -161,45 +251,80 @@
 
     .category {
       flex: 0 0 auto;
-      border: 1px solid rgba(255,255,255,.08);
-      background: #0b2721;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(11, 39, 33, .92);
       color: #e5f7f2;
       border-radius: 999px;
       padding: 9px 14px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 12px;
+      transition: .18s ease;
+    }
+
+    .category:active {
+      transform: scale(.96);
     }
 
     .category.active {
       background: #21e6a0;
       color: #05281f;
       border-color: #21e6a0;
+      box-shadow: 0 7px 20px rgba(33, 230, 160, .12);
+    }
+
+    /* MAP */
+
+    .map-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 23px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .32);
     }
 
     #map {
-      height: 330px;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      height: 340px;
+      width: 100%;
     }
+
+    .map-label {
+      position: absolute;
+      z-index: 500;
+      top: 12px;
+      right: 12px;
+      background: rgba(6, 27, 23, .88);
+      backdrop-filter: blur(10px);
+      color: #eafff8;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 10px;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    /* SECTION */
 
     .section-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 22px 0 10px;
+      margin: 23px 0 10px;
     }
 
     .section-title h2 {
       margin: 0;
       font-size: 19px;
+      letter-spacing: -.3px;
     }
 
     .count {
       color: #718e86;
       font-size: 11px;
     }
+
+    /* RESULTS */
 
     .results {
       display: grid;
@@ -210,11 +335,20 @@
       display: flex;
       align-items: center;
       gap: 11px;
-      background: linear-gradient(145deg,#103129,#0a241f);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 17px;
+      background: linear-gradient(145deg, #103129, #0a241f);
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 18px;
       padding: 12px;
       cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+
+    .result:hover {
+      border-color: rgba(33, 230, 160, .22);
+    }
+
+    .result:active {
+      transform: scale(.985);
     }
 
     .result-icon {
@@ -223,9 +357,9 @@
       flex: none;
       display: grid;
       place-items: center;
-      border-radius: 14px;
+      border-radius: 15px;
       background: #15382f;
-      font-size: 23px;
+      font-size: 22px;
     }
 
     .result-info {
@@ -245,12 +379,12 @@
       display: block;
       color: #8fa9a1;
       margin-top: 4px;
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .distance {
       color: #21e6a0;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
       white-space: nowrap;
     }
@@ -260,21 +394,37 @@
       text-align: center;
       color: #8da9a1;
       background: #0b2721;
-      border-radius: 17px;
-      font-size: 13px;
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 18px;
+      font-size: 12px;
     }
+
+    /* DETAIL */
 
     .detail {
       display: none;
       margin-top: 12px;
       padding: 16px;
-      background: #0b2721;
-      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(145deg, #0e3028, #09231e);
+      border: 1px solid rgba(33, 230, 160, .12);
       border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.2);
     }
 
     .detail.show {
       display: block;
+      animation: detailIn .2s ease;
+    }
+
+    @keyframes detailIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .detail-top {
@@ -296,6 +446,7 @@
       color: #91aca4;
       font-size: 12px;
       line-height: 1.7;
+      margin: 4px 0;
     }
 
     .close {
@@ -312,6 +463,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+      margin-top: 14px;
     }
 
     .detail-actions button {
@@ -332,20 +484,63 @@
       color: white;
     }
 
+    /* FOOTER */
+
     footer {
       text-align: center;
       color: #607e76;
-      font-size: 11px;
-      padding: 25px 0 10px;
+      font-size: 10px;
+      padding: 28px 0 8px;
     }
 
+    /* LEAFLET */
+
+    .leaflet-control-zoom a {
+      background: #09251f !important;
+      color: #dffcf3 !important;
+      border-color: rgba(255,255,255,.1) !important;
+    }
+
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      background: #0b2721;
+      color: white;
+    }
+
+    .leaflet-popup-content {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    /* MOBILE */
+
     @media (max-width: 450px) {
-      #map {
-        height: 300px;
+      .app {
+        padding: 15px 13px 30px;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .near {
+        padding: 7px 9px;
       }
 
       .hero {
-        padding-top: 24px;
+        padding-top: 28px;
+      }
+
+      h1 {
+        font-size: 45px;
+      }
+
+      #map {
+        height: 305px;
       }
 
       .detail-actions {
@@ -362,15 +557,18 @@
   <header>
     <div class="logo">
       <div class="logo-icon">📍</div>
-      Wenah <span style="color:#21e6a0">| وينه؟</span>
+      <span>Wenah <span style="color:#21e6a0">| وينه؟</span></span>
     </div>
 
-    <div class="near">● قريب منك</div>
+    <div class="near">
+      <span class="near-dot"></span>
+      قريب منك
+    </div>
   </header>
 
   <section class="hero">
 
-    <div class="eyebrow">كل شيء قريب منك.</div>
+    <div class="eyebrow">كل شيء قريب منك</div>
 
     <h1>
       وينه؟ <span>لقيته.</span>
@@ -378,13 +576,16 @@
 
     <p>
       حدد موقعك وابحث عن المكان الذي تريده.
-      Wenah يعرض لك الأماكن القريبة منك حسب الفئة.
+      Wenah يساعدك تكتشف أقرب الأماكن حولك بسهولة.
     </p>
 
     <div class="search">
+      <div class="search-icon">⌕</div>
+
       <input
         id="searchInput"
         type="text"
+        autocomplete="off"
         placeholder="مثلاً: مطاعم، كافيهات، صيدليات..."
         onkeydown="if(event.key==='Enter') searchPlaces()"
       >
@@ -400,39 +601,67 @@
 
   </section>
 
-  <div class="categories">
+  <div class="categories-wrap">
 
-    <button class="category active" data-type="" onclick="chooseCategory(this,'')">
-      الكل
-    </button>
+    <div class="categories">
 
-    <button class="category" data-type="restaurant" onclick="chooseCategory(this,'restaurant')">
-      🍔 مطاعم
-    </button>
+      <button
+        class="category active"
+        data-type=""
+        onclick="chooseCategory(this,'')">
+        الكل
+      </button>
 
-    <button class="category" data-type="cafe" onclick="chooseCategory(this,'cafe')">
-      ☕ كافيهات
-    </button>
+      <button
+        class="category"
+        data-type="restaurant"
+        onclick="chooseCategory(this,'restaurant')">
+        🍔 مطاعم
+      </button>
 
-    <button class="category" data-type="pharmacy" onclick="chooseCategory(this,'pharmacy')">
-      💊 صيدليات
-    </button>
+      <button
+        class="category"
+        data-type="cafe"
+        onclick="chooseCategory(this,'cafe')">
+        ☕ كافيهات
+      </button>
 
-    <button class="category" data-type="fuel" onclick="chooseCategory(this,'fuel')">
-      ⛽ بنزين
-    </button>
+      <button
+        class="category"
+        data-type="pharmacy"
+        onclick="chooseCategory(this,'pharmacy')">
+        💊 صيدليات
+      </button>
 
-    <button class="category" data-type="supermarket" onclick="chooseCategory(this,'supermarket')">
-      🛒 سوبرماركت
-    </button>
+      <button
+        class="category"
+        data-type="fuel"
+        onclick="chooseCategory(this,'fuel')">
+        ⛽ بنزين
+      </button>
 
-    <button class="category" data-type="atm" onclick="chooseCategory(this,'atm')">
-      🏧 ATM
-    </button>
+      <button
+        class="category"
+        data-type="supermarket"
+        onclick="chooseCategory(this,'supermarket')">
+        🛒 سوبرماركت
+      </button>
+
+      <button
+        class="category"
+        data-type="atm"
+        onclick="chooseCategory(this,'atm')">
+        🏧 ATM
+      </button>
+
+    </div>
 
   </div>
 
-  <div id="map"></div>
+  <div class="map-card">
+    <div id="map"></div>
+    <div class="map-label">🗺️ خريطة الأماكن</div>
+  </div>
 
   <div class="section-title">
     <h2>الأماكن القريبة</h2>
@@ -451,9 +680,15 @@
 
       <div>
         <div id="detailIcon" class="detail-icon">📍</div>
+
         <h3 id="detailName"></h3>
+
         <p id="detailType"></p>
-        <strong id="detailDistance" style="color:#21e6a0"></strong>
+
+        <strong
+          id="detailDistance"
+          style="color:#21e6a0">
+        </strong>
       </div>
 
       <button class="close" onclick="closeDetail()">✕</button>
@@ -496,6 +731,7 @@ L.tileLayer(
 
 let userLocation = null;
 let markers = [];
+let userMarker = null;
 let currentCategory = "";
 let selectedPlace = null;
 
@@ -530,7 +766,11 @@ function getLocation() {
         15
       );
 
-      L.circleMarker(
+      if (userMarker) {
+        map.removeLayer(userMarker);
+      }
+
+      userMarker = L.circleMarker(
         [userLocation.lat, userLocation.lon],
         {
           radius: 9,
@@ -541,8 +781,7 @@ function getLocation() {
         }
       )
       .addTo(map)
-      .bindPopup("📍 موقعك")
-      .openPopup();
+      .bindPopup("📍 موقعك");
 
       setStatus("✅ تم تحديد موقعك");
 
@@ -551,14 +790,17 @@ function getLocation() {
     },
 
     function() {
+
       setStatus(
         "❌ اسمح للموقع من إعدادات Edge ثم حاول مرة ثانية."
       );
+
     },
 
     {
       enableHighAccuracy: true,
-      timeout: 15000
+      timeout: 15000,
+      maximumAge: 60000
     }
 
   );
@@ -582,24 +824,54 @@ function chooseCategory(button, category) {
   loadPlaces();
 }
 
+function updateActiveCategory() {
+
+  document
+    .querySelectorAll(".category")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.type === currentCategory
+      );
+
+    });
+
+}
+
 function searchPlaces() {
 
   const input =
-    document.getElementById("searchInput")
+    document
+      .getElementById("searchInput")
       .value
       .trim()
       .toLowerCase();
 
-  if (input.includes("مطعم") || input.includes("برغر") || input.includes("burger")) {
+  if (
+    input.includes("مطعم") ||
+    input.includes("مطاعم") ||
+    input.includes("برغر") ||
+    input.includes("برجر") ||
+    input.includes("burger") ||
+    input.includes("restaurant")
+  ) {
+
     currentCategory = "restaurant";
+
   }
 
   else if (
     input.includes("كافيه") ||
+    input.includes("كافيهات") ||
     input.includes("قهوة") ||
-    input.includes("coffee")
+    input.includes("كوفي") ||
+    input.includes("coffee") ||
+    input.includes("cafe")
   ) {
+
     currentCategory = "cafe";
+
   }
 
   else if (
@@ -607,31 +879,45 @@ function searchPlaces() {
     input.includes("صيدليات") ||
     input.includes("pharmacy")
   ) {
+
     currentCategory = "pharmacy";
+
   }
 
   else if (
     input.includes("بنزين") ||
     input.includes("محطة") ||
-    input.includes("fuel")
+    input.includes("محطات") ||
+    input.includes("fuel") ||
+    input.includes("gas")
   ) {
+
     currentCategory = "fuel";
+
   }
 
   else if (
     input.includes("سوبر") ||
     input.includes("ماركت") ||
+    input.includes("سوبرماركت") ||
     input.includes("supermarket")
   ) {
+
     currentCategory = "supermarket";
+
   }
 
   else if (
     input.includes("atm") ||
-    input.includes("صراف")
+    input.includes("صراف") ||
+    input.includes("صراف آلي")
   ) {
+
     currentCategory = "atm";
+
   }
+
+  updateActiveCategory();
 
   if (!userLocation) {
     getLocation();
@@ -768,7 +1054,9 @@ async function loadPlaces() {
             currentCategory,
 
           phone:
-            tags.phone || "",
+            tags.phone ||
+            tags["contact:phone"] ||
+            "",
 
           distance:
             calculateDistance(
@@ -788,11 +1076,11 @@ async function loadPlaces() {
       )
 
       .sort(
-        (a,b) =>
+        (a, b) =>
           a.distance - b.distance
       )
 
-      .slice(0,20);
+      .slice(0, 20);
 
   renderPlaces(places);
 
@@ -818,30 +1106,30 @@ function calculateDistance(
   const R = 6371;
 
   const dLat =
-    (lat2-lat1) *
+    (lat2 - lat1) *
     Math.PI / 180;
 
   const dLon =
-    (lon2-lon1) *
+    (lon2 - lon1) *
     Math.PI / 180;
 
   const a =
-    Math.sin(dLat/2) ** 2 +
-    Math.cos(lat1*Math.PI/180) *
-    Math.cos(lat2*Math.PI/180) *
-    Math.sin(dLon/2) ** 2;
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) ** 2;
 
   return R *
     2 *
     Math.atan2(
       Math.sqrt(a),
-      Math.sqrt(1-a)
+      Math.sqrt(1 - a)
     );
 }
 
 function iconFor(type) {
 
-  switch(type) {
+  switch (type) {
 
     case "restaurant":
       return "🍔";
@@ -1080,11 +1368,11 @@ function savePlace() {
 function escapeHtml(text) {
 
   return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 </script>
