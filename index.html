@@ -28,8 +28,7 @@ body{
   min-height:100vh;
   background:
     radial-gradient(circle at 90% -5%,rgba(245,196,0,.24),transparent 30%),
-    radial-gradient(circle at 0% 50%,rgba(245,196,0,.08),transparent 28%),
-    linear-gradient(180deg,#11110d,#080907);
+    linear-gradient(180deg,#12120d,#070806);
   color:#fff;
 }
 
@@ -45,7 +44,7 @@ button{
   width:100%;
   max-width:760px;
   margin:auto;
-  padding:16px 14px 90px;
+  padding:15px 13px 40px;
 }
 
 /* HEADER */
@@ -74,7 +73,7 @@ header{
   background:#f5c400;
   color:#111;
   font-size:21px;
-  box-shadow:0 8px 25px rgba(245,196,0,.2);
+  box-shadow:0 8px 28px rgba(245,196,0,.22);
 }
 
 .logo-name{
@@ -105,7 +104,7 @@ header{
 /* HERO */
 
 .hero{
-  padding:34px 0 18px;
+  padding:32px 0 18px;
 }
 
 .eyebrow{
@@ -154,7 +153,6 @@ h1 span{
   background:#171812;
   border:1px solid #302f22;
   border-radius:18px;
-  transition:.2s;
 }
 
 .search:focus-within{
@@ -196,8 +194,6 @@ h1 span{
   cursor:pointer;
 }
 
-/* LOCATION */
-
 .location{
   width:100%;
   margin:10px 0 7px;
@@ -216,6 +212,70 @@ h1 span{
   color:#99988e;
   font-size:11px;
   margin:7px 4px;
+}
+
+/* TOP NAV */
+
+.top-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin:5px 0 13px;
+}
+
+.favorite-page-button{
+  width:100%;
+  border:1px solid #4a4010;
+  background:
+    linear-gradient(135deg,#211f0e,#171812);
+  color:#fff;
+  padding:14px 15px;
+  border-radius:17px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.favorite-page-button:active{
+  transform:scale(.985);
+}
+
+.favorite-page-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.favorite-page-icon{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:#f5c400;
+  color:#111;
+  font-size:19px;
+}
+
+.favorite-page-left strong{
+  display:block;
+  font-size:13px;
+}
+
+.favorite-page-left small{
+  display:block;
+  color:#8f8e84;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.favorite-page-count{
+  color:#f5c400;
+  font-weight:900;
+  font-size:11px;
 }
 
 /* CATEGORIES */
@@ -451,210 +511,111 @@ h1 span{
   color:#111;
 }
 
-/* FAVORITES BUTTON */
+/* =========================
+   FAVORITES PAGE
+========================= */
 
-.favorite-page-button{
-  width:100%;
-  margin-top:14px;
-  padding:16px;
-  border:1px solid #4a4012;
-  border-radius:18px;
-  background:
-    linear-gradient(135deg,#211f0d,#171812);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  cursor:pointer;
-  text-align:right;
-  box-shadow:0 12px 30px rgba(0,0,0,.25);
-}
-
-.favorite-page-icon{
-  width:48px;
-  height:48px;
-  display:grid;
-  place-items:center;
-  border-radius:15px;
-  background:#f5c400;
-  color:#111;
-  font-size:23px;
-}
-
-.favorite-page-text{
-  flex:1;
-}
-
-.favorite-page-text strong{
-  display:block;
-  font-size:14px;
-}
-
-.favorite-page-text small{
-  display:block;
-  color:#88877e;
-  margin-top:4px;
-}
-
-.favorite-page-arrow{
-  color:#f5c400;
-  font-size:20px;
-}
-
-/* FAVORITES SCREEN */
-
-.favorites-screen{
-  position:fixed;
-  inset:0;
-  z-index:3000;
+.favorites-page{
   display:none;
-  overflow-y:auto;
-  background:
-    radial-gradient(circle at 90% 0%,rgba(245,196,0,.2),transparent 30%),
-    linear-gradient(180deg,#11110d,#080907);
+  animation:fadeUp .25s ease;
 }
 
-.favorites-screen.show{
+.favorites-page.show{
   display:block;
 }
 
-.favorites-inner{
-  width:100%;
-  max-width:760px;
-  margin:auto;
-  min-height:100%;
-  padding:18px 14px 45px;
+.home-page.hidden{
+  display:none;
 }
 
-.favorites-nav{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:26px;
-}
-
-.back-button{
-  width:45px;
-  height:45px;
-  border:1px solid #35331f;
-  border-radius:15px;
-  background:#181812;
-  color:#fff;
-  font-size:20px;
-  cursor:pointer;
-}
-
-.favorites-nav-title{
-  flex:1;
-}
-
-.favorites-nav-title strong{
-  display:block;
-  font-size:20px;
-}
-
-.favorites-nav-title small{
-  color:#88877e;
-  font-size:11px;
-}
-
-.big-heart{
-  width:45px;
-  height:45px;
-  display:grid;
-  place-items:center;
-  border-radius:15px;
-  background:#f5c400;
-  color:#111;
-  font-size:21px;
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 .favorites-hero{
-  padding:24px;
-  border:1px solid #3b3512;
+  margin-top:22px;
+  padding:23px 18px;
   border-radius:25px;
+  border:1px solid #4a4010;
   background:
-    radial-gradient(circle at 100% 0%,rgba(245,196,0,.18),transparent 45%),
-    #171812;
-  margin-bottom:18px;
+    radial-gradient(circle at 10% 10%,rgba(245,196,0,.2),transparent 35%),
+    linear-gradient(145deg,#211f0e,#12130f);
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
 }
 
-.favorites-hero .mini-label{
-  color:#f5c400;
-  font-size:11px;
-  font-weight:900;
+.favorites-back{
+  border:1px solid #37352a;
+  background:#1b1c16;
+  color:#fff;
+  border-radius:13px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-weight:800;
+  margin-bottom:22px;
 }
 
-.favorites-hero h2{
-  font-size:32px;
-  margin:8px 0;
+.favorites-back:active{
+  transform:scale(.97);
+}
+
+.favorites-title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:15px;
+}
+
+.favorites-title{
+  margin:0;
+  font-size:34px;
   letter-spacing:-1px;
 }
 
-.favorites-hero p{
-  color:#939289;
+.favorites-title span{
+  color:#f5c400;
+}
+
+.favorites-subtitle{
+  color:#99988e;
   font-size:12px;
   line-height:1.7;
-  margin:0;
+  margin:8px 0 0;
 }
 
-.favorites-stat{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-top:20px;
-  padding-top:17px;
-  border-top:1px solid #2b2a20;
-}
-
-.favorites-stat strong{
-  color:#f5c400;
-  font-size:24px;
-}
-
-.favorites-stat span{
-  color:#85847b;
-  font-size:11px;
-}
-
-.favorite-search{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:6px 12px;
-  background:#171812;
-  border:1px solid #302f22;
-  border-radius:16px;
-  margin-bottom:13px;
-}
-
-.favorite-search span{
-  color:#77766c;
-  font-size:19px;
-}
-
-.favorite-search input{
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:#fff;
-  padding:10px 0;
-  font-size:13px;
-}
-
-.favorite-cards{
+.big-favorite-count{
+  min-width:74px;
+  height:74px;
   display:grid;
-  gap:11px;
+  place-items:center;
+  border-radius:22px;
+  background:#f5c400;
+  color:#111;
+  font-size:20px;
+  font-weight:1000;
+  box-shadow:0 12px 30px rgba(245,196,0,.15);
+}
+
+.favorite-page-list{
+  margin-top:15px;
+  display:grid;
+  gap:10px;
 }
 
 .favorite-card{
   position:relative;
-  overflow:hidden;
-  padding:15px;
-  background:#151610;
-  border:1px solid #2d2c21;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  background:linear-gradient(145deg,#181914,#12130f);
+  border:1px solid #2d2e24;
   border-radius:20px;
   cursor:pointer;
   transition:.15s;
@@ -668,30 +629,26 @@ h1 span{
   transform:scale(.985);
 }
 
-.favorite-card-top{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
 .favorite-card-icon{
-  width:54px;
-  height:54px;
+  width:55px;
+  height:55px;
+  flex:none;
   display:grid;
   place-items:center;
   border-radius:17px;
-  background:#252419;
+  background:#242318;
   font-size:24px;
+  border:1px solid #34321e;
 }
 
 .favorite-card-info{
-  flex:1;
   min-width:0;
+  flex:1;
 }
 
 .favorite-card-info strong{
   display:block;
-  font-size:15px;
+  font-size:14px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -699,98 +656,85 @@ h1 span{
 
 .favorite-card-info small{
   display:block;
-  color:#88877e;
-  margin-top:5px;
+  color:#8d8c82;
   font-size:10px;
-}
-
-.favorite-heart{
-  color:#f5c400;
-  font-size:20px;
+  margin-top:5px;
 }
 
 .favorite-card-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
-  margin-top:12px;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
 
-.favorite-card-actions button{
+.favorite-direction{
+  width:38px;
+  height:38px;
   border:0;
   border-radius:12px;
-  padding:10px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.favorite-map{
   background:#f5c400;
   color:#111;
+  cursor:pointer;
+  font-size:16px;
 }
 
 .favorite-delete{
-  background:#29291f;
+  width:38px;
+  height:38px;
+  border:1px solid #422525;
+  border-radius:12px;
+  background:#211717;
   color:#ff7777;
+  cursor:pointer;
+  font-size:17px;
 }
 
-.favorites-empty-big{
+.favorite-empty-page{
+  margin-top:15px;
+  padding:42px 20px;
   text-align:center;
-  padding:45px 20px;
-  border:1px dashed #3b3826;
-  border-radius:22px;
   background:#151610;
+  border:1px solid #29291f;
+  border-radius:23px;
 }
 
-.favorites-empty-big .heart{
-  font-size:45px;
-  margin-bottom:12px;
+.favorite-empty-icon{
+  width:72px;
+  height:72px;
+  margin:0 auto 14px;
+  display:grid;
+  place-items:center;
+  border-radius:23px;
+  background:#211f0e;
+  font-size:32px;
 }
 
-.favorites-empty-big h3{
-  margin:0 0 8px;
+.favorite-empty-page h3{
+  margin:0 0 7px;
+  font-size:18px;
 }
 
-.favorites-empty-big p{
+.favorite-empty-page p{
   margin:0;
   color:#85847b;
   font-size:12px;
-  line-height:1.7;
+  line-height:1.8;
 }
 
-/* BOTTOM NAV */
-
-.bottom-nav{
-  position:fixed;
-  left:50%;
-  bottom:12px;
-  transform:translateX(-50%);
-  z-index:2000;
-  width:min(730px,calc(100% - 24px));
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
-  padding:7px;
-  background:rgba(18,18,13,.95);
-  border:1px solid #343225;
-  border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.5);
-  backdrop-filter:blur(12px);
-}
-
-.bottom-nav button{
-  border:0;
-  border-radius:14px;
-  padding:11px;
-  background:transparent;
-  color:#8e8d84;
+.favorite-clear{
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+  border:1px solid #442626;
+  border-radius:15px;
+  background:#1d1515;
+  color:#ff7777;
   font-weight:900;
   cursor:pointer;
 }
 
-.bottom-nav button.active{
-  background:#f5c400;
-  color:#111;
+.favorite-clear:active{
+  transform:scale(.98);
 }
 
 /* FOOTER */
@@ -825,7 +769,7 @@ footer{
 @media(max-width:450px){
 
   .app{
-    padding:14px 12px 90px;
+    padding:14px 12px 30px;
   }
 
   .logo{
@@ -838,7 +782,7 @@ footer{
   }
 
   .hero{
-    padding-top:28px;
+    padding-top:27px;
   }
 
   h1{
@@ -853,8 +797,21 @@ footer{
     grid-template-columns:1fr;
   }
 
-  .favorites-hero h2{
-    font-size:28px;
+  .favorites-title{
+    font-size:30px;
+  }
+
+  .big-favorite-count{
+    min-width:64px;
+    height:64px;
+  }
+
+  .favorite-card{
+    align-items:flex-start;
+  }
+
+  .favorite-card-actions{
+    flex-direction:column;
   }
 }
 </style>
@@ -864,15 +821,23 @@ footer{
 
 <main class="app">
 
+<!-- =========================
+     HOME PAGE
+========================= -->
+
+<div id="homePage" class="home-page">
+
 <header>
 
   <div class="logo">
+
     <div class="logo-icon">📍</div>
 
     <span>
       Wenah
       <span class="logo-name">| وينه؟</span>
     </span>
+
   </div>
 
   <div class="near">
@@ -922,6 +887,35 @@ footer{
   <div id="status" class="status"></div>
 
 </section>
+
+<div class="top-actions">
+
+  <button
+    class="favorite-page-button"
+    onclick="openFavoritesPage()">
+
+    <div class="favorite-page-left">
+
+      <div class="favorite-page-icon">
+        ❤️
+      </div>
+
+      <div>
+        <strong>مفضلاتي</strong>
+        <small>الأماكن التي اخترتها وحفظتها</small>
+      </div>
+
+    </div>
+
+    <div
+      id="homeFavoriteCount"
+      class="favorite-page-count">
+      0 أماكن
+    </div>
+
+  </button>
+
+</div>
 
 <div class="categories">
 
@@ -1040,27 +1034,62 @@ footer{
 
 </div>
 
-<!-- FAVORITES ENTRY -->
+</div>
 
-<button class="favorite-page-button"
-  onclick="openFavorites()">
 
-  <div class="favorite-page-icon">
-    ❤️
+<!-- =========================
+     FAVORITES PAGE
+========================= -->
+
+<section id="favoritesPage" class="favorites-page">
+
+  <div class="favorites-hero">
+
+    <button
+      class="favorites-back"
+      onclick="closeFavoritesPage()">
+      ← رجوع للرئيسية
+    </button>
+
+    <div class="favorites-title-row">
+
+      <div>
+
+        <h2 class="favorites-title">
+          مفضلات<span>ي</span> ❤️
+        </h2>
+
+        <p class="favorites-subtitle">
+          كل الأماكن التي حبيتها وحفظتها
+          في مكان واحد.
+        </p>
+
+      </div>
+
+      <div
+        id="bigFavoriteCount"
+        class="big-favorite-count">
+        0
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="favorite-page-text">
-    <strong>مفضلتك</strong>
-    <small id="favoriteButtonText">
-      الأماكن التي تحبها بمكان واحد
-    </small>
+  <div id="favoritePageList"
+       class="favorite-page-list">
   </div>
 
-  <div class="favorite-page-arrow">
-    ‹
-  </div>
+  <button
+    id="clearFavoritesButton"
+    class="favorite-clear"
+    onclick="clearAllFavorites()"
+    style="display:none;">
+    🗑️ حذف كل المفضلة
+  </button>
 
-</button>
+</section>
+
 
 <footer>
   Wenah — وينه؟ • اكتشف أقرب مكان بسهولة.
@@ -1068,102 +1097,6 @@ footer{
 
 </main>
 
-<!-- BOTTOM NAV -->
-
-<nav class="bottom-nav">
-
-  <button
-    id="homeNav"
-    class="active"
-    onclick="goHome()">
-    🏠 الرئيسية
-  </button>
-
-  <button
-    id="favoritesNav"
-    onclick="openFavorites()">
-    ❤️ المفضلة
-  </button>
-
-</nav>
-
-<!-- FAVORITES SCREEN -->
-
-<section
-  id="favoritesScreen"
-  class="favorites-screen">
-
-  <div class="favorites-inner">
-
-    <div class="favorites-nav">
-
-      <button
-        class="back-button"
-        onclick="closeFavorites()">
-        →
-      </button>
-
-      <div class="favorites-nav-title">
-        <strong>المفضلة</strong>
-        <small>أماكنك المحفوظة في مكان واحد</small>
-      </div>
-
-      <div class="big-heart">
-        ❤️
-      </div>
-
-    </div>
-
-    <div class="favorites-hero">
-
-      <div class="mini-label">
-        WENAH • SAVED PLACES
-      </div>
-
-      <h2>
-        أماكنك المفضلة ❤️
-      </h2>
-
-      <p>
-        احفظ الأماكن التي تحبها وارجع لها بسرعة
-        وقت ما تحتاجها.
-      </p>
-
-      <div class="favorites-stat">
-
-        <strong id="bigFavoriteCount">
-          0
-        </strong>
-
-        <span>
-          مكان محفوظ
-        </span>
-
-      </div>
-
-    </div>
-
-    <div class="favorite-search">
-
-      <span>⌕</span>
-
-      <input
-        id="favoriteSearchInput"
-        type="text"
-        placeholder="ابحث داخل المفضلة..."
-        oninput="filterFavorites()"
-      >
-
-    </div>
-
-    <div
-      id="favoriteCards"
-      class="favorite-cards">
-    </div>
-
-  </div>
-
-</section>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -1192,6 +1125,7 @@ let markers = [];
 let currentCategory = "";
 let selectedPlace = null;
 
+
 /* =========================
    ELEMENTS
 ========================= */
@@ -1208,14 +1142,6 @@ const countEl =
 const saveButton =
   document.getElementById("saveButton");
 
-const favoritesScreen =
-  document.getElementById("favoritesScreen");
-
-const favoriteCards =
-  document.getElementById("favoriteCards");
-
-const favoriteSearchInput =
-  document.getElementById("favoriteSearchInput");
 
 /* =========================
    STATUS
@@ -1224,6 +1150,7 @@ const favoriteSearchInput =
 function setStatus(text){
   statusEl.textContent = text;
 }
+
 
 /* =========================
    LOCATION
@@ -1309,6 +1236,7 @@ function getLocation(){
   );
 }
 
+
 /* =========================
    CATEGORY
 ========================= */
@@ -1334,6 +1262,7 @@ function chooseCategory(button,category){
 
   loadPlaces();
 }
+
 
 /* =========================
    SEARCH
@@ -1431,6 +1360,7 @@ function searchPlaces(){
   loadPlaces();
 }
 
+
 /* =========================
    OVERPASS
 ========================= */
@@ -1461,6 +1391,7 @@ function getOverpassTag(){
       return '["name"]';
   }
 }
+
 
 /* =========================
    LOAD PLACES
@@ -1620,6 +1551,7 @@ async function loadPlaces(){
   );
 }
 
+
 /* =========================
    DISTANCE
 ========================= */
@@ -1655,6 +1587,7 @@ function calculateDistance(
     );
 }
 
+
 /* =========================
    ICON
 ========================= */
@@ -1686,6 +1619,7 @@ function iconFor(type){
   }
 }
 
+
 /* =========================
    CATEGORY NAME
 ========================= */
@@ -1711,6 +1645,7 @@ function categoryName(type){
   return names[type] || "مكان قريب";
 }
 
+
 /* =========================
    DISTANCE TEXT
 ========================= */
@@ -1732,6 +1667,7 @@ function formatDistance(distance){
   );
 }
 
+
 /* =========================
    CLEAR MARKERS
 ========================= */
@@ -1748,6 +1684,7 @@ function clearMarkers(){
 
   markers = [];
 }
+
 
 /* =========================
    RENDER PLACES
@@ -1828,6 +1765,7 @@ function renderPlaces(places){
   });
 }
 
+
 /* =========================
    DETAIL
 ========================= */
@@ -1876,10 +1814,9 @@ function showDetail(place,marker){
     17
   );
 
-  if(marker){
-    marker.openPopup();
-  }
+  marker.openPopup();
 }
+
 
 function closeDetail(){
 
@@ -1889,6 +1826,7 @@ function closeDetail(){
 
   selectedPlace = null;
 }
+
 
 /* =========================
    DIRECTIONS
@@ -1900,10 +1838,6 @@ function openDirections(){
     !selectedPlace ||
     !userLocation
   ){
-    setStatus(
-      "📍 حدد موقعك أولاً."
-    );
-
     return;
   }
 
@@ -1918,6 +1852,7 @@ function openDirections(){
   );
 }
 
+
 /* =========================
    FAVORITES STORAGE
 ========================= */
@@ -1926,21 +1861,17 @@ function getFavorites(){
 
   try{
 
-    const saved =
-      JSON.parse(
-        localStorage.getItem("wenahSaved") ||
-        "[]"
-      );
-
-    return Array.isArray(saved)
-      ? saved
-      : [];
+    return JSON.parse(
+      localStorage.getItem("wenahSaved") ||
+      "[]"
+    );
 
   }catch(error){
 
     return [];
   }
 }
+
 
 /* =========================
    SAVE PLACE
@@ -1992,15 +1923,14 @@ function savePlace(){
     );
   }
 
-  updateFavoriteButtonText();
+  renderFavorites();
 
   updateSaveButton();
-
-  renderFavoriteCards();
 }
 
+
 /* =========================
-   IS FAVORITE
+   FAVORITE CHECK
 ========================= */
 
 function isFavorite(place){
@@ -2011,6 +1941,7 @@ function isFavorite(place){
     Math.abs(item.lon-place.lon) < 0.0001
   );
 }
+
 
 /* =========================
    SAVE BUTTON
@@ -2038,43 +1969,42 @@ function updateSaveButton(){
   }
 }
 
+
 /* =========================
-   FAVORITES SCREEN
+   OLD HOME FAVORITES
 ========================= */
 
-function openFavorites(){
+function renderFavorites(){
 
-  favoritesScreen.classList.add("show");
+  const saved = getFavorites();
 
-  document
-    .getElementById("homeNav")
-    .classList.remove("active");
+  document.getElementById(
+    "homeFavoriteCount"
+  ).textContent =
+    saved.length +
+    (saved.length === 1
+      ? " مكان"
+      : " أماكن");
 
-  document
-    .getElementById("favoritesNav")
-    .classList.add("active");
-
-  favoriteSearchInput.value = "";
-
-  renderFavoriteCards();
+  renderFavoritePage();
 }
 
-function closeFavorites(){
 
-  favoritesScreen.classList.remove("show");
+/* =========================
+   FAVORITES PAGE
+========================= */
+
+function openFavoritesPage(){
 
   document
-    .getElementById("favoritesNav")
-    .classList.remove("active");
+    .getElementById("homePage")
+    .classList.add("hidden");
 
   document
-    .getElementById("homeNav")
-    .classList.add("active");
-}
+    .getElementById("favoritesPage")
+    .classList.add("show");
 
-function goHome(){
-
-  closeFavorites();
+  renderFavoritePage();
 
   window.scrollTo({
     top:0,
@@ -2082,99 +2012,85 @@ function goHome(){
   });
 }
 
+
+function closeFavoritesPage(){
+
+  document
+    .getElementById("favoritesPage")
+    .classList.remove("show");
+
+  document
+    .getElementById("homePage")
+    .classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
 /* =========================
-   FAVORITES CARDS
+   RENDER FAVORITE PAGE
 ========================= */
 
-function renderFavoriteCards(){
+function renderFavoritePage(){
 
-  const saved =
-    getFavorites();
+  const list =
+    document.getElementById(
+      "favoritePageList"
+    );
 
   const bigCount =
     document.getElementById(
       "bigFavoriteCount"
     );
 
+  const clearButton =
+    document.getElementById(
+      "clearFavoritesButton"
+    );
+
+  const saved = getFavorites();
+
   bigCount.textContent =
     saved.length;
 
-  updateFavoriteButtonText();
+  if(!saved.length){
 
-  const search =
-    favoriteSearchInput
-      .value
-      .trim()
-      .toLowerCase();
+    list.innerHTML = `
 
-  const filtered =
-    saved.filter(place =>
-      place.name
-        .toLowerCase()
-        .includes(search)
-    );
+      <div class="favorite-empty-page">
 
-  if(!filtered.length){
-
-    if(saved.length === 0){
-
-      favoriteCards.innerHTML = `
-
-        <div class="favorites-empty-big">
-
-          <div class="heart">
-            ❤️
-          </div>
-
-          <h3>
-            لسا ما عندك أماكن مفضلة
-          </h3>
-
-          <p>
-            لما تلاقي مكان يعجبك،
-            اضغط «حفظ بالمفضلة» وراح يظهر هون.
-          </p>
-
+        <div class="favorite-empty-icon">
+          🤍
         </div>
 
-      `;
+        <h3>
+          لسه ما عندك مفضلة
+        </h3>
 
-    }else{
+        <p>
+          لما تلاقي مكان يعجبك،
+          اضغط «حفظ بالمفضلة» وسيظهر هنا.
+        </p>
 
-      favoriteCards.innerHTML = `
+      </div>
 
-        <div class="favorites-empty-big">
+    `;
 
-          <div class="heart">
-            🔎
-          </div>
-
-          <h3>
-            ما لقينا المكان
-          </h3>
-
-          <p>
-            جرّب تكتب اسم مختلف للبحث داخل المفضلة.
-          </p>
-
-        </div>
-
-      `;
-    }
+    clearButton.style.display =
+      "none";
 
     return;
   }
 
-  favoriteCards.innerHTML = "";
+  clearButton.style.display =
+    "block";
 
-  filtered.forEach(place => {
+  list.innerHTML = "";
 
-    const realIndex =
-      saved.findIndex(item =>
-        item.name === place.name &&
-        item.lat === place.lat &&
-        item.lon === place.lon
-      );
+  saved.forEach((place,index) => {
 
     const card =
       document.createElement("div");
@@ -2184,90 +2100,110 @@ function renderFavoriteCards(){
 
     card.innerHTML = `
 
-      <div class="favorite-card-top">
+      <div class="favorite-card-icon">
+        ${iconFor(place.type)}
+      </div>
 
-        <div class="favorite-card-icon">
-          ${iconFor(place.type)}
-        </div>
+      <div class="favorite-card-info">
 
-        <div class="favorite-card-info">
+        <strong>
+          ${escapeHtml(place.name)}
+        </strong>
 
-          <strong>
-            ${escapeHtml(place.name)}
-          </strong>
-
-          <small>
-            ${categoryName(place.type)}
-            ${
-              place.phone
-                ? " • " +
-                  escapeHtml(place.phone)
-                : ""
-            }
-          </small>
-
-        </div>
-
-        <div class="favorite-heart">
-          ♥
-        </div>
+        <small>
+          ${categoryName(place.type)}
+          ${
+            place.distance
+              ? " • " +
+                formatDistance(place.distance)
+              : ""
+          }
+        </small>
 
       </div>
 
       <div class="favorite-card-actions">
 
         <button
-          class="favorite-map"
-          onclick="openFavoritePlace(${realIndex},event)">
-          🗺️ عرض على الخريطة
+          class="favorite-direction"
+          title="الاتجاهات"
+          onclick="favoriteDirections(${index},event)">
+          🧭
         </button>
 
         <button
           class="favorite-delete"
-          onclick="removeFavoriteFromPage(${realIndex},event)">
-          🗑️ حذف
+          title="حذف"
+          onclick="removeFavorite(${index},event)">
+          ×
         </button>
 
       </div>
     `;
 
-    card.onclick = function(event){
+    card.onclick = function(){
 
-      if(
-        event.target.tagName === "BUTTON"
-      ){
-        return;
+      selectedPlace = place;
+
+      document
+        .getElementById("detailIcon")
+        .textContent =
+          iconFor(place.type);
+
+      document
+        .getElementById("detailName")
+        .textContent =
+          place.name;
+
+      document
+        .getElementById("detailType")
+        .textContent =
+          categoryName(place.type);
+
+      document
+        .getElementById("detailDistance")
+        .textContent =
+          "❤️ محفوظ بالمفضلة";
+
+      document
+        .getElementById("detail")
+        .classList.add("show");
+
+      updateSaveButton();
+
+      closeFavoritesPage();
+
+      if(userLocation){
+
+        map.setView(
+          [place.lat,place.lon],
+          17
+        );
+
       }
 
-      openFavoritePlace(
-        realIndex,
-        event
-      );
+      window.scrollTo({
+        top:document
+          .getElementById("detail")
+          .offsetTop - 20,
+        behavior:"smooth"
+      });
 
     };
 
-    favoriteCards.appendChild(card);
+    list.appendChild(card);
 
   });
 }
 
-/* =========================
-   FILTER FAVORITES
-========================= */
-
-function filterFavorites(){
-  renderFavoriteCards();
-}
 
 /* =========================
-   OPEN FAVORITE
+   FAVORITE DIRECTIONS
 ========================= */
 
-function openFavoritePlace(index,event){
+function favoriteDirections(index,event){
 
-  if(event){
-    event.stopPropagation();
-  }
+  event.stopPropagation();
 
   const saved =
     getFavorites();
@@ -2279,84 +2215,42 @@ function openFavoritePlace(index,event){
     return;
   }
 
-  closeFavorites();
+  if(userLocation){
 
-  selectedPlace = place;
+    const url =
+      "https://www.google.com/maps/dir/?api=1" +
+      `&origin=${userLocation.lat},${userLocation.lon}` +
+      `&destination=${place.lat},${place.lon}`;
 
-  document
-    .getElementById("detailIcon")
-    .textContent =
-      iconFor(place.type);
+    window.open(
+      url,
+      "_blank"
+    );
 
-  document
-    .getElementById("detailName")
-    .textContent =
-      place.name;
+    return;
+  }
 
-  document
-    .getElementById("detailType")
-    .textContent =
-      categoryName(place.type) +
-      (
-        place.phone
-          ? " • " + place.phone
-          : ""
-      );
+  const url =
+    "https://www.google.com/maps/search/?api=1" +
+    `&query=${place.lat},${place.lon}`;
 
-  document
-    .getElementById("detailDistance")
-    .textContent =
-      "❤️ محفوظ بالمفضلة";
-
-  document
-    .getElementById("detail")
-    .classList.add("show");
-
-  updateSaveButton();
-
-  map.setView(
-    [
-      place.lat,
-      place.lon
-    ],
-    17
+  window.open(
+    url,
+    "_blank"
   );
-
-  L.popup()
-    .setLatLng([
-      place.lat,
-      place.lon
-    ])
-    .setContent(
-      `<b>${escapeHtml(place.name)}</b>`
-    )
-    .openOn(map);
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
 }
 
+
 /* =========================
-   DELETE FAVORITE
+   REMOVE FAVORITE
 ========================= */
 
-function removeFavoriteFromPage(
-  index,
-  event
-){
+function removeFavorite(index,event){
 
-  if(event){
-    event.stopPropagation();
-  }
+  event.stopPropagation();
 
   const saved =
     getFavorites();
-
-  if(!saved[index]){
-    return;
-  }
 
   saved.splice(index,1);
 
@@ -2365,47 +2259,49 @@ function removeFavoriteFromPage(
     JSON.stringify(saved)
   );
 
-  if(
-    selectedPlace &&
-    !isFavorite(selectedPlace)
-  ){
+  renderFavorites();
 
-    updateSaveButton();
-
-  }
-
-  renderFavoriteCards();
+  updateSaveButton();
 
   setStatus(
-    "🗑️ تم حذف المكان من المفضلة."
+    "تم حذف المكان من المفضلة."
   );
 }
 
+
 /* =========================
-   FAVORITE BUTTON TEXT
+   CLEAR ALL
 ========================= */
 
-function updateFavoriteButtonText(){
+function clearAllFavorites(){
 
   const saved =
     getFavorites();
 
-  const el =
-    document.getElementById(
-      "favoriteButtonText"
+  if(!saved.length){
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      "هل تريد حذف جميع الأماكن من المفضلة؟"
     );
 
-  if(saved.length === 0){
-
-    el.textContent =
-      "الأماكن التي تحبها بمكان واحد";
-
-  }else{
-
-    el.textContent =
-      `${saved.length} ${saved.length === 1 ? "مكان محفوظ" : "أماكن محفوظة"}`;
+  if(!confirmed){
+    return;
   }
+
+  localStorage.removeItem(
+    "wenahSaved"
+  );
+
+  renderFavorites();
+
+  setStatus(
+    "تم حذف جميع المفضلة."
+  );
 }
+
 
 /* =========================
    SECURITY
@@ -2426,13 +2322,12 @@ function escapeHtml(text){
     .replaceAll("'","&#039;");
 }
 
+
 /* =========================
    START
 ========================= */
 
-updateFavoriteButtonText();
-
-renderFavoriteCards();
+renderFavorites();
 
 </script>
 
