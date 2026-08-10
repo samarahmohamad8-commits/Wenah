@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#061b17">
+
+  <meta name="theme-color" content="#ffd400">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./icon.svg">
-
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <title>Wenah | وينه؟</title>
 
@@ -20,9 +19,15 @@
   >
 
   <style>
+
     * {
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
     }
 
     html {
@@ -33,10 +38,18 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 85% -5%, rgba(19,126,91,.48), transparent 30%),
-        radial-gradient(circle at 10% 25%, rgba(11,81,65,.25), transparent 28%),
-        linear-gradient(180deg, #061b17 0%, #041512 100%);
-      color: #f4fffb;
+        radial-gradient(
+          circle at 90% -10%,
+          rgba(255,212,0,.22),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 0% 30%,
+          rgba(255,212,0,.08),
+          transparent 30%
+        ),
+        #080808;
+      color: #ffffff;
     }
 
     button,
@@ -50,51 +63,54 @@
 
     .app {
       width: 100%;
-      max-width: 760px;
+      max-width: 780px;
       margin: auto;
-      padding: 18px 16px 38px;
+      padding: 18px 16px 40px;
     }
 
     /* HEADER */
 
     header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       font-size: 21px;
-      font-weight: 900;
-      letter-spacing: -.5px;
+      font-weight: 950;
     }
 
     .logo-icon {
-      width: 44px;
-      height: 44px;
+      width: 45px;
+      height: 45px;
       display: grid;
       place-items: center;
       border-radius: 15px;
-      background: linear-gradient(135deg, #39f6b4, #078b68);
+      background: #ffd400;
+      color: #080808;
       box-shadow:
-        0 8px 28px rgba(33,230,160,.18),
-        inset 0 1px 0 rgba(255,255,255,.18);
-      font-size: 21px;
+        0 8px 30px rgba(255,212,0,.22);
+      font-size: 22px;
+    }
+
+    .logo-yellow {
+      color: #ffd400;
     }
 
     .near {
       display: flex;
       align-items: center;
       gap: 7px;
-      color: #68f4c1;
-      background: rgba(33,230,160,.07);
-      border: 1px solid rgba(33,230,160,.2);
-      border-radius: 999px;
       padding: 8px 11px;
+      border-radius: 999px;
+      background: #151515;
+      border: 1px solid #292929;
+      color: #ffd400;
       font-size: 10px;
       font-weight: 900;
       white-space: nowrap;
@@ -104,23 +120,23 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #21e6a0;
-      box-shadow: 0 0 12px #21e6a0;
+      background: #ffd400;
+      box-shadow: 0 0 12px #ffd400;
     }
 
     /* HERO */
 
     .hero {
-      padding: 38px 0 20px;
+      padding: 40px 0 21px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      color: #21e6a0;
-      font-weight: 900;
+      color: #ffd400;
       font-size: 13px;
+      font-weight: 900;
     }
 
     .eyebrow::before {
@@ -128,27 +144,28 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #21e6a0;
-      box-shadow: 0 0 13px #21e6a0;
+      background: #ffd400;
+      box-shadow: 0 0 13px #ffd400;
     }
 
     h1 {
-      font-size: clamp(44px, 11vw, 64px);
+      margin: 11px 0 15px;
+      font-size: clamp(45px, 12vw, 68px);
       line-height: .95;
-      letter-spacing: -2.8px;
-      margin: 11px 0 16px;
+      letter-spacing: -3px;
+      font-weight: 950;
     }
 
     h1 span {
-      color: #21e6a0;
+      color: #ffd400;
     }
 
     .hero p {
-      color: #94b3aa;
+      max-width: 570px;
+      margin: 0 0 23px;
+      color: #999999;
       line-height: 1.85;
-      margin: 0 0 22px;
       font-size: 14px;
-      max-width: 560px;
     }
 
     /* SEARCH */
@@ -156,30 +173,28 @@
     .search {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       padding: 7px;
-      background: rgba(10,39,33,.94);
-      border: 1px solid rgba(255,255,255,.08);
+      background: #111111;
+      border: 1px solid #292929;
       border-radius: 19px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.18);
       transition: .2s ease;
     }
 
     .search:focus-within {
-      border-color: rgba(33,230,160,.4);
+      border-color: #ffd400;
       box-shadow:
-        0 0 0 3px rgba(33,230,160,.06),
-        0 18px 45px rgba(0,0,0,.2);
+        0 0 0 3px rgba(255,212,0,.08);
     }
 
     .search-icon {
-      width: 39px;
-      height: 39px;
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
-      color: #6e958a;
-      font-size: 20px;
       flex: none;
+      color: #777777;
+      font-size: 21px;
     }
 
     .search input {
@@ -188,25 +203,24 @@
       border: 0;
       outline: 0;
       background: transparent;
-      color: #fff;
+      color: #ffffff;
       padding: 10px 2px;
       font-size: 14px;
     }
 
     .search input::placeholder {
-      color: #67867d;
+      color: #666666;
     }
 
     .search button {
       border: 0;
       border-radius: 14px;
-      background: linear-gradient(135deg,#31f2ad,#16d898);
-      color: #05281f;
-      font-weight: 900;
-      padding: 11px 18px;
+      padding: 11px 19px;
+      background: #ffd400;
+      color: #090909;
+      font-weight: 950;
       cursor: pointer;
-      box-shadow: 0 7px 20px rgba(33,230,160,.13);
-      transition: .16s ease;
+      transition: .15s ease;
     }
 
     .search button:active {
@@ -219,14 +233,17 @@
       width: 100%;
       margin: 10px 0 8px;
       padding: 14px;
-      border: 1px solid rgba(33,230,160,.13);
+      border: 1px solid #332f16;
       border-radius: 16px;
-      background: linear-gradient(135deg,#103b31,#0b2c25);
-      color: #eafff8;
+      background: #151515;
+      color: #ffffff;
       font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 12px 30px rgba(0,0,0,.12);
       transition: .16s ease;
+    }
+
+    .location:hover {
+      border-color: #ffd400;
     }
 
     .location:active {
@@ -235,17 +252,16 @@
 
     .status {
       min-height: 22px;
-      text-align: center;
-      color: #8daaa2;
-      font-size: 11px;
       margin: 7px 4px;
+      text-align: center;
+      color: #858585;
+      font-size: 11px;
     }
 
     /* CATEGORIES */
 
     .categories-wrap {
-      position: relative;
-      margin-bottom: 14px;
+      margin-bottom: 15px;
     }
 
     .categories {
@@ -262,14 +278,14 @@
 
     .category {
       flex: 0 0 auto;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(11,39,33,.94);
-      color: #e5f7f2;
+      border: 1px solid #292929;
+      background: #111111;
+      color: #dddddd;
       border-radius: 999px;
       padding: 10px 15px;
-      cursor: pointer;
-      font-weight: 800;
       font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
       transition: .18s ease;
     }
 
@@ -278,10 +294,11 @@
     }
 
     .category.active {
-      background: #21e6a0;
-      color: #05281f;
-      border-color: #21e6a0;
-      box-shadow: 0 8px 22px rgba(33,230,160,.13);
+      background: #ffd400;
+      color: #080808;
+      border-color: #ffd400;
+      box-shadow:
+        0 8px 22px rgba(255,212,0,.13);
     }
 
     /* MAP */
@@ -290,14 +307,15 @@
       position: relative;
       overflow: hidden;
       border-radius: 24px;
-      border: 1px solid rgba(255,255,255,.09);
-      box-shadow: 0 25px 70px rgba(0,0,0,.34);
-      background: #0b2721;
+      border: 1px solid #292929;
+      background: #111111;
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
     }
 
     #map {
-      height: 350px;
       width: 100%;
+      height: 350px;
     }
 
     .map-label {
@@ -305,12 +323,12 @@
       z-index: 500;
       top: 12px;
       right: 12px;
-      background: rgba(6,27,23,.88);
-      backdrop-filter: blur(12px);
-      color: #eafff8;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 13px;
       padding: 8px 11px;
+      border-radius: 13px;
+      background: rgba(8,8,8,.88);
+      color: #ffd400;
+      border: 1px solid #3a3515;
+      backdrop-filter: blur(12px);
       font-size: 10px;
       font-weight: 900;
       pointer-events: none;
@@ -320,8 +338,8 @@
 
     .section-title {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin: 24px 0 11px;
     }
 
@@ -332,7 +350,7 @@
     }
 
     .count {
-      color: #718e86;
+      color: #777777;
       font-size: 11px;
     }
 
@@ -347,16 +365,22 @@
       display: flex;
       align-items: center;
       gap: 11px;
-      background: linear-gradient(145deg,#103129,#09231f);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 18px;
       padding: 12px;
+      border: 1px solid #252525;
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          145deg,
+          #151515,
+          #0e0e0e
+        );
       cursor: pointer;
-      transition: transform .16s ease, border-color .16s ease;
+      transition: .16s ease;
     }
 
     .result:hover {
-      border-color: rgba(33,230,160,.24);
+      border-color: #4b4315;
+      transform: translateY(-1px);
     }
 
     .result:active {
@@ -370,7 +394,7 @@
       display: grid;
       place-items: center;
       border-radius: 15px;
-      background: #15382f;
+      background: #1d1d1d;
       font-size: 22px;
     }
 
@@ -381,32 +405,32 @@
 
     .result-info strong {
       display: block;
-      font-size: 14px;
-      white-space: nowrap;
       overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis;
+      font-size: 14px;
     }
 
     .result-info small {
       display: block;
-      color: #8fa9a1;
       margin-top: 4px;
+      color: #858585;
       font-size: 10px;
     }
 
     .distance {
-      color: #21e6a0;
+      color: #ffd400;
       font-size: 10px;
-      font-weight: 900;
+      font-weight: 950;
       white-space: nowrap;
     }
 
     .empty {
       padding: 30px 15px;
       text-align: center;
-      color: #8da9a1;
-      background: #0b2721;
-      border: 1px solid rgba(255,255,255,.05);
+      color: #858585;
+      background: #111111;
+      border: 1px solid #242424;
       border-radius: 18px;
       font-size: 12px;
     }
@@ -417,10 +441,11 @@
       display: none;
       margin-top: 13px;
       padding: 17px;
-      background: linear-gradient(145deg,#0e3028,#09231e);
-      border: 1px solid rgba(33,230,160,.13);
+      border: 1px solid #4b4315;
       border-radius: 21px;
-      box-shadow: 0 17px 45px rgba(0,0,0,.22);
+      background: #131313;
+      box-shadow:
+        0 17px 45px rgba(0,0,0,.3);
     }
 
     .detail.show {
@@ -433,6 +458,7 @@
         opacity: 0;
         transform: translateY(7px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -455,19 +481,24 @@
     }
 
     .detail p {
-      color: #91aca4;
+      margin: 4px 0;
+      color: #909090;
       font-size: 12px;
       line-height: 1.7;
-      margin: 4px 0;
+    }
+
+    .detail-distance {
+      color: #ffd400;
+      font-weight: 950;
     }
 
     .close {
       width: 39px;
       height: 39px;
-      border: 0;
+      border: 1px solid #292929;
       border-radius: 12px;
-      background: #ffffff10;
-      color: white;
+      background: #1b1b1b;
+      color: #ffffff;
       cursor: pointer;
     }
 
@@ -479,48 +510,132 @@
     }
 
     .detail-actions button {
+      padding: 12px;
       border: 0;
       border-radius: 13px;
-      padding: 12px;
-      font-weight: 900;
+      font-weight: 950;
       cursor: pointer;
     }
 
     .directions {
-      background: #21e6a0;
-      color: #05281f;
+      background: #ffd400;
+      color: #080808;
     }
 
     .save {
-      background: #15382f;
-      color: white;
+      background: #202020;
+      color: #ffffff;
+      border: 1px solid #303030 !important;
+    }
+
+    .save.saved {
+      background: #ffd400;
+      color: #080808;
+    }
+
+    /* FAVORITES */
+
+    .favorites-section {
+      margin-top: 28px;
+    }
+
+    .favorites-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .favorites-head h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .favorites-head span {
+      color: #ffd400;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .favorite-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 17px;
+      background: #111111;
+      border: 1px solid #242424;
+      cursor: pointer;
+    }
+
+    .favorite-item-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: #1d1d1d;
+    }
+
+    .favorite-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .favorite-item-info strong {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 13px;
+    }
+
+    .favorite-item-info small {
+      display: block;
+      margin-top: 3px;
+      color: #777777;
+      font-size: 10px;
+    }
+
+    .remove-favorite {
+      border: 0;
+      background: transparent;
+      color: #ff5f5f;
+      font-size: 17px;
+      cursor: pointer;
     }
 
     /* FOOTER */
 
     footer {
-      text-align: center;
-      color: #607e76;
-      font-size: 10px;
       padding: 30px 0 8px;
+      text-align: center;
+      color: #555555;
+      font-size: 10px;
     }
 
     /* LEAFLET */
 
     .leaflet-control-zoom a {
-      background: #09251f !important;
-      color: #dffcf3 !important;
-      border-color: rgba(255,255,255,.1) !important;
+      background: #111111 !important;
+      color: #ffd400 !important;
+      border-color: #292929 !important;
     }
 
     .leaflet-popup-content-wrapper,
     .leaflet-popup-tip {
-      background: #0b2721;
-      color: white;
+      background: #111111;
+      color: #ffffff;
     }
 
     .leaflet-popup-content {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
     }
 
     /* MOBILE */
@@ -545,7 +660,7 @@
       }
 
       .hero {
-        padding-top: 29px;
+        padding-top: 30px;
       }
 
       h1 {
@@ -560,6 +675,7 @@
         grid-template-columns: 1fr;
       }
     }
+
   </style>
 </head>
 
@@ -571,21 +687,29 @@
 
     <div class="logo">
 
-      <div class="logo-icon">📍</div>
+      <div class="logo-icon">
+        📍
+      </div>
 
       <span>
         Wenah
-        <span style="color:#21e6a0">| وينه؟</span>
+        <span class="logo-yellow">
+          | وينه؟
+        </span>
       </span>
 
     </div>
 
     <div class="near">
+
       <span class="near-dot"></span>
+
       قريب منك
+
     </div>
 
   </header>
+
 
   <section class="hero">
 
@@ -601,6 +725,7 @@
       حدد موقعك وابحث عن المكان الذي تريده.
       Wenah يساعدك تكتشف أقرب الأماكن حولك بسهولة.
     </p>
+
 
     <div class="search">
 
@@ -622,11 +747,15 @@
 
     </div>
 
+
     <button
       class="location"
       onclick="getLocation()">
+
       📍 استخدم موقعي
+
     </button>
+
 
     <div
       id="status"
@@ -634,12 +763,8 @@
     </div>
 
   </section>
-<div class="favorites-bar">
-  <button class="favorites-button" onclick="showFavorites()">
-    ❤️ المفضلة
-    <span id="favoritesCount">0</span>
-  </button>
-</div>
+
+
   <div class="categories-wrap">
 
     <div class="categories">
@@ -648,54 +773,75 @@
         class="category active"
         data-type=""
         onclick="chooseCategory(this,'')">
+
         الكل
+
       </button>
+
 
       <button
         class="category"
         data-type="restaurant"
         onclick="chooseCategory(this,'restaurant')">
+
         🍔 مطاعم
+
       </button>
+
 
       <button
         class="category"
         data-type="cafe"
         onclick="chooseCategory(this,'cafe')">
+
         ☕ كافيهات
+
       </button>
+
 
       <button
         class="category"
         data-type="pharmacy"
         onclick="chooseCategory(this,'pharmacy')">
+
         💊 صيدليات
+
       </button>
+
 
       <button
         class="category"
         data-type="fuel"
         onclick="chooseCategory(this,'fuel')">
+
         ⛽ بنزين
+
       </button>
+
 
       <button
         class="category"
         data-type="supermarket"
         onclick="chooseCategory(this,'supermarket')">
+
         🛒 سوبرماركت
+
       </button>
+
 
       <button
         class="category"
         data-type="atm"
         onclick="chooseCategory(this,'atm')">
+
         🏧 ATM
+
       </button>
 
     </div>
 
   </div>
+
 
   <div class="map-card">
 
@@ -707,6 +853,7 @@
 
   </div>
 
+
   <div class="section-title">
 
     <h2>
@@ -716,20 +863,27 @@
     <span
       id="count"
       class="count">
+
       حدد موقعك أولاً
+
     </span>
 
   </div>
+
 
   <div
     id="results"
     class="results">
 
     <div class="empty">
-      📍 اضغط «استخدم موقعي» حتى نعرض الأماكن حولك.
+
+      📍 اضغط «استخدم موقعي»
+      حتى نعرض الأماكن حولك.
+
     </div>
 
   </div>
+
 
   <div
     id="detail"
@@ -742,7 +896,9 @@
         <div
           id="detailIcon"
           class="detail-icon">
+
           📍
+
         </div>
 
         <h3 id="detailName"></h3>
@@ -751,44 +907,89 @@
 
         <strong
           id="detailDistance"
-          style="color:#21e6a0">
+          class="detail-distance">
+
         </strong>
 
       </div>
 
+
       <button
         class="close"
         onclick="closeDetail()">
+
         ✕
+
       </button>
 
     </div>
+
 
     <div class="detail-actions">
 
       <button
         class="directions"
         onclick="openDirections()">
+
         🧭 الاتجاهات
+
       </button>
 
+
       <button
+        id="saveButton"
         class="save"
         onclick="savePlace()">
+
         ♡ حفظ
+
       </button>
 
     </div>
 
   </div>
 
+
+  <!-- FAVORITES -->
+
+  <section class="favorites-section">
+
+    <div class="favorites-head">
+
+      <h2>
+        ⭐ المفضلة
+      </h2>
+
+      <span id="favoriteCount">
+        0 أماكن
+      </span>
+
+    </div>
+
+
+    <div id="favoritesList">
+
+      <div class="empty">
+        الأماكن التي تحفظها ستظهر هنا.
+      </div>
+
+    </div>
+
+  </section>
+
+
   <footer>
-    Wenah — وينه؟ • اكتشف أقرب مكان بسهولة.
+
+    Wenah — وينه؟
+    • اكتشف أقرب مكان بسهولة.
+
   </footer>
 
 </main>
 
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 
 <script>
 
@@ -796,19 +997,22 @@ let map =
   L.map("map")
    .setView([31.95, 35.91], 12);
 
+
 L.tileLayer(
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {
     maxZoom: 19,
-    attribution: "©️ OpenStreetMap"
+    attribution: "© OpenStreetMap"
   }
 ).addTo(map);
+
 
 let userLocation = null;
 let markers = [];
 let userMarker = null;
 let currentCategory = "";
 let selectedPlace = null;
+
 
 const statusEl =
   document.getElementById("status");
@@ -819,11 +1023,18 @@ const resultsEl =
 const countEl =
   document.getElementById("count");
 
+const saveButton =
+  document.getElementById("saveButton");
+
+
 function setStatus(text) {
 
   statusEl.textContent = text;
 
 }
+
+
+/* LOCATION */
 
 function getLocation() {
 
@@ -834,11 +1045,14 @@ function getLocation() {
     );
 
     return;
+
   }
+
 
   setStatus(
     "📍 جاري تحديد موقعك..."
   );
+
 
   navigator.geolocation.getCurrentPosition(
 
@@ -854,6 +1068,7 @@ function getLocation() {
 
       };
 
+
       map.setView(
         [
           userLocation.lat,
@@ -861,6 +1076,7 @@ function getLocation() {
         ],
         15
       );
+
 
       if (userMarker) {
 
@@ -870,6 +1086,7 @@ function getLocation() {
 
       }
 
+
       userMarker =
         L.circleMarker(
           [
@@ -878,30 +1095,34 @@ function getLocation() {
           ],
           {
             radius: 9,
-            color: "#071d19",
+            color: "#080808",
             weight: 4,
-            fillColor: "#21e6a0",
+            fillColor: "#ffd400",
             fillOpacity: 1
           }
         )
         .addTo(map)
         .bindPopup("📍 موقعك");
 
+
       setStatus(
         "✅ تم تحديد موقعك"
       );
+
 
       loadPlaces();
 
     },
 
+
     function() {
 
       setStatus(
-        "❌ اسمح للموقع من إعدادات Edge ثم حاول مرة ثانية."
+        "❌ اسمح للموقع من إعدادات المتصفح ثم حاول مرة ثانية."
       );
 
     },
+
 
     {
       enableHighAccuracy: true,
@@ -912,6 +1133,9 @@ function getLocation() {
   );
 
 }
+
+
+/* CATEGORY */
 
 function chooseCategory(
   button,
@@ -925,21 +1149,27 @@ function chooseCategory(
         btn.classList.remove("active")
     );
 
+
   button.classList.add("active");
+
 
   currentCategory =
     category;
+
 
   if (!userLocation) {
 
     getLocation();
 
     return;
+
   }
+
 
   loadPlaces();
 
 }
+
 
 function updateActiveCategory() {
 
@@ -956,6 +1186,9 @@ function updateActiveCategory() {
 
 }
 
+
+/* SEARCH */
+
 function searchPlaces() {
 
   const input =
@@ -964,6 +1197,7 @@ function searchPlaces() {
       .value
       .trim()
       .toLowerCase();
+
 
   if (
     input.includes("مطعم") ||
@@ -979,6 +1213,7 @@ function searchPlaces() {
 
   }
 
+
   else if (
     input.includes("كافيه") ||
     input.includes("كافيهات") ||
@@ -993,6 +1228,7 @@ function searchPlaces() {
 
   }
 
+
   else if (
     input.includes("صيدلية") ||
     input.includes("صيدليات") ||
@@ -1003,6 +1239,7 @@ function searchPlaces() {
       "pharmacy";
 
   }
+
 
   else if (
     input.includes("بنزين") ||
@@ -1017,6 +1254,7 @@ function searchPlaces() {
 
   }
 
+
   else if (
     input.includes("سوبر") ||
     input.includes("ماركت") ||
@@ -1029,6 +1267,7 @@ function searchPlaces() {
 
   }
 
+
   else if (
     input.includes("atm") ||
     input.includes("صراف") ||
@@ -1040,18 +1279,25 @@ function searchPlaces() {
 
   }
 
+
   updateActiveCategory();
+
 
   if (!userLocation) {
 
     getLocation();
 
     return;
+
   }
+
 
   loadPlaces();
 
 }
+
+
+/* OVERPASS */
 
 function getOverpassTag() {
 
@@ -1082,29 +1328,36 @@ function getOverpassTag() {
 
 }
 
+
 async function loadPlaces() {
 
   if (!userLocation) {
     return;
   }
 
+
   setStatus(
     "🔎 جاري البحث عن الأماكن القريبة..."
   );
 
+
   resultsEl.innerHTML =
     '<div class="empty">جاري البحث...</div>';
 
+
   clearMarkers();
+
 
   const tag =
     getOverpassTag();
+
 
   const lat =
     userLocation.lat;
 
   const lon =
     userLocation.lon;
+
 
   const query = `
     [out:json][timeout:25];
@@ -1121,6 +1374,7 @@ async function loadPlaces() {
     out center tags;
   `;
 
+
   const endpoints = [
 
     "https://overpass-api.de/api/interpreter",
@@ -1129,7 +1383,9 @@ async function loadPlaces() {
 
   ];
 
+
   let data = null;
+
 
   for (
     const endpoint of endpoints
@@ -1144,16 +1400,20 @@ async function loadPlaces() {
           encodeURIComponent(query)
         );
 
+
       if (!response.ok) {
         continue;
       }
 
+
       data =
         await response.json();
+
 
       break;
 
     }
+
 
     catch(error) {
 
@@ -1163,11 +1423,13 @@ async function loadPlaces() {
 
   }
 
+
   if (!data) {
 
     setStatus(
       "❌ تعذر تحميل الأماكن حالياً."
     );
+
 
     resultsEl.innerHTML =
       '<div class="empty">⚠️ حاول مرة ثانية بعد قليل.</div>';
@@ -1175,6 +1437,7 @@ async function loadPlaces() {
     return;
 
   }
+
 
   const places =
 
@@ -1186,16 +1449,20 @@ async function loadPlaces() {
           item.lat ??
           item.center?.lat;
 
+
         const lon =
           item.lon ??
           item.center?.lon;
 
+
         const tags =
           item.tags || {};
+
 
         return {
 
           lat,
+
           lon,
 
           name:
@@ -1224,25 +1491,31 @@ async function loadPlaces() {
 
       })
 
+
       .filter(
         place =>
           Number.isFinite(place.lat) &&
           Number.isFinite(place.lon)
       )
 
+
       .sort(
         (a,b) =>
           a.distance - b.distance
       )
 
+
       .slice(0,20);
 
+
   renderPlaces(places);
+
 
   countEl.textContent =
     places.length
       ? `${places.length} نتيجة`
       : "لا نتائج";
+
 
   setStatus(
     places.length
@@ -1251,6 +1524,9 @@ async function loadPlaces() {
   );
 
 }
+
+
+/* DISTANCE */
 
 function calculateDistance(
   lat1,
@@ -1261,13 +1537,16 @@ function calculateDistance(
 
   const R = 6371;
 
+
   const dLat =
     (lat2-lat1) *
     Math.PI / 180;
 
+
   const dLon =
     (lon2-lon1) *
     Math.PI / 180;
+
 
   const a =
     Math.sin(dLat/2) ** 2 +
@@ -1282,6 +1561,7 @@ function calculateDistance(
 
     Math.sin(dLon/2) ** 2;
 
+
   return R *
     2 *
     Math.atan2(
@@ -1290,6 +1570,9 @@ function calculateDistance(
     );
 
 }
+
+
+/* ICONS */
 
 function iconFor(type) {
 
@@ -1320,6 +1603,9 @@ function iconFor(type) {
 
 }
 
+
+/* CLEAR MARKERS */
+
 function clearMarkers() {
 
   markers.forEach(
@@ -1327,13 +1613,18 @@ function clearMarkers() {
       map.removeLayer(marker)
   );
 
+
   markers = [];
 
 }
 
+
+/* RESULTS */
+
 function renderPlaces(places) {
 
   resultsEl.innerHTML = "";
+
 
   if (!places.length) {
 
@@ -1343,6 +1634,7 @@ function renderPlaces(places) {
     return;
 
   }
+
 
   places.forEach(place => {
 
@@ -1357,13 +1649,17 @@ function renderPlaces(places) {
         ${formatDistance(place.distance)}`
       );
 
+
     markers.push(marker);
+
 
     const item =
       document.createElement("div");
 
+
     item.className =
       "result";
+
 
     item.innerHTML = `
 
@@ -1395,6 +1691,7 @@ function renderPlaces(places) {
 
     `;
 
+
     item.onclick =
       () =>
         showDetail(
@@ -1402,11 +1699,15 @@ function renderPlaces(places) {
           marker
         );
 
+
     resultsEl.appendChild(item);
 
   });
 
 }
+
+
+/* CATEGORY NAME */
 
 function categoryName(type) {
 
@@ -1432,12 +1733,16 @@ function categoryName(type) {
 
   };
 
+
   return (
     names[type] ||
     "مكان قريب"
   );
 
 }
+
+
+/* DISTANCE TEXT */
 
 function formatDistance(
   distance
@@ -1453,12 +1758,16 @@ function formatDistance(
 
   }
 
+
   return (
     distance.toFixed(1) +
     " كم"
   );
 
 }
+
+
+/* DETAIL */
 
 function showDetail(
   place,
@@ -1468,15 +1777,18 @@ function showDetail(
   selectedPlace =
     place;
 
+
   document
     .getElementById("detailIcon")
     .textContent =
       iconFor(place.type);
 
+
   document
     .getElementById("detailName")
     .textContent =
       place.name;
+
 
   document
     .getElementById("detailType")
@@ -1489,6 +1801,7 @@ function showDetail(
           : ""
       );
 
+
   document
     .getElementById("detailDistance")
     .textContent =
@@ -1497,9 +1810,14 @@ function showDetail(
       ) +
       " منك";
 
+
+  updateSaveButton();
+
+
   document
     .getElementById("detail")
     .classList.add("show");
+
 
   map.setView(
     [
@@ -1509,9 +1827,11 @@ function showDetail(
     17
   );
 
+
   marker.openPopup();
 
 }
+
 
 function closeDetail() {
 
@@ -1519,10 +1839,14 @@ function closeDetail() {
     .getElementById("detail")
     .classList.remove("show");
 
+
   selectedPlace =
     null;
 
 }
+
+
+/* DIRECTIONS */
 
 function openDirections() {
 
@@ -1530,13 +1854,17 @@ function openDirections() {
     !selectedPlace ||
     !userLocation
   ) {
+
     return;
+
   }
+
 
   const url =
     `https://www.google.com/maps/dir/?api=1` +
     `&origin=${userLocation.lat},${userLocation.lon}` +
     `&destination=${selectedPlace.lat},${selectedPlace.lon}`;
+
 
   window.open(
     url,
@@ -1545,108 +1873,103 @@ function openDirections() {
 
 }
 
-function getSavedPlaces() {
-  return JSON.parse(
-    localStorage.getItem("wenahSaved") || "[]"
-  );
-}
 
-function updateFavoritesCount() {
-  const saved = getSavedPlaces();
+/* FAVORITES */
 
-  const count = document.getElementById("favoritesCount");
+function getFavorites() {
 
-  if (count) {
-    count.textContent = saved.length;
-  }
-}
+  try {
 
-function savePlace() {
-
-  if (!selectedPlace) {
-    return;
-  }
-
-  let saved = getSavedPlaces();
-
-  const exists = saved.some(place =>
-    place.name === selectedPlace.name &&
-    Math.abs(place.lat - selectedPlace.lat) < 0.0001 &&
-    Math.abs(place.lon - selectedPlace.lon) < 0.0001
-  );
-
-  if (exists) {
-
-    saved = saved.filter(place =>
-      !(
-        place.name === selectedPlace.name &&
-        Math.abs(place.lat - selectedPlace.lat) < 0.0001 &&
-        Math.abs(place.lon - selectedPlace.lon) < 0.0001
-      )
-    );
-
-    localStorage.setItem(
-      "wenahSaved",
-      JSON.stringify(saved)
-    );
-
-    alert("تمت إزالة المكان من المفضلة ❤️");
-
-  } else {
-
-    saved.push(selectedPlace);
-
-    localStorage.setItem(
-      "wenahSaved",
-      JSON.stringify(saved)
-    );
-
-    alert("تمت إضافة المكان إلى المفضلة ❤️");
-  }
-
-  updateFavoritesCount();
-}
-
-  let saved =
-    JSON.parse(
+    return JSON.parse(
       localStorage.getItem(
         "wenahSaved"
       ) || "[]"
     );
 
-  const exists =
-    saved.some(place =>
-      place.name ===
-        selectedPlace.name &&
+  }
 
-      Math.abs(
-        place.lat -
-        selectedPlace.lat
-      ) < 0.0001
+  catch {
+
+    return [];
+
+  }
+
+}
+
+
+function isFavorite(place) {
+
+  const saved =
+    getFavorites();
+
+
+  return saved.some(item =>
+
+    item.name === place.name &&
+
+    Math.abs(
+      item.lat - place.lat
+    ) < 0.0001 &&
+
+    Math.abs(
+      item.lon - place.lon
+    ) < 0.0001
+
+  );
+
+}
+
+
+function savePlace() {
+
+  if(!selectedPlace) {
+
+    return;
+
+  }
+
+
+  let saved =
+    getFavorites();
+
+
+  const exists =
+    isFavorite(
+      selectedPlace
     );
+
 
   if(exists) {
 
     saved =
-      saved.filter(place =>
+      saved.filter(item =>
+
         !(
-          place.name ===
+          item.name ===
             selectedPlace.name &&
 
           Math.abs(
-            place.lat -
+            item.lat -
             selectedPlace.lat
+          ) < 0.0001 &&
+
+          Math.abs(
+            item.lon -
+            selectedPlace.lon
           ) < 0.0001
         )
+
       );
+
 
     localStorage.setItem(
       "wenahSaved",
       JSON.stringify(saved)
     );
 
-    alert(
-      "تمت إزالة المكان من المفضلة ❤️"
+
+    setStatus(
+      "🗑️ تمت إزالة المكان من المفضلة"
     );
 
   }
@@ -1657,18 +1980,245 @@ function savePlace() {
       selectedPlace
     );
 
+
     localStorage.setItem(
       "wenahSaved",
       JSON.stringify(saved)
     );
 
-    alert(
-      "تم حفظ المكان بالمفضلة ❤️"
+
+    setStatus(
+      "⭐ تم حفظ المكان في المفضلة"
     );
 
   }
 
+
+  updateSaveButton();
+
+  renderFavorites();
+
 }
+
+
+function updateSaveButton() {
+
+  if(!selectedPlace) {
+
+    return;
+
+  }
+
+
+  const favorite =
+    isFavorite(
+      selectedPlace
+    );
+
+
+  saveButton.textContent =
+    favorite
+      ? "★ محفوظ"
+      : "♡ حفظ";
+
+
+  saveButton.classList.toggle(
+    "saved",
+    favorite
+  );
+
+}
+
+
+/* FAVORITES LIST */
+
+function renderFavorites() {
+
+  const list =
+    document.getElementById(
+      "favoritesList"
+    );
+
+
+  const count =
+    document.getElementById(
+      "favoriteCount"
+    );
+
+
+  const saved =
+    getFavorites();
+
+
+  count.textContent =
+    `${saved.length} أماكن`;
+
+
+  if(!saved.length) {
+
+    list.innerHTML =
+      '<div class="empty">الأماكن التي تحفظها ستظهر هنا.</div>';
+
+    return;
+
+  }
+
+
+  list.innerHTML = "";
+
+
+  saved.forEach((place,index) => {
+
+    const item =
+      document.createElement("div");
+
+
+    item.className =
+      "favorite-item";
+
+
+    item.innerHTML = `
+
+      <div class="favorite-item-icon">
+        ${iconFor(place.type)}
+      </div>
+
+      <div class="favorite-item-info">
+
+        <strong>
+          ${escapeHtml(place.name)}
+        </strong>
+
+        <small>
+          ${categoryName(place.type)}
+          •
+          ${formatDistance(place.distance || 0)}
+        </small>
+
+      </div>
+
+      <button
+        class="remove-favorite"
+        title="حذف">
+
+        🗑️
+
+      </button>
+
+    `;
+
+
+    item.onclick = function(event) {
+
+      if(
+        event.target.closest(
+          ".remove-favorite"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      selectedPlace =
+        place;
+
+
+      document
+        .getElementById("detailIcon")
+        .textContent =
+          iconFor(place.type);
+
+
+      document
+        .getElementById("detailName")
+        .textContent =
+          place.name;
+
+
+      document
+        .getElementById("detailType")
+        .textContent =
+          categoryName(place.type);
+
+
+      document
+        .getElementById("detailDistance")
+        .textContent =
+          formatDistance(
+            place.distance || 0
+          ) +
+          " منك";
+
+
+      updateSaveButton();
+
+
+      document
+        .getElementById("detail")
+        .classList.add("show");
+
+
+      map.setView(
+        [
+          place.lat,
+          place.lon
+        ],
+        17
+      );
+
+    };
+
+
+    item
+      .querySelector(
+        ".remove-favorite"
+      )
+      .onclick = function(event) {
+
+        event.stopPropagation();
+
+
+        let current =
+          getFavorites();
+
+
+        current.splice(
+          index,
+          1
+        );
+
+
+        localStorage.setItem(
+          "wenahSaved",
+          JSON.stringify(current)
+        );
+
+
+        renderFavorites();
+
+
+        if(
+          selectedPlace &&
+          selectedPlace.name === place.name
+        ) {
+
+          updateSaveButton();
+
+        }
+
+      };
+
+
+    list.appendChild(item);
+
+  });
+
+}
+
+
+/* ESCAPE HTML */
 
 function escapeHtml(text) {
 
@@ -1700,6 +2250,11 @@ function escapeHtml(text) {
     );
 
 }
+
+
+/* START */
+
+renderFavorites();
 
 </script>
 
